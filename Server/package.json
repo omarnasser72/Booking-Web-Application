@@ -27,5 +27,8 @@
     "nodemailer": "^6.9.4",
     "nodemon": "^2.0.22",
     "react-datepicker": "^4.16.0"
+  },
+  "engines": {
+    "node": "14.20.1"
   }
 }
