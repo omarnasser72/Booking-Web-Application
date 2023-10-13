@@ -1,0 +1,156 @@
+.reserve {
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  z-index: 3;
+  background-color: rgb(66, 66, 66);
+  color: #fffc55;
+  /*padding: 40px;*/
+  position: relative;
+}
+.reserveContainer {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /*margin: 0;*/
+}
+.changeDate {
+  width: 100%;
+}
+
+.selectRooms {
+  width: 80%;
+  height: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 0;
+  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.reservationRooms {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /*padding: 40px;*/
+  gap: 20px;
+}
+.reserveClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.reserveRoom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: rgb(66, 66, 66);
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.712);
+}
+.reserveButton {
+  width: 100%;
+}
+
+.reserveBtn {
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #fffc55;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.room {
+  display: flex;
+}
+
+.roomInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.roomNumbers {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.reserveRoomTitle {
+  font-weight: 500;
+}
+
+.reserveRoomDesc {
+  font-weight: 300;
+}
+
+.reserveMax {
+  font-size: 12px;
+}
+
+.reservePrice {
+  font-weight: 500;
+}
+
+.reserveSelectedRooms {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.room {
+  gap: 5px;
+}
+.room1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.changeDateBtn {
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #fffc55;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.newDate {
+  margin-top: 0%;
+  align-self: center;
+  justify-content: center;
+  position: absolute;
+  top: 80px;
+  margin-bottom: 55%;
+}
+
+.dateRange {
+  margin-top: 5%;
+  margin-bottom: 15%;
+}
+
+.closeIcon {
+  position: relative;
+  top: 5%;
+  left: 120%;
+  font-size: x-large;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.closeIcon.disabled {
+  cursor: not-allowed;
+}

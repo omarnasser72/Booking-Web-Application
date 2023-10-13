@@ -1,0 +1,17 @@
+.Home {
+  width: 100%;
+  background-color: #fffc55;
+}
+.homeContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*gap: 30px;*/
+}
+
+.homeTitle {
+  width: 1024px;
+  font-size: x-large;
+  font-family: fantasy;
+}

@@ -1,0 +1,116 @@
+.new {
+  display: flex;
+  width: 100%;
+  .newContainer {
+    flex: 6;
+    .top,
+    .bottom {
+      color: yellow;
+      background-color: rgb(66, 66, 66);
+      display: flex;
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      margin: 20px;
+      padding: 20px;
+      .errmsg {
+        background-color: lightpink;
+        color: firebrick;
+        font-weight: bold;
+      }
+      .left {
+        flex: 1;
+        text-align: center;
+
+        img {
+          margin-top: 50px;
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+      .right {
+        flex: 2;
+        display: flex;
+        form {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          gap: 20px;
+          .formInput {
+            width: 40%;
+            gap: 20px;
+            label {
+              gap: 10px;
+              display: flex;
+              align-items: center;
+              .icon {
+                cursor: pointer;
+              }
+            }
+            input {
+              width: 100%;
+              padding: 5px;
+              border: none;
+              outline: none;
+              border-radius: 5px;
+              border-bottom: 1px solid black;
+              color: white;
+              background-color: rgb(66, 66, 66);
+            }
+            .valid {
+              color: limegreen;
+            }
+
+            .invalid {
+              color: red;
+            }
+
+            .hide {
+              display: none;
+            }
+
+            .instructions {
+              background-color: #000;
+              border-radius: 5px;
+              position: relative;
+              bottom: -10px;
+              padding: 5px;
+            }
+
+            .offscreen {
+              position: absolute;
+              left: -9999px;
+            }
+            .inputErrMsg {
+              text-align: center;
+              color: red;
+              background-color: lightpink;
+              border-radius: 5px;
+              margin: 5px;
+            }
+          }
+          button {
+            width: 200px;
+            padding: 5px 30px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: yellow;
+          }
+        }
+      }
+    }
+    .sidebarWrapper {
+      display: flex;
+      align-items: center;
+      .listOutBtn {
+        background-color: white;
+        color: #000;
+        padding: 5px;
+      }
+    }
+  }
+}

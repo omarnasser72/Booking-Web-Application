@@ -1,0 +1,117 @@
+.list {
+}
+.listContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: #fffc55;
+  margin-top: -1%;
+}
+
+.listWrapper {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  gap: 10px;
+  padding: 50px;
+  margin-left: 5%;
+  flex-grow: 10;
+  min-height: 100vh;
+}
+
+.listSearch {
+  flex: 1;
+  background-color: #363636;
+  padding: 10px;
+  border-radius: 10px;
+  position: sticky;
+  margin-left: -15%;
+  top: 10px;
+}
+
+.listSearchTitle {
+  font-family: Courier, monospace;
+  font-style: 20px;
+  padding: 10px 0px;
+  color: #ffe600;
+  margin-bottom: 20px;
+}
+
+.listResult {
+  flex: 3;
+  width: 100%;
+}
+
+.listSearchItem {
+  color: #ffe600;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.listSearchItem > input {
+  font-size: 14px;
+  color: black;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+  margin-bottom: 10px;
+  width: 250px;
+}
+
+.listSearchItem > span {
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.optionItems {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  gap: 5px;
+}
+.optionItem {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.optionItemLabel {
+  white-space: nowrap;
+  margin-right: 30px;
+  padding-right: 80px;
+  width: 00%;
+}
+.optionItem > input {
+  color: black;
+  display: flex;
+  width: 100px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 5%;
+}
+
+.optionItem > input::placeholder {
+  color: black;
+}
+.searchBtn {
+  cursor: pointer;
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 40px;
+  margin-left: 80px;
+}
+
+.noResults {
+  align-self: flex-start;
+}
+.footer {
+  margin-top: auto; /* Push the footer to the bottom */
+}

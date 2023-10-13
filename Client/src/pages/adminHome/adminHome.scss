@@ -1,0 +1,45 @@
+.adminHome {
+  display: flex;
+  .adminHomeContainer {
+    flex: 6;
+    .sidebarWrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      .sidebarBtn {
+        margin-top: 10px;
+        color: rgb(66, 66, 66);
+        button {
+          cursor: pointer;
+          background-color: #fff;
+          border-radius: 5px;
+          border: none;
+        }
+      }
+      .navbar {
+        width: 100%;
+      }
+    }
+    .widgetContainer {
+      display: flex;
+      padding: 15px;
+      gap: 30px;
+    }
+    .charts {
+      display: flex;
+    }
+    .adminListContainer {
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      padding: 20px;
+      background-color: rgb(66, 66, 66);
+      margin: 30px;
+      .listTitle {
+        font-size: 20px;
+        font-weight: 600;
+        color: yellow;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

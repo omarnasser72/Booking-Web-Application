@@ -1,0 +1,233 @@
+.Hotel {
+  width: 100%;
+  display: flex;
+}
+.wholePage {
+  background-color: #fffc55;
+  width: 100%;
+  align-items: center;
+}
+.hotelContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #fffc55;
+  gap: 20px;
+}
+
+.hotelWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1024px;
+  gap: 10px;
+  background-color: #363636;
+  color: white;
+  padding: 15px;
+  position: relative;
+}
+
+.rateBtn {
+  position: absolute;
+  right: 20px;
+  border: none;
+  padding: 10px 20px;
+  color: #363636;
+  background-color: #fffc55;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  margin-top: 15px;
+}
+
+.hotelTitle {
+  font-size: 24px;
+  height: 5px;
+}
+
+.ratings {
+  display: flex;
+  justify-content: space-between;
+}
+.hotelAddress {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hotelDistance {
+  color: #0071c2;
+  font-weight: bold;
+}
+
+.hotelPriceHighlight {
+  color: #008009;
+  font-weight: 500;
+}
+
+.hotelImages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hotelImageWrapper {
+  width: 33%;
+}
+
+.hotelImg {
+  width: 100%;
+  height: min-content;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.hotelDetails {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.hotelDetailText {
+  flex: 3;
+}
+
+.hotelDetailsPrice {
+  flex: 1;
+}
+
+.hotelDesc {
+  font-size: 16px;
+}
+
+.hotelDetailsPrice {
+  flex: 1;
+  background-color: #4d4d4d;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hotelDetailsPrice > h1 {
+  font-size: 22px;
+}
+
+.hotelDetailsPrice > span {
+  font-size: 16px;
+}
+
+.hotelDetailsPrice > h2 {
+  font-weight: 400;
+}
+
+.hotelDetailsPrice > button {
+  top: 10px;
+  border: none;
+  padding: 10px 20px;
+  color: #fffc55;
+  background-color: #363636;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.rateContainer {
+  background-color: #52525280;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rateWrapper {
+  position: sticky;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: rgb(66, 66, 66);
+  color: #fffb00;
+  font-size: xx-large;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+}
+.closeRate {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 30px;
+  color: #fffb00;
+  cursor: pointer;
+}
+
+.submitRate {
+  border: none;
+  padding: 10px 20px;
+  color: #363636;
+  background-color: #fffc55;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.slider {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff6b;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+}
+
+.slideWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderImg {
+  height: 80vh;
+}
+
+.closeImgSlider {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  color: #4d4d4d;
+  cursor: pointer;
+}
+
+.arrow {
+  margin: 20px;
+  font-size: 40px;
+  color: #4d4d4d;
+  cursor: pointer;
+}
+.reserveContainer {
+  margin: 50px;
+}
+
+.rateContainer {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #fffc55;
+  background-color: #ffffff6b;
+}

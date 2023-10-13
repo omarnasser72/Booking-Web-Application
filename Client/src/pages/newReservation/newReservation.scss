@@ -1,0 +1,111 @@
+.new {
+  width: 100%;
+  display: flex;
+  .newContainer {
+    flex: 6;
+    .top,
+    .bottom {
+      color: yellow;
+      background-color: rgb(66, 66, 66);
+      display: flex;
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      margin: 20px;
+      padding: 20px;
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        .errmsg {
+          background-color: lightpink;
+          color: firebrick;
+          font-weight: bold;
+        }
+        .wrapper {
+          width: 100%;
+          gap: 50px;
+          display: flex;
+          justify-content: center;
+          .formInput {
+            width: 40%;
+            gap: 20px;
+            label {
+              gap: 10px;
+              display: flex;
+              align-items: center;
+              .icon {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .dateRange {
+          display: flex;
+          flex-direction: column;
+          .headerDate {
+            cursor: pointer;
+          }
+          .rdrCalendarWrapper.rdrDateRangeWrapper.date {
+            background-color: rgb(255, 255, 125);
+            .rdrDateDisplayWrapper {
+              background-color: rgb(255, 255, 125);
+              .rdrWeekDays {
+                color: black;
+              }
+            }
+          }
+          button {
+            color: black;
+            background-color: rgb(248, 248, 1);
+          }
+        }
+        button.submitBtn {
+          width: 200px;
+          padding: 5px 30px;
+          border: none;
+          border-radius: 5px;
+          margin-bottom: 10px;
+          cursor: pointer;
+          font-weight: 600;
+          background-color: yellow;
+        }
+      }
+    }
+    .sidebarWrapper {
+      display: flex;
+      align-items: center;
+      .listOutBtn {
+        background-color: white;
+        color: #000;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+.valid {
+  color: limegreen;
+}
+
+.invalid {
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
+.instructions {
+  background-color: #000;
+  border-radius: 5px;
+  position: relative;
+  bottom: -10px;
+  padding: 5px;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
