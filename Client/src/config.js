@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost:8888/API";
+export const API_BASE_URL = "https://booking-fwaz.onrender.com";
