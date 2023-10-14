@@ -12,6 +12,11 @@ import { SearchContext } from "../../context/SearchContext";
 const Home = () => {
   const { date: contextDate } = useContext(SearchContext);
   console.log(contextDate);
+  // Add these console logs to help with debugging
+  console.log("API Endpoint URL:", process.env.REACT_APP_API_ENDPOINT);
+  console.log("User Data:", data);
+  console.log("Error:", error);
+
   return (
     <div className="Home">
       <Navbar />
