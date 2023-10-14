@@ -60,7 +60,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8888",
+  "proxy": "https://booking-fwaz.onrender.com",
   "keywords": [],
   "author": "",
   "license": "ISC"
