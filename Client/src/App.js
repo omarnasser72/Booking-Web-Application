@@ -40,6 +40,7 @@ import AdminProfile from "./pages/adminProfile/AdminProfile";
 function App() {
   const ProtectedRoute = ({ element }) => {
     // Change `children` to `element`
+    return element;
     const { user } = useContext(AuthContext);
     const isLoginOrRegister =
       useLocation().pathname.match(/^(login|register)$/);
@@ -50,6 +51,7 @@ function App() {
   };
 
   const ProtectedAdminRoute = ({ element }) => {
+    return element;
     const { user } = useContext(AuthContext);
     if (user) {
       if (user.isAdmin) return element;
@@ -64,7 +66,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/Booking-Web-app">
-            <Route index element={<Login />} />
+            <Route index element={<AdminHome />} />
           </Route>
 
           <Route path="/">
