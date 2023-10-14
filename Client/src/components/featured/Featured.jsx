@@ -3,6 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import "./featured.css";
 import { useContext, useState } from "react";
 import { SearchContext } from "../../context/SearchContext.js";
+import api from "../../api";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import "./featuredProperties.css";
+import api from "../../api";
 
 const FeaturedProperties = () => {
   const { data, loading } = useFetch(`/hotels?featured=true&max=3`);

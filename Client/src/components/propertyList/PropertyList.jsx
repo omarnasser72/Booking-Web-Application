@@ -1,6 +1,6 @@
 import "./propertyList.css";
 import useFetch from "../../hooks/useFetch.js";
-
+import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const PropertyList = () => {
