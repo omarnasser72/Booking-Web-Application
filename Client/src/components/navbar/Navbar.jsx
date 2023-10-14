@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const { data, error, loading } = useFetch(`users/${user._id}`);
+  const { data, error, loading } = useFetch(`users/${user?._id}`);
   console.log(data);
   const [openSettings, setOpenSettings] = useState(false);
   const [imgClass, setImgClass] = useState("profileImg");

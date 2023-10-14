@@ -66,7 +66,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/Booking-Web-app">
-            <Route index element={<AdminHome />} />
+            <Route index element={<Login />} />
           </Route>
 
           <Route path="/">
