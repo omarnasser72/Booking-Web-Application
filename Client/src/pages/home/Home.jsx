@@ -8,6 +8,7 @@ import Navbar from "../../components/navbar/Navbar";
 import PropertyList from "../../components/propertyList/PropertyList";
 import "./home.css";
 import { SearchContext } from "../../context/SearchContext";
+import api from "./api";
 
 const Home = () => {
   const { date: contextDate } = useContext(SearchContext);
