@@ -1,8 +1,9 @@
 import "./propertyList.css";
 import useFetch from "../../hooks/useFetch.js";
-import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../../api.js";
+
 const PropertyList = () => {
   const { data, loading, error } = useFetch("/hotels/countByType");
   const images = [
