@@ -116,7 +116,9 @@ const NewReservation = () => {
     if (roomTypeId && roomNumberId) {
       const fetchRoomNumber = async () => {
         console.log(roomTypeId, roomNumberId);
-        const roomRes = await axios.get(`/rooms/${roomTypeId}/${roomNumberId}`);
+        const roomRes = await axios.get(
+          `https://booking-fwaz.onrender.com/rooms/${roomTypeId}/${roomNumberId}`
+        );
         return roomRes.data;
       };
 
@@ -170,7 +172,7 @@ const NewReservation = () => {
     data: users,
     error: userError,
     loading: usersLoading,
-  } = useFetch("/users/getUsers/all");
+  } = useFetch("https://booking-fwaz.onrender.com/users/getUsers/all");
   const [Users, setUsers] = useState([]);
   // useEffect(() => {
   //   const getUsers = async () => {
@@ -190,7 +192,7 @@ const NewReservation = () => {
     error: hotelsError,
     loading,
     hotelsLoading,
-  } = useFetch("/hotels");
+  } = useFetch("https://booking-fwaz.onrender.com/hotels");
 
   console.log(hotelId);
   console.log(hotels);
@@ -374,7 +376,9 @@ const NewReservation = () => {
       if (!validRoomNumber) setRoomNumberFocus(true);
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(`/rooms/${roomTypeId}`);
+      const roomRes = await axios.get(
+        `https://booking-fwaz.onrender.com/rooms/${roomTypeId}`
+      );
       const room = roomRes.data;
       const price = room.price;
       try {

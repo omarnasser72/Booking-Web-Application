@@ -240,7 +240,7 @@ const NewHotel = () => {
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }
-        navigate("adminDashboard/hotels");
+        navigate("/adminDashboard/hotels");
       } catch (error) {
         setErrMsg(error.response.data.message);
         console.log(error);
