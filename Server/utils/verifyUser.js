@@ -30,27 +30,27 @@ export const verifyToken = (req, res, next) => {
       return next(createError(403, "Token isn't valid"));
     }
     req.user = decoded;
-
+    console.log("decoded:", decoded);
     next();
   });
 };
 
 export const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user || req.user.isAdmin) {
+    if (req.user) {
       next();
     } else {
-      return next(createError(403, "you'ren't authorized"));
+      return next(createError(403, "You aren't authorized"));
     }
   });
 };
 
 export const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user?.isAdmin) {
+    if (req.user && req.user.isAdmin) {
       next();
     } else {
-      return next(createError(403, "you'ren't authorized"));
+      return next(createError(403, "You aren't authorized"));
     }
   });
 };
