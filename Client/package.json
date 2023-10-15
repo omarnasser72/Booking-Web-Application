@@ -60,6 +60,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://booking-fwaz.onrender.com",
   "keywords": [],
   "author": "",
   "license": "ISC"
