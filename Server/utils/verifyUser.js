@@ -1,14 +1,33 @@
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 
-export const verifyToken = (req, res, next) => {
-  if (!req.cookies || !req.cookies.accessToken)
-    return next(createError(401, "You aren't authenticated (no token)"));
+// export const verifyToken = (req, res, next) => {
+//   if (!req.cookies || !req.cookies.accessToken)
+//     return next(createError(401, "You aren't authenticated (no token)"));
 
-  const token = req.cookies.accessToken;
-  jwt.verify(token, process.env.JWT, (err, decoded) => {
+//   const token = req.cookies.accessToken;
+//   jwt.verify(token, process.env.JWT, (err, decoded) => {
+//     if (err) {
+//       return next(createError(403, "token isn't valid"));
+//     }
+//     req.user = decoded;
+
+//     next();
+//   });
+// };
+
+export const verifyToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+
+  if (!authHeader) {
+    return next(createError(401, "You aren't authenticated (no token)"));
+  }
+
+  const token = authHeader.replace("Bearer ", ""); // Assuming the token is sent as "Bearer your-token-here"
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return next(createError(403, "token isn't valid"));
+      return next(createError(403, "Token isn't valid"));
     }
     req.user = decoded;
 
