@@ -49,7 +49,10 @@ export const login = async (req, res, next) => {
     );
     const { password, ...otherDetails } = user._doc; // returned everything except extracted attributes
     res
-      .cookie("accessToken", token, { httpOnly: true })
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        domain: "booking-fwaz.onrender.com",
+      })
       .status(200)
       .json({ details: { ...otherDetails } });
   } catch (error) {
