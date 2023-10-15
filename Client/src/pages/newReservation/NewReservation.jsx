@@ -173,20 +173,9 @@ const NewReservation = () => {
     error: userError,
     loading: usersLoading,
   } = useFetch("https://booking-fwaz.onrender.com/users/getUsers/all");
-  const [Users, setUsers] = useState([]);
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     try {
-  //       const res = await axios.get("/users");
-  //       setUsers(res.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getUsers();
-  //   console.log(Users);
-  // }, []);
+
   console.log(users);
+
   const {
     data: hotels,
     error: hotelsError,
