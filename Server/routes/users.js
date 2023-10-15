@@ -28,19 +28,19 @@ router.get("/checkAdmin/:id", verifyAdmin, (req, res, next) => {
 });
 
 //UPDATE
-router.put("/:id", updateUser);
-router.put("/changePwd/:id", changePwd);
+router.put("/:id", verifyUser, updateUser);
+router.put("/changePwd/:id", verifyUser, changePwd);
 //DELETE
 router.delete("/:id", verifyAdmin, deleteUser);
 //GET
-router.get("/:id", getUser);
+router.get("/:id", verifyUser, getUser);
 //GETALL
-router.get("/getUsers/all", getAllUsers);
+router.get("/getUsers/all", verifyAdmin, getAllUsers);
 
 //GET RESERVATION
-router.get("/reservations/:id", getUserReservations);
+router.get("/reservations/:id", verifyUser, getUserReservations);
 
 //DELETE RESERVATION
-router.delete("/reservations/:id", deleteReservation);
+router.delete("/reservations/:id", verifyUser, deleteReservation);
 
 export default router;
