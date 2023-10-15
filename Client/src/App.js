@@ -110,7 +110,7 @@ function App() {
             <Route path="/ListAll/">
               <Route
                 path="hotels"
-                element={<ProtectedRoute element={<List />} />}
+                element={<ProtectedRoute element={<ListType />} />}
               />
               <Route
                 path="apartments"
