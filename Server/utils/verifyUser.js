@@ -30,7 +30,7 @@ export const verifyToken = (req, res, next) => {
       return next(createError(403, "Token isn't valid"));
     }
     req.user = decoded;
-    console.log("decoded:", decoded);
+
     next();
   });
 };
@@ -38,7 +38,8 @@ export const verifyToken = (req, res, next) => {
 export const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user) {
-      next();
+      res.status(200).json({ decoded });
+      //next();
     } else {
       return next(createError(403, "You aren't authorized"));
     }
