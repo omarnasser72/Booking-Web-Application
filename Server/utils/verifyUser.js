@@ -25,7 +25,7 @@ export const verifyToken = (req, res, next) => {
 
   const token = authHeader.replace("Bearer ", ""); // Assuming the token is sent as "Bearer your-token-here"
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT, (err, decoded) => {
     if (err) {
       return next(createError(403, "Token isn't valid"));
     }
