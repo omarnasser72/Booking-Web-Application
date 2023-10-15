@@ -52,7 +52,7 @@ export const login = async (req, res, next) => {
       .cookie("accessToken", token, {
         httpOnly: true,
         secure: true,
-        domain: "booking-fwaz.onrender.com",
+        domain: "bookingwebapp.onrender.com",
       })
       .status(200)
       .json({ details: { ...otherDetails } });
