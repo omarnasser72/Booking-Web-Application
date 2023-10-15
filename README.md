@@ -59,3 +59,13 @@ api takes hotel's id and search if exists in database it deletes it</p>
 <p><strong>getRate</strong> api return the hotelRate using hotelRateId if exists</p>
 <p><strong>getAllRates</strong> api return all hotel Rates from database</p>
 <p><strong>deleteRate</strong> api deletes rate using rateId if exists</p>
+<h2>Utils</h2>
+<h4>error.js</h4>
+<p>exports createError function creates new object of Error and sets status and message properties with the calling ones and return the error</p>
+<h4>verify User.js</h4>
+<h6>verifyToken</h6>
+<p>if req doesn't have cokkies or accessToken inside cokkies return unauthorized message with status code 401 else verify the returned token with JWT in. env using verify function in jwt if error exist return token invalid with status code 403 and store decided in req.user then call next function </p>
+<h6>verifyUser</h6>
+<p>call verify token and sent req and res to it if req.user or req. user.isAdmin is true we call next function otherwise return unauthorized message with status code 403</p>
+<h6>verifyAdmin</h6>
+<p>like verifyUser but here we check if req.user.isAdmin is true we call next function</p>
