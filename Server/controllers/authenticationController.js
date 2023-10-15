@@ -72,7 +72,7 @@ export const login = async (req, res, next) => {
 
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET, // Change this to your secret key
+      process.env.JWT, // Change this to your secret key
       { expiresIn: "1h" } // Set the expiration time
     );
 
