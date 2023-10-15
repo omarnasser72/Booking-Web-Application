@@ -18,7 +18,9 @@ const List = () => {
 
   const getLastReservations = async () => {
     try {
-      const res = await axios.get(`/reservations`);
+      const res = await axios.get(
+        `https://booking-fwaz.onrender.com/reservations`
+      );
       setFetchedReservations(res.data);
     } catch (error) {
       console.log(error.response.data);
@@ -39,7 +41,7 @@ const List = () => {
             last10Reservations.map(async (fetchedReservation) => {
               // Fetch user data
               const userResponse = await axios.get(
-                `/users/${fetchedReservation.userId}`
+                `https://booking-fwaz.onrender.com/users/${fetchedReservation.userId}`
               );
               console.log(userResponse.data);
               const username = userResponse.data?.username;
@@ -48,19 +50,19 @@ const List = () => {
 
               // Fetch hotel data
               const hotelResponse = await axios.get(
-                `/hotels/find/${fetchedReservation.hotelId}`
+                `https://booking-fwaz.onrender.com/hotels/find/${fetchedReservation.hotelId}`
               );
               const hotel = hotelResponse.data?.name;
 
               // Fetch room type data
               const roomTypeResponse = await axios.get(
-                `/rooms/${fetchedReservation.roomTypeId}`
+                `https://booking-fwaz.onrender.com/rooms/${fetchedReservation.roomTypeId}`
               );
               const roomType = roomTypeResponse.data?.title;
 
               // Fetch room number data
               const roomNumberResponse = await axios.get(
-                `/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`
+                `https://booking-fwaz.onrender.com/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`
               );
               const roomNumber = roomNumberResponse.data?.number;
 

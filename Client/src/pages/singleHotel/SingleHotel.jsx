@@ -126,7 +126,9 @@ const SingleHotel = () => {
         if (roomsIDs.length > 0) {
           const roomsData = await Promise.all(
             roomsIDs.map(async (roomId) => {
-              const roomReq = await axios.get(`/rooms/${roomId}`);
+              const roomReq = await axios.get(
+                `https://booking-fwaz.onrender.com/rooms/${roomId}`
+              );
               if (roomReq.data) {
                 roomsRows.push(roomReq.data);
               }
@@ -327,7 +329,10 @@ const SingleHotel = () => {
           photos: currPhotos,
         };
         console.log(newHotel);
-        const res = await axios.put(`/hotels/${hotelId}`, newHotel);
+        const res = await axios.put(
+          `https://booking-fwaz.onrender.com/hotels/${hotelId}`,
+          newHotel
+        );
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }

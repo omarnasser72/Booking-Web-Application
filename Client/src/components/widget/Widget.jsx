@@ -19,10 +19,24 @@ const Widget = ({ type }) => {
 
   const handleWidgets = async (e) => {
     try {
-      setNoOfUsers((await axios.get(`/users/getUsers/all`)).data.length);
-      setNoOfHotels((await axios.get(`/hotels`)).data.length);
-      setNoOfRooms((await axios.get(`/rooms`)).data.length);
-      setNoOfReservations((await axios.get(`/reservations`)).data.length);
+      setNoOfUsers(
+        (
+          await axios.get(
+            `https://booking-fwaz.onrender.com/users/getUsers/all`
+          )
+        ).data.length
+      );
+      setNoOfHotels(
+        (await axios.get(`https://booking-fwaz.onrender.com/hotels`)).data
+          .length
+      );
+      setNoOfRooms(
+        (await axios.get(`https://booking-fwaz.onrender.com/rooms`)).data.length
+      );
+      setNoOfReservations(
+        (await axios.get(`https://booking-fwaz.onrender.com/reservations`)).data
+          .length
+      );
       setLoading(false);
     } catch (error) {
       console.log(error);

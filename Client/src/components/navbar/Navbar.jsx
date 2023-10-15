@@ -21,7 +21,9 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    const res = await axios.get("/auth/logout");
+    const res = await axios.get(
+      "https://booking-fwaz.onrender.com/auth/logout"
+    );
     localStorage.removeItem("user");
     navigate("/login");
   };

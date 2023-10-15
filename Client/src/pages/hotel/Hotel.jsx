@@ -88,9 +88,15 @@ const Hotel = () => {
           rating: rate,
         };
         if (hotel._id && user._id) {
-          await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj);
+          await axios.post(
+            `https://booking-fwaz.onrender.com/rates/${user._id}/${hotel._id}`,
+            rateObj
+          );
           console.log(
-            await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj)
+            await axios.post(
+              `https://booking-fwaz.onrender.com/rates/${user._id}/${hotel._id}`,
+              rateObj
+            )
           );
         }
       };

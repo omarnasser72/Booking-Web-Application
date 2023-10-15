@@ -181,7 +181,10 @@ const Register = () => {
           age: age,
         };
         console.log(newUser);
-        const res = await axios.post("/auth/signup", newUser);
+        const res = await axios.post(
+          "https://booking-fwaz.onrender.com/auth/signup",
+          newUser
+        );
         console.log(res);
         navigate("/");
       } catch (error) {

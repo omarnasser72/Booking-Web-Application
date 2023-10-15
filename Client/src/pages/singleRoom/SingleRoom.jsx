@@ -278,7 +278,10 @@ const SingleRoom = () => {
           images: currPhotos,
           roomNumbers,
         };
-        await axios.put(`/rooms/${roomId}`, updatedRoom);
+        await axios.put(
+          `https://booking-fwaz.onrender.com/rooms/${roomId}`,
+          updatedRoom
+        );
         navigate("/adminDashboard/rooms");
       } catch (error) {
         console.log(error);

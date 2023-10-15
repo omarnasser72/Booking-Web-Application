@@ -162,7 +162,10 @@ const SingleUser = () => {
         };
         const { username } = newUser;
         console.log(newUser);
-        const res = await axios.put(`/users/${user._id}`, newUser);
+        const res = await axios.put(
+          `https://booking-fwaz.onrender.com/users/${user._id}`,
+          newUser
+        );
         console.log(res);
         setEditMode(false);
       } catch (error) {

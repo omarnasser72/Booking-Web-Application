@@ -245,7 +245,7 @@ const AdminProfile = () => {
         };
         console.log(updatedUser);
         const res = await axios.put(
-          `/users/changePwd/${fetchedUser._id}`,
+          `https://booking-fwaz.onrender.com/users/changePwd/${fetchedUser._id}`,
           updatedUser
         );
         setUser(updatedUser);
@@ -259,7 +259,9 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/users/${user._id}`);
+        const response = await axios.get(
+          `https://booking-fwaz.onrender.com/users/${user._id}`
+        );
         localStorage.setItem("user", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);

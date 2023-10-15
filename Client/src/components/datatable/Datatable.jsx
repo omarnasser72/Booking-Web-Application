@@ -40,7 +40,11 @@ const Datatable = ({ columns }) => {
   const handleDelete = async (id) => {
     try {
       if (path == "reservations") {
-        const reservation = (await axios.get(`reservations/${id}`)).data;
+        const reservation = (
+          await axios.get(
+            `https://booking-fwaz.onrender.com/reservations/${id}`
+          )
+        ).data;
         console.log(reservation);
 
         const { hotelId, userId, roomTypeId, roomNumberId } = reservation;
@@ -56,7 +60,7 @@ const Datatable = ({ columns }) => {
         );
 
         const roomRes = await axios.delete(
-          `rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
+          `https://booking-fwaz.onrender.com/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
         );
         console.log(roomRes);
         //const reservationRes = await axios.delete(`/${path}/${id}`);
@@ -64,7 +68,7 @@ const Datatable = ({ columns }) => {
 
         setList(list.filter((item) => item._id !== id));
       }
-      await axios.delete(`/${path}/${id}`);
+      await axios.delete(`https://booking-fwaz.onrender.com/${path}/${id}`);
       setList(list.filter((item) => item._id !== id));
     } catch (error) {
       console.log(error.response.data);

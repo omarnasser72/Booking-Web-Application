@@ -75,7 +75,10 @@ const ChangePwd = () => {
     } else {
       dispatch({ type: "LOGIN_START" });
       try {
-        const res = await axios.post(`/auth/login`, credentials);
+        const res = await axios.post(
+          `https://booking-fwaz.onrender.com/auth/login`,
+          credentials
+        );
         console.log(res.data);
         if (res.data) {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
@@ -83,7 +86,10 @@ const ChangePwd = () => {
             ...user,
             newPwd: newPwd,
           };
-          await axios.put(`/users/changePwd/${user._id}`, updatedUser);
+          await axios.put(
+            `https://booking-fwaz.onrender.com/users/changePwd/${user._id}`,
+            updatedUser
+          );
           navigate("/profile");
         } else {
           dispatch({

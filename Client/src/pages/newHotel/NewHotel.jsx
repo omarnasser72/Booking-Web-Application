@@ -233,7 +233,10 @@ const NewHotel = () => {
           photos: Array.from(files).map((file) => file.name),
         };
         console.log(newHotel);
-        const res = await axios.post("/hotels", newHotel);
+        const res = await axios.post(
+          "https://booking-fwaz.onrender.com/hotels",
+          newHotel
+        );
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }

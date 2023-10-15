@@ -114,7 +114,7 @@ const SingleReservation = () => {
         const fetchRoomNumber = async () => {
           console.log(reservation.roomTypeId, reservation.roomNumberId);
           const roomRes = await axios.get(
-            `/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
+            `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
           );
           return roomRes.data;
         };
@@ -309,7 +309,9 @@ const SingleReservation = () => {
     if (!validDates) {
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(`/rooms/${reservation.roomTypeId}`);
+      const roomRes = await axios.get(
+        `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}`
+      );
       const room = roomRes.data;
       const price = room.price;
       try {
@@ -328,7 +330,7 @@ const SingleReservation = () => {
         };
 
         try {
-          const deleteReservationUrl = `/rooms/${reservation.hotelId}/${reservation.roomTypeId}/${reservation.roomNumberId}/${reservation.reservationDuration.startDate}/${reservation.reservationDuration.endDate}`;
+          const deleteReservationUrl = `https://booking-fwaz.onrender.com/rooms/${reservation.hotelId}/${reservation.roomTypeId}/${reservation.roomNumberId}/${reservation.reservationDuration.startDate}/${reservation.reservationDuration.endDate}`;
           console.log("DELETE URL:", deleteReservationUrl);
 
           const reservationDateResponse = await axios.delete(
@@ -339,7 +341,7 @@ const SingleReservation = () => {
         }
         console.log(updatedReservation);
         const reservationRes = await axios.put(
-          `/reservations/${reservation._id}`,
+          `https://booking-fwaz.onrender.com/reservations/${reservation._id}`,
           updatedReservation
         );
         //assign reservation duration to room's unavailable dates
@@ -352,7 +354,7 @@ const SingleReservation = () => {
           console.log(roomAvailabilityDates);
 
           const roomAvailabilityRes = await axios.put(
-            `/rooms/availability/${reservation.roomNumberId}`,
+            `https://booking-fwaz.onrender.com/rooms/availability/${reservation.roomNumberId}`,
             {
               dates: roomAvailabilityDates,
             }

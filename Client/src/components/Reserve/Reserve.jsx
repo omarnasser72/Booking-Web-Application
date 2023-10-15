@@ -14,7 +14,7 @@ const Reserve = ({ hotelId }) => {
   const [date, setDate] = useState(contextDate);
   console.log(contextDate[0]);
   const [noOfPeople, setNoOfPeople] = useState(0);
-  const { data: rooms, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  const { data: rooms, loading, error } = useFetch(`hotels/room/${hotelId}`);
   const [selectedRooms, setSelectedRooms] = useState([{}]);
   const [dateFound, setDateFound] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -150,14 +150,16 @@ const Reserve = ({ hotelId }) => {
         selectedRooms.map(async (selectedRoom) => {
           if (!selectedRoom.value) return;
           const res = await axios.put(
-            `/rooms/availability/${selectedRoom.value}`,
+            `https://booking-fwaz.onrender.com/rooms/availability/${selectedRoom.value}`,
             {
               dates: allDates,
             }
           );
           console.log(allDates);
           console.log(selectedRoom.roomId);
-          const room = await axios.get(`/rooms/${selectedRoom.roomId}`);
+          const room = await axios.get(
+            `https://booking-fwaz.onrender.com/rooms/${selectedRoom.roomId}`
+          );
           const roomPrice = room.data.price;
           console.log(roomPrice);
           const reservationDays =
@@ -179,7 +181,7 @@ const Reserve = ({ hotelId }) => {
           };
           console.log(reserve);
           const reserveRes = await axios.post(
-            `/hotels/reserve/${hotelId}`,
+            `https://booking-fwaz.onrender.com/hotels/reserve/${hotelId}`,
             reserve
           );
           console.log(reserveRes);

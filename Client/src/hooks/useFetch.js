@@ -10,8 +10,8 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        console.log(url);
-        const res = await axios.get(url);
+        console.log(`https://booking-fwaz.onrender.com/${url}`);
+        const res = await axios.get(`https://booking-fwaz.onrender.com/${url}`);
         console.log(res);
         setData(res.data);
       } catch (error) {
@@ -25,7 +25,7 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(url);
+      const res = await axios.get(`https://booking-fwaz.onrender.com/${url}`);
       setData(res.data);
     } catch (error) {
       setError(error);
