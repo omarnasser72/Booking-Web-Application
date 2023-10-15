@@ -13,7 +13,9 @@ const Datatable = ({ columns }) => {
   console.log(path);
   let addedUrl = "";
   if (path === "users") addedUrl = "/getUsers/all";
-  const { data, loading, error } = useFetch(`/${path}${addedUrl}`);
+  const { data, loading, error } = useFetch(
+    `https://booking-fwaz.onrender.com/${path}${addedUrl}`
+  );
 
   console.log(data);
   const [list, setList] = useState([]);

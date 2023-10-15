@@ -217,7 +217,10 @@ const AdminProfile = () => {
         };
         console.log(newUser);
         setEditBtn(true);
-        const res = await axios.put(`/users/${user._id}`, newUser);
+        const res = await axios.put(
+          `https://booking-fwaz.onrender.com/users/${user._id}`,
+          newUser
+        );
         setUser(newUser);
         setUpdateMode(false);
       } catch (error) {

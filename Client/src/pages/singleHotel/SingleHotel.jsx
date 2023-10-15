@@ -42,7 +42,7 @@ const SingleHotel = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(`/hotels/find/${hotelId}`);
+  } = useFetch(`https://booking-fwaz.onrender.com/hotels/find/${hotelId}`);
 
   const [rooms, setRooms] = useState([]);
   const [slideNumber, setSlideNumber] = useState(0);

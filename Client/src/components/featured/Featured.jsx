@@ -7,7 +7,7 @@ import api from "../../api.js";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "/hotels/countByCity?cities=cairo,giza,alexandria,aswan"
+    "https://booking-fwaz.onrender.com/hotels/countByCity?cities=cairo,giza,alexandria,aswan"
   );
   const location = useLocation();
   console.log(location);

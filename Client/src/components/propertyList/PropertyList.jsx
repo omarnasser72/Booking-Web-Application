@@ -5,7 +5,9 @@ import axios from "axios";
 import api from "../../api.js";
 
 const PropertyList = () => {
-  const { data, loading, error } = useFetch("/hotels/countByType");
+  const { data, loading, error } = useFetch(
+    "https://booking-fwaz.onrender.com/hotels/countByType"
+  );
   const images = [
     "https://images.jdmagicbox.com/comp/mumbai/10/022pgl01810/catalogue/taj-lands-end-hotel-bandra-west-mumbai-5-star-hotels-4swt18.jpg?clr=",
     "https://exej2saedb8.exactdn.com/wp-content/uploads/2022/02/Screen-Shot-2022-02-04-at-2.28.40-PM.png?strip=all&lossy=1&ssl=1",
@@ -17,7 +19,7 @@ const PropertyList = () => {
   const handleClick = async (type) => {
     if (type !== "hotel") navigate(`ListAll/${type}s`);
     try {
-      await axios.get(`${type}s`);
+      await axios.get(`https://booking-fwaz.onrender.com/${type}s`);
       navigate(`ListAll/${type}s`);
     } catch (error) {
       console.log(error);

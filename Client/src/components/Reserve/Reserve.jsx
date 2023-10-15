@@ -14,7 +14,11 @@ const Reserve = ({ hotelId }) => {
   const [date, setDate] = useState(contextDate);
   console.log(contextDate[0]);
   const [noOfPeople, setNoOfPeople] = useState(0);
-  const { data: rooms, loading, error } = useFetch(`hotels/room/${hotelId}`);
+  const {
+    data: rooms,
+    loading,
+    error,
+  } = useFetch(`https://booking-fwaz.onrender.com/hotels/room/${hotelId}`);
   const [selectedRooms, setSelectedRooms] = useState([{}]);
   const [dateFound, setDateFound] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);

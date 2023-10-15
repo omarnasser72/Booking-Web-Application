@@ -29,7 +29,11 @@ const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const SingleUser = () => {
   const location = useLocation();
   const userId = location.pathname.split("/")[3];
-  const { data: user, loading, error } = useFetch(`/users/${userId}`);
+  const {
+    data: user,
+    loading,
+    error,
+  } = useFetch(`https://booking-fwaz.onrender.com/users/${userId}`);
   const [sidebar, setSidebar] = useState(false);
 
   const [info, setInfo] = useState({});

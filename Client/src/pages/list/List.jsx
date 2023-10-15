@@ -22,7 +22,9 @@ const List = () => {
     error,
     reFetch,
   } = useFetch(
-    `/hotels?city=${destination}&min=${min || 0}&max=${max || 9999}`
+    `https://booking-fwaz.onrender.com/hotels?city=${destination}&min=${
+      min || 0
+    }&max=${max || 9999}`
   );
 
   const handleCounter = (name, value) => {

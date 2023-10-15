@@ -36,20 +36,26 @@ const SingleReservation = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(`/reservations/${reservationId}`);
+  } = useFetch(
+    `https://booking-fwaz.onrender.com/reservations/${reservationId}`
+  );
   console.log(reservation);
 
   const {
     data: hotel,
     loading: loadingHotel,
     error: errhotel,
-  } = useFetch(`/hotels/find/${reservation?.hotelId}`);
+  } = useFetch(
+    `https://booking-fwaz.onrender.com/hotels/find/${reservation?.hotelId}`
+  );
 
   const {
     data: room,
     loading: loadingRoom,
     error: errRoom,
-  } = useFetch(`/rooms/${reservation?.roomTypeId}`);
+  } = useFetch(
+    `https://booking-fwaz.onrender.com/rooms/${reservation?.roomTypeId}`
+  );
 
   const [editMode, setEditMode] = useState(false);
 

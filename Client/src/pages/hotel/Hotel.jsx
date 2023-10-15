@@ -33,7 +33,7 @@ const Hotel = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(`/hotels/find/${id}`);
+  } = useFetch(`https://booking-fwaz.onrender.com/hotels/find/${id}`);
   console.log(hotel);
   const [rate, setRate] = useState();
   const [openRate, setOpenRate] = useState(false);

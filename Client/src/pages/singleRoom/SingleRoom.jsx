@@ -33,7 +33,11 @@ const SingleRoom = () => {
   const roomId = location.pathname.split("/")[3];
   console.log(roomId);
   const [sidebar, setSidebar] = useState(false);
-  const { data: room, loading, error } = useFetch(`/rooms/${roomId}`);
+  const {
+    data: room,
+    loading,
+    error,
+  } = useFetch(`https://booking-fwaz.onrender.com/rooms/${roomId}`);
   const [currPhotos, setCurrPhotos] = useState(room ? room.images : []);
   const [slideNumber, setSlideNumber] = useState(0);
   const [isImgSliderOpen, setImgSlider] = useState(false);

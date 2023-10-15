@@ -4,7 +4,9 @@ import "./featuredProperties.css";
 import api from "../../api.js";
 
 const FeaturedProperties = () => {
-  const { data, loading } = useFetch(`/hotels?featured=true&max=3`);
+  const { data, loading } = useFetch(
+    `https://booking-fwaz.onrender.com/hotels?featured=true&max=3`
+  );
   const navigate = useNavigate();
   const handleClick = (hotelId) => {
     navigate(`/hotels/${hotelId}`);
