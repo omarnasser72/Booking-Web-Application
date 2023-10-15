@@ -69,3 +69,7 @@ api takes hotel's id and search if exists in database it deletes it</p>
 <p>call verify token and sent req and res to it if req.user or req. user.isAdmin is true we call next function otherwise return unauthorized message with status code 403</p>
 <h6>verifyAdmin</h6>
 <p>like verifyUser but here we check if req.user.isAdmin is true we call next function</p>
+<h2>Auth route</h2>
+<p>here we call apis without verification as it'sn't needed here</p>
+<h2>user route </h2>
+<p>in delete user or getting all users we use verify Admin utili </p>
