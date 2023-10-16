@@ -1,5 +1,4 @@
 import Express from "express";
-import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyUser.js";
 import {
   changePwd,
   deleteUser,
@@ -12,10 +11,11 @@ import {
   deleteReservation,
   getUserReservations,
 } from "../controllers/reservationController.js";
+import { validateToken, verifyAdmin, verifyUser } from "../utils/jwt.js";
 
 const router = Express.Router();
 
-router.get("/checkAuthentication", verifyToken, (req, res, next) => {
+router.get("/checkAuthentication", validateToken, (req, res, next) => {
   res.send("user logged in");
 });
 

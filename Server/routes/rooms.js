@@ -8,7 +8,7 @@ import {
   updateRoom,
   updateRoomAvailability,
 } from "../controllers/roomController.js";
-import { verifyAdmin } from "../utils/verifyUser.js";
+import { verifyAdmin } from "../utils/jwt.js";
 
 import { getRoomNumbers } from "../controllers/roomController.js";
 const router = Express.Router();

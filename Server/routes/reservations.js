@@ -5,7 +5,7 @@ import {
   getReservation,
   updateReservation,
 } from "../controllers/reservationController.js";
-import { verifyAdmin } from "../utils/verifyUser.js";
+import { verifyAdmin } from "../utils/jwt.js";
 
 const router = Express.Router();
 
