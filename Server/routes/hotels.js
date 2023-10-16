@@ -24,7 +24,7 @@ router.delete("/:id", verifyAdmin, deleteHotel);
 //GET
 router.get("/find/:id", getHotel);
 // GET HOTELS
-router.get("/", (req, res) => {
+router.get("/", verifyUser, (req, res) => {
   Object.keys(req.query).length !== 0
     ? getHotels(req, res)
     : getAllHotles(req, res);
