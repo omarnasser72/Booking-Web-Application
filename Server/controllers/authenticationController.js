@@ -35,33 +35,6 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) return next(createError(404, "user not found !"));
-
-    if (!bcrypt.compareSync(req.body.password, user.password))
-      return next(createError(400, "Wrong Password !"));
-
-    const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT
-    );
-    const { password, ...otherDetails } = user._doc; // returned everything except extracted attributes
-    res
-      .cookie("accessToken", token, {
-        //httpOnly: true,
-        domain: "bookingwebapp.onrender.com",
-        path: "/",
-        secure: true, // Set the secure attribute
-      })
-      .status(200)
-      .json({ details: { ...otherDetails } });
-  } catch (error) {
-    next(error);
-  }
-};
-
 // export const login = async (req, res, next) => {
 //   try {
 //     const user = await User.findOne({ username: req.body.username });
@@ -72,16 +45,45 @@ export const login = async (req, res, next) => {
 
 //     const token = jwt.sign(
 //       { id: user._id, isAdmin: user.isAdmin },
-//       process.env.JWT, // Change this to your secret key
-//       { expiresIn: "1h" } // Set the expiration time
+//       process.env.JWT
 //     );
-
 //     const { password, ...otherDetails } = user._doc; // returned everything except extracted attributes
-//     res.status(200).json({ accessToken: token, details: { ...otherDetails } });
+//     res
+//       .cookie("accessToken", token, {
+//         //httpOnly: true,
+//         domain: "bookingwebapp.onrender.com",
+//         path: "/",
+//         secure: true, // Set the secure attribute
+//       })
+//       .status(200)
+//       .json({ details: { ...otherDetails } });
 //   } catch (error) {
 //     next(error);
 //   }
 // };
+
+export const login = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) return next(createError(404, "User not found!"));
+
+    if (!bcrypt.compareSync(req.body.password, user.password))
+      return next(createError(400, "Wrong Password!"));
+
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT,
+      {
+        expiresIn: "1h", // Adjust the expiration time as needed
+      }
+    );
+
+    // Send the JWT token in the response
+    res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const logout = (req, res, next) => {
   try {
