@@ -17,21 +17,15 @@ import { createError } from "../utils/error.js";
 // };
 
 export const verifyToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+  const token = req.headers["authorization"];
 
-  if (!authHeader) {
-    return next(createError(401, "You aren't authenticated (no token)"));
+  if (!token) {
+    return res.status(403).json({ message: "No token provided" });
   }
 
-  const tokenData = authHeader.split(" ");
-
-  if (tokenData[0] !== "Bearer" || !tokenData[1]) {
-    return next(createError(403, "Invalid token format"));
-  }
-
-  jwt.verify(tokenData[1], process.env.JWT, (err, decoded) => {
+  jwt.verify(token, process.env.JWT, (err, decoded) => {
     if (err) {
-      return next(createError(403, "Token isn't valid"));
+      return res.status(403).json({ message: "Invalid token" });
     }
     req.user = decoded;
     next();
