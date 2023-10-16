@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 
 export const verifyToken = (req, res, next) => {
-  if (!req.cookies || !req.cookies.accessToken)
+  if (!req.cookies.accessToken)
     return next(createError(401, "You aren't authenticated (no token)"));
 
   const token = req.cookies.accessToken;
@@ -42,7 +42,7 @@ export const verifyUser = (req, res, next) => {
     if (req.user) {
       next();
     } else {
-      return next(createError(403, "You aren't authorized"));
+      return next(createError(405, "You aren't authorized"));
     }
   });
 };
