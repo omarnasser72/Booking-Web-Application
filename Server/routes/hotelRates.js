@@ -5,7 +5,7 @@ import {
   getAllRates,
   updateRate,
 } from "../controllers/hotelRatesController.js";
-import { verifyAdmin, verifyUser } from "../utils/verifyUser.js";
+import { verifyAdmin, verifyUser } from "../utils/jwt.js";
 
 const router = Express.Router();
 

@@ -10,8 +10,8 @@ import {
   getHotels,
   updateHotel,
 } from "../controllers/hotelController.js";
-import { verifyAdmin, verifyUser } from "../utils/verifyUser.js";
 import { createReservation } from "../controllers/reservationController.js";
+import { verifyAdmin, verifyUser } from "../utils/jwt.js";
 
 const router = Express.Router();
 
@@ -22,7 +22,7 @@ router.put("/:id", verifyUser, updateHotel);
 //DELETE
 router.delete("/:id", verifyAdmin, deleteHotel);
 //GET
-router.get("/find/:id", getHotel);
+router.get("/find/:id", verifyUser, getHotel);
 // GET HOTELS
 router.get("/", verifyUser, (req, res) => {
   Object.keys(req.query).length !== 0

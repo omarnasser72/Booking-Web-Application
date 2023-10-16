@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
+import { createToken } from "../utils/jwt.js";
 
 function generateRandomPassword(length) {
   const characters =
@@ -70,14 +71,11 @@ export const login = async (req, res, next) => {
     if (!bcrypt.compareSync(req.body.password, user.password))
       return next(createError(400, "Wrong Password!"));
 
-    const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin }, // Include user role (isAdmin) in the token
-      process.env.JWT
-    );
+    const token = createToken(user);
     const { password, ...otherDetails } = user._doc;
     res
       .status(200)
-      .header("Authorization", `Bearer ${token}`)
+      .cookie("accessToken", token, { httpOnly: true })
       .json({ details: { ...otherDetails } });
   } catch (error) {
     next(error);
