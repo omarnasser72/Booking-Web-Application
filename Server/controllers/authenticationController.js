@@ -75,7 +75,10 @@ export const login = async (req, res, next) => {
       process.env.JWT
     );
     const { password, ...otherDetails } = user._doc;
-    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
+    res
+      .status(200)
+      .header("Authorization", `Bearer ${token}`)
+      .json({ details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }
