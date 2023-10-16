@@ -71,15 +71,11 @@ export const login = async (req, res, next) => {
       return next(createError(400, "Wrong Password!"));
 
     const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT,
-      {
-        expiresIn: "1h", // Adjust the expiration time as needed
-      }
+      { id: user._id, isAdmin: user.isAdmin }, // Include user role (isAdmin) in the token
+      process.env.JWT
     );
-
-    // Send the JWT token in the response
-    res.status(200).json({ token });
+    const { password, ...otherDetails } = user._doc;
+    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }
