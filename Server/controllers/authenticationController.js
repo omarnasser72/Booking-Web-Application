@@ -77,7 +77,9 @@ export const login = async (req, res, next) => {
       .status(200)
       .cookie("accessToken", token, {
         httpOnly: true,
-        domain: "bookingwebapp.onrender.com",
+        secure: true,
+        domain: ".com",
+        path: "/",
       })
       .json({ details: { ...otherDetails } });
   } catch (error) {
