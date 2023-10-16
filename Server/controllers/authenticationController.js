@@ -51,7 +51,7 @@ export const login = async (req, res, next) => {
     res
       .cookie("accessToken", token, {
         //httpOnly: true,
-        domain: "onrender.com",
+        domain: "bookingwebapp.onrender.com",
         path: "/",
         secure: true, // Set the secure attribute
       })

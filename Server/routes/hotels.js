@@ -32,12 +32,12 @@ router.get("/", verifyUser, (req, res) => {
 
 //-----------------------
 
-router.get("/countByCity", countByCity);
-router.get("/countByType", countByType);
-router.get("/room/:id", getHotelRooms);
+router.get("/countByCity", verifyUser, countByCity);
+router.get("/countByType", verifyUser, countByType);
+router.get("/room/:id", verifyUser, getHotelRooms);
 //--------------------
 //reserve rooms
 
-router.post("/reserve/:id", createReservation);
+router.post("/reserve/:id", verifyUser, createReservation);
 
 export default router;
