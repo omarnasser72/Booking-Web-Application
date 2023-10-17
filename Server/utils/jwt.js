@@ -49,7 +49,7 @@ export const verifyUser = (req, res, next) => {
 
 export const verifyAdmin = (req, res, next) => {
   validateToken(req, res, () => {
-    if (req.user && req.user.isAdmin) {
+    if (req.user.isAdmin) {
       next();
     } else {
       return next(createError(403, "You aren't admin"));
