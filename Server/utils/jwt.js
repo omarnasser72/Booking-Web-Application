@@ -4,7 +4,7 @@ import { createError } from "./error.js";
 export const createToken = (user) => {
   const accessToken = jwt.sign(
     { id: user._id, isAdmin: user.isAdmin }, // Include user role (isAdmin) in the token
-    process.env.JWT
+    "1234"
   );
   return accessToken;
 };
@@ -16,16 +16,12 @@ export const validateToken = (req, res, next) => {
     next(createError(400, "no token exists"));
   }
   try {
-    const validToken = jwt.verify(
-      accessToken,
-      process.env.JWT,
-      (err, decoded) => {
-        if (err) {
-          return res.status(403).json({ message: "Invalid token" });
-        }
-        req.user = decoded;
+    const validToken = jwt.verify(accessToken, "1234", (err, decoded) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid token" });
       }
-    );
+      req.user = decoded;
+    });
     if (validToken) {
       req.authenticated = true;
       return next();
