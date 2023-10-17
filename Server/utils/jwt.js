@@ -4,25 +4,32 @@ import { createError } from "./error.js";
 export const createToken = (user) => {
   const accessToken = jwt.sign(
     { id: user._id, isAdmin: user.isAdmin },
-    "secretToken"
+    process.env.JWT
   );
   return accessToken;
 };
 
 export const validateToken = (req, res, next) => {
-  const accessToken = req.cookies["accessToken"];
-  let userExist;
+  const cookieHeader = req.headers.cookie;
+  const cookies = cookieHeader.split("; ");
+  let accessToken;
+
+  for (const cookie of cookies) {
+    const [name, value] = cookie.split("=");
+    if (name === "accessToken") {
+      accessToken = value;
+      break;
+    }
+  }
+
   if (!accessToken) {
     next(createError(400, "no token exists"));
   }
   try {
-    jwt.verify(accessToken, "secretToken", (err, decoded) => {
-      if (err) next(err);
-      req.user = decoded;
-      userExist = decoded;
-      req.authenticated = true;
-    });
-    if (userExist) next();
+    const decoded = jwt.verify(accessToken, process.env.JWT);
+    req.user = decoded;
+    req.authenticated = true;
+    next();
   } catch (error) {
     next(error);
   }

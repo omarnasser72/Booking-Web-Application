@@ -35,7 +35,7 @@ router.delete("/:id", verifyAdmin, deleteUser);
 //GET
 router.get("/:id", verifyUser, getUser);
 //GETALL
-router.get("/getUsers/all", validateToken, getAllUsers);
+router.get("/getUsers/all", verifyAdmin, getAllUsers);
 
 //GET RESERVATION
 router.get("/reservations/:id", verifyUser, getUserReservations);
