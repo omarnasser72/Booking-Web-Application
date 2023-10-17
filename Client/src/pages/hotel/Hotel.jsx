@@ -33,7 +33,7 @@ const Hotel = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(`https://booking-fwaz.onrender.com/hotels/find/${id}`);
+  } = useFetch(`/hotels/find/${id}`);
   console.log(hotel);
   const [rate, setRate] = useState();
   const [openRate, setOpenRate] = useState(false);
@@ -88,15 +88,9 @@ const Hotel = () => {
           rating: rate,
         };
         if (hotel._id && user._id) {
-          await axios.post(
-            `https://booking-fwaz.onrender.com/rates/${user._id}/${hotel._id}`,
-            rateObj
-          );
+          await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj);
           console.log(
-            await axios.post(
-              `https://booking-fwaz.onrender.com/rates/${user._id}/${hotel._id}`,
-              rateObj
-            )
+            await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj)
           );
         }
       };

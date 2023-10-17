@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import axios from "axios";
+import axios from "../../axios";
 import moment from "moment";
 import "moment-timezone";
 const Datatable = ({ columns }) => {
@@ -13,9 +13,7 @@ const Datatable = ({ columns }) => {
   console.log(path);
   let addedUrl = "";
   if (path === "users") addedUrl = "/getUsers/all";
-  const { data, loading, error } = useFetch(
-    `https://booking-fwaz.onrender.com/${path}${addedUrl}`
-  );
+  const { data, loading, error } = useFetch(`/${path}${addedUrl}`);
 
   console.log(data);
   const [list, setList] = useState([]);
@@ -42,11 +40,7 @@ const Datatable = ({ columns }) => {
   const handleDelete = async (id) => {
     try {
       if (path == "reservations") {
-        const reservation = (
-          await axios.get(
-            `https://booking-fwaz.onrender.com/reservations/${id}`
-          )
-        ).data;
+        const reservation = (await axios.get(`/reservations/${id}`)).data;
         console.log(reservation);
 
         const { hotelId, userId, roomTypeId, roomNumberId } = reservation;
@@ -62,7 +56,7 @@ const Datatable = ({ columns }) => {
         );
 
         const roomRes = await axios.delete(
-          `https://booking-fwaz.onrender.com/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
+          `/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
         );
         console.log(roomRes);
         //const reservationRes = await axios.delete(`/${path}/${id}`);
@@ -70,7 +64,7 @@ const Datatable = ({ columns }) => {
 
         setList(list.filter((item) => item._id !== id));
       }
-      await axios.delete(`https://booking-fwaz.onrender.com/${path}/${id}`);
+      await axios.delete(`/${path}/${id}`);
       setList(list.filter((item) => item._id !== id));
     } catch (error) {
       console.log(error.response.data);

@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 
 const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
 
@@ -18,9 +18,7 @@ const List = () => {
 
   const getLastReservations = async () => {
     try {
-      const res = await axios.get(
-        `https://booking-fwaz.onrender.com/reservations`
-      );
+      const res = await axios.get(`/reservations`);
       setFetchedReservations(res.data);
     } catch (error) {
       console.log(error.response.data);
@@ -41,7 +39,7 @@ const List = () => {
             last10Reservations.map(async (fetchedReservation) => {
               // Fetch user data
               const userResponse = await axios.get(
-                `https://booking-fwaz.onrender.com/users/${fetchedReservation.userId}`
+                `/users/${fetchedReservation.userId}`
               );
               console.log(userResponse.data);
               const username = userResponse.data?.username;
@@ -50,19 +48,19 @@ const List = () => {
 
               // Fetch hotel data
               const hotelResponse = await axios.get(
-                `https://booking-fwaz.onrender.com/hotels/find/${fetchedReservation.hotelId}`
+                `/hotels/find/${fetchedReservation.hotelId}`
               );
               const hotel = hotelResponse.data?.name;
 
               // Fetch room type data
               const roomTypeResponse = await axios.get(
-                `https://booking-fwaz.onrender.com/rooms/${fetchedReservation.roomTypeId}`
+                `/rooms/${fetchedReservation.roomTypeId}`
               );
               const roomType = roomTypeResponse.data?.title;
 
               // Fetch room number data
               const roomNumberResponse = await axios.get(
-                `https://booking-fwaz.onrender.com/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`
+                `/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`
               );
               const roomNumber = roomNumberResponse.data?.number;
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./register.scss";
-import axios from "axios";
+import axios from "../../axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { userInputs } from "../../formSource";
@@ -181,10 +181,7 @@ const Register = () => {
           age: age,
         };
         console.log(newUser);
-        const res = await axios.post(
-          "https://booking-fwaz.onrender.com/auth/signup",
-          newUser
-        );
+        const res = await axios.post("/auth/signup", newUser);
         console.log(res);
         navigate("/");
       } catch (error) {

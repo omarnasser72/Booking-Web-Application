@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import useFetch from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,11 +33,7 @@ const SingleRoom = () => {
   const roomId = location.pathname.split("/")[3];
   console.log(roomId);
   const [sidebar, setSidebar] = useState(false);
-  const {
-    data: room,
-    loading,
-    error,
-  } = useFetch(`https://booking-fwaz.onrender.com/rooms/${roomId}`);
+  const { data: room, loading, error } = useFetch(`/rooms/${roomId}`);
   const [currPhotos, setCurrPhotos] = useState(room ? room.images : []);
   const [slideNumber, setSlideNumber] = useState(0);
   const [isImgSliderOpen, setImgSlider] = useState(false);
@@ -282,10 +278,7 @@ const SingleRoom = () => {
           images: currPhotos,
           roomNumbers,
         };
-        await axios.put(
-          `https://booking-fwaz.onrender.com/rooms/${roomId}`,
-          updatedRoom
-        );
+        await axios.put(`/rooms/${roomId}`, updatedRoom);
         navigate("/adminDashboard/rooms");
       } catch (error) {
         console.log(error);
