@@ -75,11 +75,16 @@ export const login = async (req, res, next) => {
     const { password, ...otherDetails } = user._doc;
     res
       .status(200)
-      .cookie("accessToken", token, {
+      // .cookie("accessToken", token, {
+      //   httpOnly: true,
+      //   secure: true,
+      //   domain: "bookingwebapp.onrender.com",
+      //   path: "/",
+      // })
+      .cookie("role", user.isAdmin, {
         httpOnly: true,
         secure: true,
         domain: "bookingwebapp.onrender.com",
-        path: "/",
       })
       .json({ details: { ...otherDetails } });
   } catch (error) {
