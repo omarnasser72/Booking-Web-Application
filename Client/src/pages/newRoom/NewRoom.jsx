@@ -177,10 +177,7 @@ const NewHotel = () => {
           images: Array.from(files).map((file) => file.name),
           roomNumbers,
         };
-        const res = await axios.post(
-          `https://booking-fwaz.onrender.com/rooms/${hotelId}`,
-          newRoom
-        );
+        const res = await axios.post(`/rooms/${hotelId}`, newRoom);
 
         navigate("/rooms");
       } catch (error) {

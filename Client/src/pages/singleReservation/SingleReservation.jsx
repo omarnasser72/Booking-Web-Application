@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -36,26 +36,20 @@ const SingleReservation = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(
-    `https://booking-fwaz.onrender.com/reservations/${reservationId}`
-  );
+  } = useFetch(`/reservations/${reservationId}`);
   console.log(reservation);
 
   const {
     data: hotel,
     loading: loadingHotel,
     error: errhotel,
-  } = useFetch(
-    `https://booking-fwaz.onrender.com/hotels/find/${reservation?.hotelId}`
-  );
+  } = useFetch(`/hotels/find/${reservation?.hotelId}`);
 
   const {
     data: room,
     loading: loadingRoom,
     error: errRoom,
-  } = useFetch(
-    `https://booking-fwaz.onrender.com/rooms/${reservation?.roomTypeId}`
-  );
+  } = useFetch(`/rooms/${reservation?.roomTypeId}`);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -120,7 +114,7 @@ const SingleReservation = () => {
         const fetchRoomNumber = async () => {
           console.log(reservation.roomTypeId, reservation.roomNumberId);
           const roomRes = await axios.get(
-            `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
+            `/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
           );
           return roomRes.data;
         };
@@ -315,9 +309,7 @@ const SingleReservation = () => {
     if (!validDates) {
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(
-        `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}`
-      );
+      const roomRes = await axios.get(`/rooms/${reservation.roomTypeId}`);
       const room = roomRes.data;
       const price = room.price;
       try {
@@ -336,7 +328,7 @@ const SingleReservation = () => {
         };
 
         try {
-          const deleteReservationUrl = `https://booking-fwaz.onrender.com/rooms/${reservation.hotelId}/${reservation.roomTypeId}/${reservation.roomNumberId}/${reservation.reservationDuration.startDate}/${reservation.reservationDuration.endDate}`;
+          const deleteReservationUrl = `/rooms/${reservation.hotelId}/${reservation.roomTypeId}/${reservation.roomNumberId}/${reservation.reservationDuration.startDate}/${reservation.reservationDuration.endDate}`;
           console.log("DELETE URL:", deleteReservationUrl);
 
           const reservationDateResponse = await axios.delete(
@@ -347,7 +339,7 @@ const SingleReservation = () => {
         }
         console.log(updatedReservation);
         const reservationRes = await axios.put(
-          `https://booking-fwaz.onrender.com/reservations/${reservation._id}`,
+          `/reservations/${reservation._id}`,
           updatedReservation
         );
         //assign reservation duration to room's unavailable dates
@@ -360,7 +352,7 @@ const SingleReservation = () => {
           console.log(roomAvailabilityDates);
 
           const roomAvailabilityRes = await axios.put(
-            `https://booking-fwaz.onrender.com/rooms/availability/${reservation.roomNumberId}`,
+            `/rooms/availability/${reservation.roomNumberId}`,
             {
               dates: roomAvailabilityDates,
             }

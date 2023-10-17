@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { userInputs } from "../../formSource";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -175,10 +175,7 @@ const NewUser = () => {
         age: age,
       };
       console.log(newUser);
-      const res = await axios.post(
-        "https://booking-fwaz.onrender.com/auth/signup",
-        newUser
-      );
+      const res = await axios.post("/auth/signup", newUser);
       console.log(res);
       if (res.data.success === false) {
         setErrMsg("Signup was not successful."); // Set an appropriate error message

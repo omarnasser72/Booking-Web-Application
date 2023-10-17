@@ -1,5 +1,5 @@
 import "./profile.scss";
-import axios from "axios";
+import axios from "../../axios";
 import useFetch from "../../hooks/useFetch";
 import { useContext, useEffect, useRef, useState } from "react";
 import { userInputs } from "../../formSource";
@@ -174,10 +174,7 @@ const Profile = () => {
         try {
           console.log(newUser);
           setEditBtn(true);
-          const res = await axios.put(
-            `https://booking-fwaz.onrender.com/users/${user._id}`,
-            newUser
-          );
+          const res = await axios.put(`/users/${user._id}`, newUser);
           setUser(newUser);
         } catch (err) {
           console.log(err);
@@ -191,7 +188,7 @@ const Profile = () => {
   const getReservations = async () => {
     try {
       const reservationsRes = await axios.get(
-        `https://booking-fwaz.onrender.com/users/reservations/${user._id}`
+        `/users/reservations/${user._id}`
       );
       const lastUpdatedReservations = reservationsRes.data;
       console.log(lastUpdatedReservations);
@@ -207,14 +204,10 @@ const Profile = () => {
     for (const reservation of reservations) {
       try {
         const [hotel, roomType, roomNumber] = await Promise.all([
+          axios.get(`/hotels/find/${reservation.hotelId}`),
+          axios.get(`/rooms/${reservation.roomTypeId}`),
           axios.get(
-            `https://booking-fwaz.onrender.com/hotels/find/${reservation.hotelId}`
-          ),
-          axios.get(
-            `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}`
-          ),
-          axios.get(
-            `https://booking-fwaz.onrender.com/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
+            `/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
           ),
         ]);
 
@@ -246,9 +239,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `https://booking-fwaz.onrender.com/users/${user._id}`
-        );
+        const response = await axios.get(`/users/${user._id}`);
         localStorage.setItem("user", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);
@@ -281,7 +272,7 @@ const Profile = () => {
       const resvDivId = e.target.dataset.reservationId;
 
       const resvationResponse = await axios.delete(
-        `https://booking-fwaz.onrender.com/users/reservations/${resvDivId}`
+        `/users/reservations/${resvDivId}`
       );
 
       const resvDivToDelete = reservationData.find(
@@ -294,7 +285,7 @@ const Profile = () => {
 
       try {
         const reservationDateResponse = await axios.delete(
-          `https://booking-fwaz.onrender.com/rooms/${resvDivToDelete.hotel._id}/${resvDivToDelete.roomType._id}/${resvDivToDelete.roomNumber._id}/${resvDivToDelete.startDate}/${resvDivToDelete.endDate}`
+          `/rooms/${resvDivToDelete.hotel._id}/${resvDivToDelete.roomType._id}/${resvDivToDelete.roomNumber._id}/${resvDivToDelete.startDate}/${resvDivToDelete.endDate}`
         );
       } catch (err) {
         console.log(err);

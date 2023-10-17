@@ -3,11 +3,11 @@ import useFetch from "../../hooks/useFetch";
 import "./featured.css";
 import { useContext, useState } from "react";
 import { SearchContext } from "../../context/SearchContext.js";
-import api from "../../api.js";
+import axios from "../../axios";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "https://booking-fwaz.onrender.com/hotels/countByCity?cities=cairo,giza,alexandria,aswan"
+    "/hotels/countByCity?cities=cairo,giza,alexandria,aswan"
   );
   const location = useLocation();
   console.log(location);

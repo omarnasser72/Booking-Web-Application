@@ -12,14 +12,12 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../axios";
 
 export const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
-    const res = await axios.get(
-      "https://booking-fwaz.onrender.com/auth/logout"
-    );
+    const res = await axios.get("/auth/logout");
     localStorage.removeItem("user");
     navigate("/login");
   };

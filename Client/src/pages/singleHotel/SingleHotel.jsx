@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -42,7 +42,7 @@ const SingleHotel = () => {
     loading,
     error,
     reFetch,
-  } = useFetch(`https://booking-fwaz.onrender.com/hotels/find/${hotelId}`);
+  } = useFetch(`/hotels/find/${hotelId}`);
 
   const [rooms, setRooms] = useState([]);
   const [slideNumber, setSlideNumber] = useState(0);
@@ -126,9 +126,7 @@ const SingleHotel = () => {
         if (roomsIDs.length > 0) {
           const roomsData = await Promise.all(
             roomsIDs.map(async (roomId) => {
-              const roomReq = await axios.get(
-                `https://booking-fwaz.onrender.com/rooms/${roomId}`
-              );
+              const roomReq = await axios.get(`/rooms/${roomId}`);
               if (roomReq.data) {
                 roomsRows.push(roomReq.data);
               }
@@ -329,10 +327,7 @@ const SingleHotel = () => {
           photos: currPhotos,
         };
         console.log(newHotel);
-        const res = await axios.put(
-          `https://booking-fwaz.onrender.com/hotels/${hotelId}`,
-          newHotel
-        );
+        const res = await axios.put(`/hotels/${hotelId}`, newHotel);
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }

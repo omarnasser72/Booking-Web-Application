@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import axios from "axios";
+import axios from "../../axios";
 import useFetch from "../../hooks/useFetch";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import api from "../../api.js";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const { data, error, loading } = useFetch(
-    `https://booking-fwaz.onrender.com/users/${user?._id}`
-  );
+  const { data, error, loading } = useFetch(`/users/${user?._id}`);
   console.log(data);
   const [openSettings, setOpenSettings] = useState(false);
   const [imgClass, setImgClass] = useState("profileImg");
@@ -23,9 +20,7 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    const res = await axios.get(
-      "https://booking-fwaz.onrender.com/auth/logout"
-    );
+    const res = await axios.get("/auth/logout");
     localStorage.removeItem("user");
     navigate("/login");
   };

@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { hotelInputs } from "../../formSource";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -233,10 +233,7 @@ const NewHotel = () => {
           photos: Array.from(files).map((file) => file.name),
         };
         console.log(newHotel);
-        const res = await axios.post(
-          "https://booking-fwaz.onrender.com/hotels",
-          newHotel
-        );
+        const res = await axios.post("/hotels", newHotel);
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }

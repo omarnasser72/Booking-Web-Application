@@ -12,9 +12,7 @@ const ListType = () => {
   const location = useLocation();
   console.log(location);
   const propertyType = location.pathname.split("/")[2];
-  const { data, loading, error, reFetch } = useFetch(
-    `https://booking-fwaz.onrender.com/${propertyType}`
-  );
+  const { data, loading, error, reFetch } = useFetch(`/${propertyType}`);
   console.log(data);
   const msg =
     propertyType !== "hotels" ? "Still working on it" : "No result to show";

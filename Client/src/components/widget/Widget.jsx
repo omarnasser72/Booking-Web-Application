@@ -3,7 +3,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import StoreIcon from "@mui/icons-material/Store";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
-import axios from "axios";
+import axios from "../../axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,24 +19,10 @@ const Widget = ({ type }) => {
 
   const handleWidgets = async (e) => {
     try {
-      setNoOfUsers(
-        (
-          await axios.get(
-            `https://booking-fwaz.onrender.com/users/getUsers/all`
-          )
-        ).data.length
-      );
-      setNoOfHotels(
-        (await axios.get(`https://booking-fwaz.onrender.com/hotels`)).data
-          .length
-      );
-      setNoOfRooms(
-        (await axios.get(`https://booking-fwaz.onrender.com/rooms`)).data.length
-      );
-      setNoOfReservations(
-        (await axios.get(`https://booking-fwaz.onrender.com/reservations`)).data
-          .length
-      );
+      setNoOfUsers((await axios.get(`/users/getUsers/all`)).data.length);
+      setNoOfHotels((await axios.get(`/hotels`)).data.length);
+      setNoOfRooms((await axios.get(`/rooms`)).data.length);
+      setNoOfReservations((await axios.get(`/reservations`)).data.length);
       setLoading(false);
     } catch (error) {
       console.log(error);

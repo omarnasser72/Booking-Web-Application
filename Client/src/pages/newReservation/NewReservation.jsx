@@ -2,7 +2,7 @@ import "./newReservation.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { DateRange } from "react-date-range";
@@ -116,9 +116,7 @@ const NewReservation = () => {
     if (roomTypeId && roomNumberId) {
       const fetchRoomNumber = async () => {
         console.log(roomTypeId, roomNumberId);
-        const roomRes = await axios.get(
-          `https://booking-fwaz.onrender.com/rooms/${roomTypeId}/${roomNumberId}`
-        );
+        const roomRes = await axios.get(`/rooms/${roomTypeId}/${roomNumberId}`);
         return roomRes.data;
       };
 
@@ -172,7 +170,7 @@ const NewReservation = () => {
     data: users,
     error: userError,
     loading: usersLoading,
-  } = useFetch("https://booking-fwaz.onrender.com/users/getUsers/all");
+  } = useFetch("/users/getUsers/all");
 
   console.log(users);
 
@@ -181,7 +179,7 @@ const NewReservation = () => {
     error: hotelsError,
     loading,
     hotelsLoading,
-  } = useFetch("https://booking-fwaz.onrender.com/hotels");
+  } = useFetch("/hotels");
 
   console.log(hotelId);
   console.log(hotels);
@@ -197,9 +195,7 @@ const NewReservation = () => {
     const fetch = async () => {
       if (hotelId) {
         try {
-          const roomsRes = await axios.get(
-            `https://booking-fwaz.onrender.com/hotels/room/${hotelId}`
-          );
+          const roomsRes = await axios.get(`/hotels/room/${hotelId}`);
           setRooms(roomsRes.data);
           return roomsRes.data;
         } catch (error) {
@@ -215,9 +211,7 @@ const NewReservation = () => {
   useEffect(() => {
     const fetch = async () => {
       if (roomTypeId) {
-        const roomsRes = await axios.get(
-          `https://booking-fwaz.onrender.com/rooms/${roomTypeId}`
-        );
+        const roomsRes = await axios.get(`/rooms/${roomTypeId}`);
         console.log(roomsRes.data.roomNumbers);
         setRoomNumbers(roomsRes.data.roomNumbers);
         return roomsRes.data;
@@ -365,9 +359,7 @@ const NewReservation = () => {
       if (!validRoomNumber) setRoomNumberFocus(true);
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(
-        `https://booking-fwaz.onrender.com/rooms/${roomTypeId}`
-      );
+      const roomRes = await axios.get(`/rooms/${roomTypeId}`);
       const room = roomRes.data;
       const price = room.price;
       try {
@@ -391,7 +383,7 @@ const NewReservation = () => {
         };
         console.log(newReservation);
         const reservationRes = await axios.post(
-          `https://booking-fwaz.onrender.com/hotels/reserve/${hotelId}`,
+          `/hotels/reserve/${hotelId}`,
           newReservation
         );
         //assign reservation duration to room's unavailable dates
@@ -404,7 +396,7 @@ const NewReservation = () => {
           console.log(roomAvailabilityDates);
 
           const roomAvailabilityRes = await axios.put(
-            `https://booking-fwaz.onrender.com/rooms/availability/${roomNumberId}`,
+            `/rooms/availability/${roomNumberId}`,
             {
               dates: roomAvailabilityDates,
             }
