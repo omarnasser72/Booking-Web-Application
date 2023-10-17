@@ -28,12 +28,12 @@ const connect = async () => {
 };
 
 // MIDDLEWARES
-//app.use(cors());
-app.use(
-  cors({
-    origin: "https://bookingwebapp.onrender.com",
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: "https://bookingwebapp.onrender.com",
+//   })
+// );
 
 app.use(cookieParser());
 // To send JSON to Express, we have to use its middleware
