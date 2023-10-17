@@ -68,7 +68,11 @@ const Login = () => {
         const res = await axios.post(`/auth/login`, credentials);
         console.log(res.data);
         if (res.data) {
-          dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: res.data.details,
+            accessToken: res.data.accessToken,
+          });
           res.data.details.isAdmin === true
             ? navigate("/adminDashboard/")
             : navigate("/");

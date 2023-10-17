@@ -92,7 +92,7 @@ export const login = async (req, res, next) => {
       //   secure: true,
       //   domain: "bookingwebapp.onrender.com",
       // })
-      .json({ details: { ...otherDetails } });
+      .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }
