@@ -36,33 +36,6 @@ export const register = async (req, res, next) => {
   }
 };
 
-// export const login = async (req, res, next) => {
-//   try {
-//     const user = await User.findOne({ username: req.body.username });
-//     if (!user) return next(createError(404, "user not found !"));
-
-//     if (!bcrypt.compareSync(req.body.password, user.password))
-//       return next(createError(400, "Wrong Password !"));
-
-//     const token = jwt.sign(
-//       { id: user._id, isAdmin: user.isAdmin },
-//       process.env.JWT
-//     );
-//     const { password, ...otherDetails } = user._doc; // returned everything except extracted attributes
-//     res
-//       .cookie("accessToken", token, {
-//         //httpOnly: true,
-//         domain: "bookingwebapp.onrender.com",
-//         path: "/",
-//         secure: true, // Set the secure attribute
-//       })
-//       .status(200)
-//       .json({ details: { ...otherDetails } });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -73,26 +46,7 @@ export const login = async (req, res, next) => {
 
     const token = createToken(user);
     const { password, ...otherDetails } = user._doc;
-    res
-      .status(200)
-      // .cookie("accessToken", token, {
-      //   httpOnly: true,
-      //   secure: true,
-      //   domain: "fanciful-hamster-4b702c.netlify.app/",
-      //   path: "/",
-      // })
-      .cookie("accessToken", token, {
-        httpOnly: true,
-        path: "/",
-        secure: true,
-        sameSite: "None", // If you want cross-origin access
-      })
-      // .cookie("role", user.isAdmin, {
-      //   httpOnly: true,
-      //   secure: true,
-      //   domain: "bookingwebapp.onrender.com",
-      // })
-      .json({ accessToken: token, details: { ...otherDetails } });
+    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }

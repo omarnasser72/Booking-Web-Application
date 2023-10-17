@@ -11,7 +11,7 @@ try {
 const tokenString = localStorage.getItem("accessToken");
 let token = null;
 try {
-  user = JSON.parse(tokenString); //to initialize the user state with the value stored in the browser's local storage
+  token = JSON.parse(tokenString); //to initialize the user state with the value stored in the browser's local storage
 } catch (error) {
   console.log("Error parsing token from local storage:", error); //If there is no value stored in the local storage, the user state is initialized with null.
 }
