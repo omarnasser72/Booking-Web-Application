@@ -1,40 +1,22 @@
 import jwt from "jsonwebtoken";
 import { createError } from "./error.js";
 
-export const createToken = (user) => {
-  const accessToken = jwt.sign(
-    { id: user._id, isAdmin: user.isAdmin },
-    process.env.JWT
-  );
-  return accessToken;
-};
-
 export const validateToken = (req, res, next) => {
   const accessToken = req.cookies["accessToken"];
 
   if (!accessToken) {
-    next(createError(400, "no token exists"));
+    return next(createError(400, "No token exists"));
   }
-  try {
-    const validToken = jwt.verify(
-      accessToken,
-      process.env.JWT,
-      (err, decoded) => {
-        if (err) {
-          next(err);
-        }
-        return (req.user = decoded);
-      }
-    );
-    if (validToken) {
-      req.authenticated = true;
-      next();
-    } else {
-      next(createError(403, "invalid token"));
+
+  jwt.verify(accessToken, process.env.JWT, (err, decoded) => {
+    if (err) {
+      return next(createError(403, "Invalid token"));
     }
-  } catch (error) {
-    next(error);
-  }
+
+    req.user = decoded;
+    req.authenticated = true;
+    next();
+  });
 };
 
 export const verifyUser = (req, res, next) => {
@@ -42,7 +24,7 @@ export const verifyUser = (req, res, next) => {
     if (req.user) {
       next();
     } else {
-      return next(createError(403, "You aren't user"));
+      return next(createError(403, "You aren't authorized"));
     }
   });
 };
@@ -52,7 +34,7 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user && req.user.isAdmin) {
       next();
     } else {
-      return next(createError(403, "You aren't admin"));
+      return next(createError(403, "You aren't authorized as an admin"));
     }
   });
 };
