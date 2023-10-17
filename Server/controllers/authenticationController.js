@@ -78,14 +78,20 @@ export const login = async (req, res, next) => {
       // .cookie("accessToken", token, {
       //   httpOnly: true,
       //   secure: true,
-      //   domain: "bookingwebapp.onrender.com",
+      //   domain: "fanciful-hamster-4b702c.netlify.app/",
       //   path: "/",
       // })
-      .cookie("role", user.isAdmin, {
+      .cookie("accessToken", token, {
         httpOnly: true,
         secure: true,
         domain: "bookingwebapp.onrender.com",
+        path: "/",
       })
+      // .cookie("role", user.isAdmin, {
+      //   httpOnly: true,
+      //   secure: true,
+      //   domain: "bookingwebapp.onrender.com",
+      // })
       .json({ details: { ...otherDetails } });
   } catch (error) {
     next(error);
