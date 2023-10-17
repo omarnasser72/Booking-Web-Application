@@ -83,9 +83,9 @@ export const login = async (req, res, next) => {
       // })
       .cookie("accessToken", token, {
         httpOnly: true,
-        secure: true,
-        domain: "bookingwebapp.onrender.com",
         path: "/",
+        secure: true,
+        sameSite: "None", // If you want cross-origin access
       })
       // .cookie("role", user.isAdmin, {
       //   httpOnly: true,
