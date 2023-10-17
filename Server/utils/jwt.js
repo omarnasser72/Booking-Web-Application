@@ -1,22 +1,30 @@
 import jwt from "jsonwebtoken";
 import { createError } from "./error.js";
 
+export const createToken = (user) => {
+  const accessToken = jwt.sign(
+    { id: user._id, isAdmin: user.isAdmin },
+    "secretToken"
+  );
+  return accessToken;
+};
+
 export const validateToken = (req, res, next) => {
   const accessToken = req.cookies["accessToken"];
 
   if (!accessToken) {
-    return next(createError(400, "No token exists"));
+    next(createError(400, "no token exists"));
   }
-
-  jwt.verify(accessToken, process.env.JWT, (err, decoded) => {
-    if (err) {
-      return next(createError(403, "Invalid token"));
-    }
-
-    req.user = decoded;
-    req.authenticated = true;
+  try {
+    jwt.verify(accessToken, "secretToken", (err, decoded) => {
+      if (err) next(err);
+      req.user = decoded;
+      req.authenticated = true;
+    });
     next();
-  });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const verifyUser = (req, res, next) => {
@@ -24,7 +32,7 @@ export const verifyUser = (req, res, next) => {
     if (req.user) {
       next();
     } else {
-      return next(createError(403, "You aren't authorized"));
+      return next(createError(403, "You aren't user"));
     }
   });
 };
@@ -34,7 +42,7 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user && req.user.isAdmin) {
       next();
     } else {
-      return next(createError(403, "You aren't authorized as an admin"));
+      return next(createError(403, "You aren't admin"));
     }
   });
 };
