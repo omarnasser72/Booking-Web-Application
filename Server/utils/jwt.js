@@ -11,7 +11,7 @@ export const createToken = (user) => {
 
 export const validateToken = (req, res, next) => {
   const accessToken = req.cookies["accessToken"];
-
+  let userExist;
   if (!accessToken) {
     next(createError(400, "no token exists"));
   }
@@ -19,9 +19,10 @@ export const validateToken = (req, res, next) => {
     jwt.verify(accessToken, "secretToken", (err, decoded) => {
       if (err) next(err);
       req.user = decoded;
+      userExist = decoded;
       req.authenticated = true;
     });
-    next();
+    if (userExist) next();
   } catch (error) {
     next(error);
   }
