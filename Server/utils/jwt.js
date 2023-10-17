@@ -18,15 +18,15 @@ export const validateToken = (req, res, next) => {
   try {
     const validToken = jwt.verify(accessToken, "1234", (err, decoded) => {
       if (err) {
-        return res.status(403).json({ message: "Invalid token" });
+        next(err);
       }
       req.user = decoded;
     });
     if (validToken) {
       req.authenticated = true;
-      return next();
+      next();
     } else {
-      next(createError(400, "invalid token"));
+      next(createError(403, "invalid token"));
     }
   } catch (error) {
     next(error);
