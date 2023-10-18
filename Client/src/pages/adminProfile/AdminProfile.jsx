@@ -1,5 +1,5 @@
 import "./adminProfile.scss";
-import axios from "../../axios";
+import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import { userInputs } from "../../formSource";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";

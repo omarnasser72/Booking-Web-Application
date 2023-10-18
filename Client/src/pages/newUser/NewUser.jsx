@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState, useRef } from "react";
-import axios from "../../axios";
+import axios from "axios";
 import { userInputs } from "../../formSource";
 import { useLocation, useNavigate } from "react-router-dom";
 

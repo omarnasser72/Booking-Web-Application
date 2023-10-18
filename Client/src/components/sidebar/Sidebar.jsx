@@ -18,7 +18,7 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     const res = await axios.get("/auth/logout");
-    //localStorage.removeItem("user");
+    localStorage.removeItem("user");
     navigate("/login");
   };
 

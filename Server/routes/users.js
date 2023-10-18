@@ -11,11 +11,11 @@ import {
   deleteReservation,
   getUserReservations,
 } from "../controllers/reservationController.js";
-import { validateToken, verifyAdmin, verifyUser } from "../utils/jwt.js";
+import { verifyAdmin, verifyUser } from "../utils/jwt.js";
 
 const router = Express.Router();
 
-router.get("/checkAuthentication", validateToken, (req, res, next) => {
+router.get("/checkAuthentication", (req, res, next) => {
   res.send("user logged in");
 });
 
@@ -35,7 +35,7 @@ router.delete("/:id", verifyAdmin, deleteUser);
 //GET
 router.get("/:id", verifyUser, getUser);
 //GETALL
-router.get("/getUsers/all", verifyAdmin, getAllUsers);
+router.get("/getUsers/all", verifyUser, getAllUsers);
 
 //GET RESERVATION
 router.get("/reservations/:id", verifyUser, getUserReservations);

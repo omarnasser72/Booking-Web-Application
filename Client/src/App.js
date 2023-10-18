@@ -39,6 +39,7 @@ import AdminProfile from "./pages/adminProfile/AdminProfile";
 
 function App() {
   const ProtectedRoute = ({ element }) => {
+    // Change `children` to `element`
     const { user } = useContext(AuthContext);
     const isLoginOrRegister =
       useLocation().pathname.match(/^(login|register)$/);

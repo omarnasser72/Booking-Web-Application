@@ -46,7 +46,14 @@ export const login = async (req, res, next) => {
 
     const token = createToken(user);
     const { password, ...otherDetails } = user._doc;
-    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
+    res
+      .status(200)
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        secure: true,
+        path: "/",
+      })
+      .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }
