@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import axios from "../../axios";
+import axios from "axios";
 import moment from "moment";
 import "moment-timezone";
 const Datatable = ({ columns }) => {
@@ -40,7 +40,7 @@ const Datatable = ({ columns }) => {
   const handleDelete = async (id) => {
     try {
       if (path == "reservations") {
-        const reservation = (await axios.get(`/reservations/${id}`)).data;
+        const reservation = (await axios.get(`reservations/${id}`)).data;
         console.log(reservation);
 
         const { hotelId, userId, roomTypeId, roomNumberId } = reservation;
@@ -56,7 +56,7 @@ const Datatable = ({ columns }) => {
         );
 
         const roomRes = await axios.delete(
-          `/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
+          `rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
         );
         console.log(roomRes);
         //const reservationRes = await axios.delete(`/${path}/${id}`);

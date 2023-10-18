@@ -7,38 +7,32 @@
   font-size: 14px;
   color: #555;
   margin-top: 0px;
-
   .wrapper {
     width: 100%;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     .search {
       display: flex;
       padding: 3px;
       align-items: center;
       -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
       box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-
       input {
         border: none;
         outline: none;
         //background: transparent;
       }
-
       .icon {
         cursor: pointer;
       }
     }
-
     .items {
       width: 100%;
       display: flex;
       align-items: end;
       justify-content: end;
-
       .item {
         width: 100%;
         display: flex;
@@ -46,14 +40,13 @@
         justify-content: end;
         margin-right: 20px;
         position: relative;
+        //cursor: pointer;
 
         .avatar {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          cursor: pointer;
         }
-
         .counter {
           position: absolute;
           width: 15px;
