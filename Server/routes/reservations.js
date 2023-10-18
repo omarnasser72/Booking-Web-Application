@@ -15,7 +15,7 @@ router.get("/", verifyAdmin, getAllReservations);
 //GET
 router.get("/:id", verifyAdmin, getReservation);
 
-//UODATE
+//UPDATE
 router.put("/:id", verifyAdmin, updateReservation);
 
 //DELETE

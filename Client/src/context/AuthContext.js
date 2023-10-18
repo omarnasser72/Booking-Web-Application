@@ -3,19 +3,18 @@ import { createContext, useEffect, useReducer } from "react";
 const userString = localStorage.getItem("user");
 let user = null;
 try {
-  user = JSON.parse(userString); //to initialize the user state with the value stored in the browser's local storage
+  user = JSON.parse(userString);
 } catch (error) {
-  console.log("Error parsing user from local storage:", error); //If there is no value stored in the local storage, the user state is initialized with null.
+  console.log("Error parsing user from local storage:", error);
 }
 
 const tokenString = localStorage.getItem("accessToken");
 let accessToken = null;
 try {
-  accessToken = tokenString; //to initialize the user state with the value stored in the browser's local storage
+  accessToken = tokenString;
 } catch (error) {
-  console.log("Error parsing token from local storage:", error); //If there is no value stored in the local storage, the user state is initialized with null.
+  console.log("Error parsing token from local storage:", error);
 }
-
 const INTIAL_STATE = {
   user,
   accessToken,
@@ -66,7 +65,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("accessToken", state.accessToken);
     localStorage.setItem("user", JSON.stringify(state.user)); // a function to be executed after rendering
-  }, [state.user]); // function executes when user's state changes
+  }, [state.user, state.accessToken]); // function executes when user's state changes
   return (
     <AuthContext.Provider
       value={{
