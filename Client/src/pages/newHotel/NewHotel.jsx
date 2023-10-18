@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { hotelInputs } from "../../formSource";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -237,7 +237,7 @@ const NewHotel = () => {
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }
-        navigate("adminDashboard/hotels");
+        navigate("/adminDashboard/hotels");
       } catch (error) {
         setErrMsg(error.response.data.message);
         console.log(error);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./register.scss";
-import axios from "axios";
+import axios from "../../axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { userInputs } from "../../formSource";
@@ -70,7 +70,6 @@ const Register = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  console.log(errMsg);
 
   const [usernameExists, setUsernameExists] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
