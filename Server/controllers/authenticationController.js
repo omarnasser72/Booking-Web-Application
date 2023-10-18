@@ -5,6 +5,7 @@ import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { createToken } from "../utils/jwt.js";
+import { cloudinary } from "../utils/cloudinary.js";
 
 function generateRandomPassword(length) {
   const characters =
@@ -81,6 +82,11 @@ export const signup = async (req, res, next) => {
       phone: req.body.phone,
     });
     if (phoneExist.length > 0) throw createError(400, "Phone Already exists");
+
+    const uploadRes = await cloudinary.uploader.upload(req.body.img, {
+      upload_preset: "booking",
+    });
+    console.log(uploadRes);
 
     const newUser = new User({
       ...req.body,
