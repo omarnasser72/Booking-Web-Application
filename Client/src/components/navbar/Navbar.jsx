@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import axios from "axios";
+import axios from "../../axios";
 import useFetch from "../../hooks/useFetch";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const { data, error, loading } = useFetch(`users/${user._id}`);
+  const { data, error, loading } = useFetch(`/users/${user?._id}`);
   console.log(data);
   const [openSettings, setOpenSettings] = useState(false);
   const [imgClass, setImgClass] = useState("profileImg");

@@ -1,8 +1,8 @@
 import "./propertyList.css";
 import useFetch from "../../hooks/useFetch.js";
-
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../axios";
+
 const PropertyList = () => {
   const { data, loading, error } = useFetch("/hotels/countByType");
   const images = [
@@ -16,7 +16,7 @@ const PropertyList = () => {
   const handleClick = async (type) => {
     if (type !== "hotel") navigate(`ListAll/${type}s`);
     try {
-      await axios.get(`${type}s`);
+      await axios.get(`/${type}s`);
       navigate(`ListAll/${type}s`);
     } catch (error) {
       console.log(error);
