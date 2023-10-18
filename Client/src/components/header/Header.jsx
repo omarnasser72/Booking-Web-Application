@@ -186,27 +186,6 @@ const Header = ({ type }) => {
                       </button>
                     </div>
                   </div>
-                  {/* <div className="optionItem">
-                    <span className="optionText">Rooms</span>
-                    <div className="optionCounter">
-                      <button
-                        className="optionCounterBtn"
-                        onClick={() => handleCounter("room", "d")}
-                        disabled={options.room <= 1}
-                      >
-                        -
-                      </button>
-                      <span className="optionCounterNumber">
-                        {options.room}
-                      </span>
-                      <button
-                        className="optionCounterBtn"
-                        onClick={() => handleCounter("room", "i")}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div> */}
                 </div>
               )}
             </div>

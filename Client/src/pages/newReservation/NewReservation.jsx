@@ -2,7 +2,7 @@ import "./newReservation.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { DateRange } from "react-date-range";
@@ -171,20 +171,9 @@ const NewReservation = () => {
     error: userError,
     loading: usersLoading,
   } = useFetch("/users/getUsers/all");
-  const [Users, setUsers] = useState([]);
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     try {
-  //       const res = await axios.get("/users");
-  //       setUsers(res.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getUsers();
-  //   console.log(Users);
-  // }, []);
+
   console.log(users);
+
   const {
     data: hotels,
     error: hotelsError,
