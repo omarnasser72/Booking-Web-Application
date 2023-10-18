@@ -83,7 +83,6 @@ const Login = () => {
           });
         }
       } catch (error) {
-        console.log(error);
         dispatch({ type: "LOGIN_FALIURE", payload: error.response.data });
       }
     }

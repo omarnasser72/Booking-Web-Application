@@ -555,7 +555,7 @@ const SingleHotel = () => {
                         <FontAwesomeIcon
                           icon={faTimes}
                           className={
-                            validHotelName || (name == "" && !hotelNameFocus)
+                            validHotelName || (name === "" && !hotelNameFocus)
                               ? "hide"
                               : "invalid"
                           }
