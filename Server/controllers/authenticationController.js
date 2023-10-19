@@ -82,11 +82,6 @@ export const signup = async (req, res, next) => {
     });
     if (phoneExist.length > 0) throw createError(400, "Phone Already exists");
 
-    const uploadRes = await cloudinary.uploader.upload(req.body.img, {
-      upload_preset: "booking",
-    });
-    console.log(uploadRes);
-
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
