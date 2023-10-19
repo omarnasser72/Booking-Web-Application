@@ -15,6 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import org_axios from "axios";
 
 const HOTEL_REGEX = /^[A-Za-z0-9\s.'-]{3,}$/;
 const CITY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
@@ -210,22 +211,9 @@ const NewHotel = () => {
       if (!validType) setTypeFocus(true);
       if (!validPrice) setPriceFocus(true);
       if (!validFeatured) setFeaturedFocus(true);
-    }
-    // const data = new FormData();
-    // data.append("file", file);
-    // data.append("uploadPreset", "upload");
-    else {
+    } else {
       try {
-        // const uploadRes = await axios.post(
-        //   "https://api.cloudinary.com/v1_1/dyrrfclr2/image/upload",
-        //   data
-        // );
-        // console.log(uploadRes.data);
-        // const { secure_url } = uploadRes.data;
-
-        // const list = await Promise.all(
-        //   Object.values(files).map(async (file) => {})
-        // );
+        if (files) handleUpload();
         const photos = Array.from(files).map((file) => file.name);
         console.log(photos);
         const newHotel = {
@@ -242,6 +230,25 @@ const NewHotel = () => {
         setErrMsg(error.response.data.message);
         console.log(error);
       }
+    }
+  };
+  const handleUpload = async () => {
+    console.log("uploading....");
+    try {
+      files.map(async (file) => {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await org_axios.post(
+          "https://api.cloudinary.com/v1_1/omarnasser/upload",
+          data
+        );
+        console.log(uploadRes);
+        console.log("uploaded successfully");
+      });
+      //setCurrImg(uploadRes?.data?.url);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
