@@ -72,4 +72,12 @@ api takes hotel's id and search if exists in database it deletes it</p>
 <h2>Auth route</h2>
 <p>here we call apis without verification as it'sn't needed here</p>
 <h2>user route </h2>
-<p>in delete user or getting all users we use verify Admin utili </p>
+<p>with delete user or getting all users we use verify Admin utilize, with updateUser, changePwd, getUser, getUserReservations, deleteReservation we use verify User middleware</p>
+<h2>Hotel Route</h2>
+<p>with createHotel, deleteHotel we use verify Admin, with update Hotel, get Hotel, get Hotels, get All Hotels, countByCity, countByType, createReservation we use verifyUser</p>
+<h2>Room Route</h2>
+<p>with create Room, update Room, updateRoomAvailability, deleteRoom we use verifyAdmin and with rest of apis we use verifyUser</p>
+<h2>Hotel Rate</h2>
+<p>we use only verifyUser middleware in this route</p>
+<h2>Reservation Route</h2>
+<p>with getReservation we use verifyUser middleware and with the rest apis we use verifyAdmin</p>
