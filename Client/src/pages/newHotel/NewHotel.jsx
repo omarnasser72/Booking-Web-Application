@@ -1,12 +1,9 @@
 import "./newHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useRef, useState } from "react";
 import axios from "../../axios";
-import { hotelInputs } from "../../formSource";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
 import {
   faCheck,
   faTimes,
@@ -301,7 +298,7 @@ const NewHotel = () => {
                   <FontAwesomeIcon
                     icon={faTimes}
                     className={
-                      validHotelName || (name == "" && !hotelNameFocus)
+                      validHotelName || (name === "" && !hotelNameFocus)
                         ? "hide"
                         : "invalid"
                     }
