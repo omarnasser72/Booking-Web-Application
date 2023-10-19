@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./register.scss";
 import axios from "../../axios";
+import org_axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { userInputs } from "../../formSource";
@@ -75,6 +76,7 @@ const Register = () => {
   const [emailExists, setEmailExists] = useState(false);
   const [phoneExists, setPhoneExists] = useState(false);
 
+  const [currImg, setCurrImg] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const [birthDate, setBirthDate] = useState(null);
@@ -101,6 +103,10 @@ const Register = () => {
   useEffect(() => {
     setValidCountry(COUNTRY_REGEX.test(country));
   }, [country]);
+
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
 
   //calculate age
   // useEffect(() => {
@@ -176,7 +182,7 @@ const Register = () => {
         const newUser = {
           ...info,
           email: email,
-          img: file.name,
+          img: currImg,
           birthDate: birthDate,
           age: age,
         };
@@ -185,11 +191,33 @@ const Register = () => {
         console.log(res);
         navigate("/");
       } catch (error) {
-        setErrMsg(error.response.data.message);
+        setErrMsg(error);
         console.log(error);
       }
     }
   };
+  const handleUpload = async () => {
+    console.log("uploading....");
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "upload");
+      const uploadRes = await org_axios.post(
+        "https://api.cloudinary.com/v1_1/omarnasser/upload",
+        data
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("uploaded successfully");
+    console.log(uploadRes);
+    setCurrImg(uploadRes?.data?.url);
+  };
+  useEffect(() => {
+    if (file) {
+      handleUpload();
+    }
+  }, [file]);
   return (
     <div className="register">
       {/* <span className="logo" onClick={() => navigate("/")}>
@@ -566,6 +594,19 @@ const Register = () => {
           </div>
         </form>
       </div>
+      {/* <div
+        className="uploadCloud"
+        style={{ marginLeft: "20%", cursor: "pointer" }}
+      >
+        <input
+          type="file"
+          id="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <button onClick={() => handleUpload()} style={{ cursor: "pointer" }}>
+          upload
+        </button>
+      </div> */}
     </div>
   );
 };

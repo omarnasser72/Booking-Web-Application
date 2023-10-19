@@ -9,11 +9,6 @@ import reservationsRoute from "./routes/reservations.js";
 import rateRoute from "./routes/hotelRates.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { fileURLToPath } from "url"; // Import fileURLToPath
-import path from "path"; // Import path
-
-const __filename = fileURLToPath(import.meta.url); // Get the current filename
-const __dirname = path.dirname(__filename); // Get the directory name
 
 const app = express();
 dotenv.config();
@@ -56,13 +51,6 @@ app.use((err, req, res, next) => {
     message: errorMessage,
   });
 });
-
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "Client/build"))); // Use __dirname
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "../Client/build", "index.html")); // Use __dirname
-//   });
-// }
 
 app.listen(8888, () => {
   connect();

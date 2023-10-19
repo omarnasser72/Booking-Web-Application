@@ -5,7 +5,7 @@ import {
   getReservation,
   updateReservation,
 } from "../controllers/reservationController.js";
-import { verifyAdmin } from "../utils/jwt.js";
+import { verifyAdmin, verifyUser } from "../utils/jwt.js";
 
 const router = Express.Router();
 
@@ -13,7 +13,7 @@ const router = Express.Router();
 router.get("/", verifyAdmin, getAllReservations);
 
 //GET
-router.get("/:id", verifyAdmin, getReservation);
+router.get("/:id", verifyUser, getReservation);
 
 //UPDATE
 router.put("/:id", verifyAdmin, updateReservation);
