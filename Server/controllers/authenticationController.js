@@ -46,7 +46,10 @@ export const login = async (req, res, next) => {
 
     const token = createToken(user);
     const { password, ...otherDetails } = user._doc;
-    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
+    res
+      .status(200)
+      .cookie("accessToken", token)
+      .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
   }
@@ -82,10 +85,12 @@ export const signup = async (req, res, next) => {
     });
     if (phoneExist.length > 0) throw createError(400, "Phone Already exists");
 
+    console.log("before creating object");
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
     });
+    console.log("newUser:", newUser);
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
 
