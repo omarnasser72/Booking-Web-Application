@@ -5,7 +5,6 @@ import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { createToken } from "../utils/jwt.js";
-import { cloudinary } from "../utils/cloudinary.js";
 
 function generateRandomPassword(length) {
   const characters =

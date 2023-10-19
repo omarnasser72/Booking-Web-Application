@@ -206,12 +206,12 @@ const Register = () => {
         "https://api.cloudinary.com/v1_1/omarnasser/upload",
         data
       );
+      console.log("uploaded successfully");
+      console.log(uploadRes);
+      setCurrImg(uploadRes?.data?.url);
     } catch (error) {
       console.log(error);
     }
-    console.log("uploaded successfully");
-    console.log(uploadRes);
-    setCurrImg(uploadRes?.data?.url);
   };
   useEffect(() => {
     if (file) {
