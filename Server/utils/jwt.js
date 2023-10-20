@@ -67,9 +67,8 @@ export const verifyUser = (req, res, next) => {
 };
 
 export const verifyAdmin = (req, res, next) => {
-  console.log("req.headers:", req.headers);
-  console.log("req.cookies:", req?.cookies);
-  const accessToken = req.headers.authorization || req?.cookies?.accessToken;
+  const accessToken = req.headers.authorization;
+
   if (!accessToken) next(createError(400, "no token exists"));
 
   try {
