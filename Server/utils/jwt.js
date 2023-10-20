@@ -77,7 +77,7 @@ export const verifyAdmin = (req, res, next) => {
     console.log(decoded);
     req.user = decoded;
     req.authenticated = true;
-    if (req.user && req.user.isAdmin) {
+    if (req?.user?.isAdmin) {
       next();
     } else {
       return next(createError(403, "You aren't Admin"));
