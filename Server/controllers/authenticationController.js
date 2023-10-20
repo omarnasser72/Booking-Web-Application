@@ -48,7 +48,9 @@ export const login = async (req, res, next) => {
     const { password, ...otherDetails } = user._doc;
     res
       .status(200)
-      .cookie("accessToken", token)
+      .cookie("accessToken", token, {
+        domain: "booking-fwaz.onrender.com",
+      })
       .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
