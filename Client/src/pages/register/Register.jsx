@@ -108,17 +108,6 @@ const Register = () => {
     console.log(file);
   }, [file]);
 
-  //calculate age
-  // useEffect(() => {
-  //   if (birthDate) {
-  //     const currentYear = new Date().getFullYear();
-  //     const birthYear = birthDate.getFullYear();
-  //     const calculatedAge = currentYear - birthYear;
-  //     setAge(calculatedAge);
-  //   }
-  //   setInfo((prev) => ({ ...prev, age: age }));
-  // }, [birthDate]);
-
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
@@ -179,6 +168,8 @@ const Register = () => {
       if (!validPhone) setPhoneFocus(true);
     } else {
       try {
+        if (file) handleUpload();
+
         const newUser = {
           ...info,
           email: email,
@@ -213,11 +204,7 @@ const Register = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (file) {
-      handleUpload();
-    }
-  }, [file]);
+
   return (
     <div className="register">
       {/* <span className="logo" onClick={() => navigate("/")}>
