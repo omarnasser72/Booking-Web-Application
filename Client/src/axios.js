@@ -8,7 +8,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Async function to wait for 1 second and then get the token from localStorage
 const getTokenWithDelay = async () => {
-  await delay(2000); // Wait for 1000 ms (1 second)
+  await delay(10000); // Wait for 1000 ms (1 second)
   const accessToken = localStorage.getItem("accessToken");
   console.log("accessToken:", accessToken);
   // If the token exists, set it as an Axios default header
