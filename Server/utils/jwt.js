@@ -46,9 +46,16 @@ export const validateToken = (req, res, next) => {
   }
 };
 
-export const verifyUser = (req, res, next) => {
-  const accessToken = req.headers.authorization;
-  if (!accessToken) next(createError(400, "no token exists"));
+export const verifyUser = async (req, res, next) => {
+  let accessToken = req.headers.authorization;
+
+  if (!accessToken || accessToken === null) {
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    await delay(2000); // 2000 milliseconds (2 seconds) delay
+  }
+
+  if (!accessToken || accessToken === null)
+    next(createError(400, "no token exists"));
 
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
@@ -64,10 +71,17 @@ export const verifyUser = (req, res, next) => {
   }
 };
 
-export const verifyAdmin = (req, res, next) => {
-  const accessToken = req.headers.authorization;
+export const verifyAdmin = async (req, res, next) => {
+  let accessToken = req.headers.authorization;
 
-  if (!accessToken) next(createError(400, "no token exists"));
+  if (!accessToken || accessToken === null) {
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    await delay(2000); // 2000 milliseconds (2 seconds) delay
+  }
+  await delay(2000); // 2000 milliseconds (2 seconds) delay
+
+  if (!accessToken || accessToken === null)
+    next(createError(400, "no token exists"));
 
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
