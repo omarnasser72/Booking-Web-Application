@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { createError } from "./error.js";
+const jwtRegex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$/;
 
 export const createToken = (user) => {
   const accessToken = jwt.sign(
@@ -49,50 +50,51 @@ export const validateToken = (req, res, next) => {
 export const verifyUser = async (req, res, next) => {
   let accessToken = req.headers.authorization;
 
-  if (!accessToken || accessToken === null) {
+  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     await delay(2000); // 2000 milliseconds (2 seconds) delay
   }
 
-  if (!accessToken || accessToken === null)
-    next(createError(400, "no token exists"));
-
-  try {
-    const decoded = jwt.verify(accessToken, process.env.JWT);
-    req.user = decoded;
-    req.authenticated = true;
-    if (req.user) {
-      next();
-    } else {
-      return next(createError(403, "You aren't user"));
+  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
+    next(createError(400, "Invalid or missing token"));
+  } else {
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT);
+      req.user = decoded;
+      req.authenticated = true;
+      if (req.user) {
+        next();
+      } else {
+        return next(createError(403, "You aren't a user"));
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
 };
 
 export const verifyAdmin = async (req, res, next) => {
   let accessToken = req.headers.authorization;
 
-  if (!accessToken || accessToken === null) {
+  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     await delay(2000); // 2000 milliseconds (2 seconds) delay
   }
-  await delay(2000); // 2000 milliseconds (2 seconds) delay
 
-  if (!accessToken || accessToken === null)
-    next(createError(400, "no token exists"));
-
-  try {
-    const decoded = jwt.verify(accessToken, process.env.JWT);
-    req.user = decoded;
-    req.authenticated = true;
-    if (req?.user?.isAdmin) {
-      next();
-    } else {
-      return next(createError(403, "You aren't Admin"));
+  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
+    next(createError(400, "Invalid or missing token"));
+  } else {
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT);
+      req.user = decoded;
+      req.authenticated = true;
+      if (req?.user?.isAdmin) {
+        next();
+      } else {
+        return next(createError(403, "You aren't Admin"));
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
 };
