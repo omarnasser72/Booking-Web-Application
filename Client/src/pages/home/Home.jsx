@@ -12,6 +12,9 @@ import { SearchContext } from "../../context/SearchContext";
 const Home = () => {
   const { date: contextDate } = useContext(SearchContext);
   console.log(contextDate);
+  useEffect(() => {
+    window.location.href = window.location.href;
+  }, []);
 
   return (
     <div className="Home">
