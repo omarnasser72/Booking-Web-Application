@@ -3,7 +3,8 @@ import useFetch from "../../hooks/useFetch";
 import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
-  const { data, loading } = useFetch(`/hotels?featured=true&max=3`);
+  const { data, loading, error } = useFetch(`/hotels?featured=true&max=3`);
+  if (error) console.log(error);
   const navigate = useNavigate();
   const handleClick = (hotelId) => {
     navigate(`/hotels/${hotelId}`);

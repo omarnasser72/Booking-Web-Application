@@ -3,12 +3,12 @@ import useFetch from "../../hooks/useFetch";
 import "./featured.css";
 import { useContext, useState } from "react";
 import { SearchContext } from "../../context/SearchContext.js";
-import axios from "../../axios";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
     "/hotels/countByCity?cities=cairo,giza,alexandria,aswan"
   );
+  if (error) console.log(error);
   const location = useLocation();
   console.log(location);
 
