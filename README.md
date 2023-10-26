@@ -4,9 +4,17 @@ this is full stack web application using MERN stack
 it's similar to idea of booking web app
 this is my 1st full stack MERN web app
 I build it using MVC design pattern
-
+<h1><bold>Stack</bold></h1>
+<ul><li>MongoDB</li>
+<li>Express</li><li>Reactjs</li>
+<li>Nodejs</li><li>ESM Javascript </li><li>cloudinary</li>
+<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><</ul>
 <h1><bold>Features</bold></h1>
-
+<ul><li>authentication system for user using jwt auth</li>
+<li>authorization system for Admin, user using middlewares</li><li>Real-time input validation for all forms</li><li>User able to update his own profile info</li><li>User can change his password </li><li>User can reset his password using his email</li><li>User, Hotel, Room, Reservations and Hotel Rates CRUD operations</li>
+<li>User can reserve room in a hotel for specific duration and able to cancel reservation </li><li>Realtime Search for hotels </li><li>filters using min and max price, no of people, reservation duration</li>
+<li>Rating hotel</li>
+<li></li></ul>
 <h2>Backend Side</h2>
 <p>I used express using middlewares, moongose for connecting to MongoDB server and created my routes</p>
 <h2>Models</h2>
