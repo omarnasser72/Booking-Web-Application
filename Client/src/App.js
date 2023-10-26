@@ -10,13 +10,11 @@ import SingleUser from "./pages/singleUser/SingleUser";
 import NewUser from "./pages/newUser/NewUser";
 import NewHotel from "./pages/newHotel/NewHotel";
 import NewRoom from "./pages/newRoom/NewRoom";
-import { hotelInputs, roomInputs, userInputs } from "./formSource";
 import Home from "./pages/home/Home";
 import List from "./pages/list/List";
 import Hotel from "./pages/hotel/Hotel";
 import Login from "./pages/login/Login";
 import AdminHome from "./pages/adminHome/AdminHome";
-import AdminLogin from "./pages/adminLogin/AdminLogin";
 import AdminList from "./pages/adminList/AdminList";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext"; // Import the AuthContextProvider
 import Register from "./pages/register/Register";
@@ -72,7 +70,6 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="resetPassword" element={<ResetPwd />} />
-            <Route path="" element={<Home />} />
             <Route
               path="Flights"
               element={<ProtectedRoute element={<ListType />} />}
