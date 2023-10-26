@@ -13,16 +13,6 @@ const Home = () => {
   const { date: contextDate } = useContext(SearchContext);
   console.log(contextDate);
 
-  const [hasRefreshed, setHasRefreshed] = useState(false);
-
-  useEffect(() => {
-    if (!hasRefreshed) {
-      // Refresh the page once
-      window.location.reload();
-      setHasRefreshed(true);
-    }
-  }, [hasRefreshed]);
-
   return (
     <div className="Home">
       <Navbar />
