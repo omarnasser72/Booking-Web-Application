@@ -334,7 +334,7 @@ const NewHotel = () => {
               src={
                 currImgs[slideNumber] instanceof File
                   ? URL.createObjectURL(currImgs[slideNumber])
-                  : photo
+                  : currImgs[slideNumber]
               }
               className="sliderImg"
             />

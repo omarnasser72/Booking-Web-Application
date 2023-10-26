@@ -61,7 +61,6 @@ const ResetPwd = () => {
         console.log(res);
         if (res.data) navigate("/login");
         else {
-          setValidResetPwd(false);
           setSentPwd(true);
         }
       } catch (error) {

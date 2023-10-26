@@ -10,6 +10,8 @@ import {
   faTimes,
   faInfoCircle,
   faCircleXmark,
+  faCircleArrowLeft,
+  faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
@@ -297,7 +299,7 @@ const NewHotel = () => {
               src={
                 currImgs[slideNumber] instanceof File
                   ? URL.createObjectURL(currImgs[slideNumber])
-                  : photo
+                  : currImgs[slideNumber]
               }
               className="sliderImg"
             />

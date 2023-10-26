@@ -1,7 +1,7 @@
 import orgaxios from "axios";
 
-//const axios = orgaxios.create({ baseURL: "https://booking-fwaz.onrender.com" });
-const axios = orgaxios.create({ baseURL: "http://localhost:8080" });
+const axios = orgaxios.create({ baseURL: "https://booking-fwaz.onrender.com" });
+//const axios = orgaxios.create({ baseURL: "http://localhost:8080" });
 
 // Get the token from localStorage
 const accessToken = localStorage.getItem("accessToken");
