@@ -178,6 +178,13 @@ const Login = () => {
             </p>{" "}
             Now!
           </pre>
+          <pre
+            onClick={() => {
+              navigate("/resetPassword");
+            }}
+          >
+            <p>forget password</p>
+          </pre>
         </div>
       </div>
     </div>

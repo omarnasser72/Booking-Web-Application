@@ -7,6 +7,7 @@
   padding: 15px;
   height: 40%;
   background-color: rgb(66, 66, 66);
+
   .left,
   .right {
     display: flex;
@@ -14,35 +15,46 @@
     justify-content: space-between;
     gap: 10px;
     color: rgb(236, 250, 48);
+
     .title {
       font-weight: bold;
       font-size: 20px;
       color: rgb(236, 250, 48);
     }
+
     .link {
       width: max-content;
       font-size: 15px;
       color: rgb(136, 136, 136);
       cursor: pointer;
     }
+
     .percentage {
       display: flex;
       align-items: center;
       font-size: 14px;
+
       &.positive {
         color: green;
       }
+
       &.negative {
         color: red;
       }
     }
+
     .icon {
       font-size: 25px;
       padding: 5px;
       align-self: flex-end;
     }
+
     .counter {
       color: rgb(236, 250, 48);
+
+      .loadingWidget {
+        width: 30px;
+      }
     }
   }
 }

@@ -1,10 +1,10 @@
 import "./singleRoom.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "../../axios";
+import org_axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -34,7 +34,7 @@ const SingleRoom = () => {
   console.log(roomId);
   const [sidebar, setSidebar] = useState(false);
   const { data: room, loading, error } = useFetch(`/rooms/${roomId}`);
-  const [currPhotos, setCurrPhotos] = useState(room ? room.images : []);
+  const [currImgs, setCurrImgs] = useState(room ? room.images : []);
   const [slideNumber, setSlideNumber] = useState(0);
   const [isImgSliderOpen, setImgSlider] = useState(false);
   const [isPhotosRetrieved, setIsRetrivedPhotos] = useState(false);
@@ -75,8 +75,15 @@ const SingleRoom = () => {
   );
 
   const [imgUrl, setImgUrl] = useState("");
+  const uploadedUrls = [];
+  const [uploading, setUploading] = useState(false);
+  const [excceded, setExceeded] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    console.log(room);
+  }, [room]);
 
   useEffect(() => {
     roomRef.current?.focus();
@@ -94,8 +101,8 @@ const SingleRoom = () => {
     if (!isPhotosRetrieved) {
       if (room) {
         console.log(room.images);
-        setCurrPhotos(room.images);
-        if (currPhotos !== undefined) setIsRetrivedPhotos(true);
+        setCurrImgs(room.images);
+        if (currImgs !== undefined) setIsRetrivedPhotos(true);
       }
     }
     if (room !== undefined && room.length > 0)
@@ -154,19 +161,19 @@ const SingleRoom = () => {
   }, [noOfRooms, roomDesc, roomMaxPeople, roomPrice, roomTitle]);
 
   useEffect(() => {
-    let fileNames = [];
     console.log(files);
+    setExceeded(false);
     if (files) {
-      for (let i = 0; i < files.length; i++) fileNames.push(files[i].name);
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].size > 1024 * 1024) setExceeded(true);
+        else setCurrImgs((currPhotos) => currPhotos.concat(files[i]));
+      }
     }
-    console.log(fileNames);
-    if (fileNames.length > 0)
-      setCurrPhotos((currPhotos) => currPhotos.concat(fileNames));
   }, [files]);
 
   useEffect(() => {
-    console.log(currPhotos);
-  }, [currPhotos]);
+    console.log(currImgs);
+  }, [currImgs]);
 
   const handleChange = (e) => {
     if (e.target.id === "title") setRoomTitle(e.target.value);
@@ -205,6 +212,10 @@ const SingleRoom = () => {
     console.log(allowedExtensions.test("pexels-pixabay-262048.jpg"));
   }, []);
 
+  useEffect(() => {
+    console.log("currImgs:", currImgs);
+  }, [currImgs]);
+
   const handleOpenImgSlider = (index) => {
     setSlideNumber(index);
     console.log(slideNumber);
@@ -225,18 +236,45 @@ const SingleRoom = () => {
     }
   };
   const handleRemoveImg = (selectedPhoto) => {
-    const updatedPhotos = currPhotos.filter((photo) => photo !== selectedPhoto);
-    setCurrPhotos(updatedPhotos);
-    console.log(currPhotos);
+    const updatedPhotos = currImgs.filter((photo) => photo !== selectedPhoto);
+    setCurrImgs(updatedPhotos);
+    console.log(currImgs);
   };
 
   const handleImgUrl = (e) => {
     e.preventDefault();
-    if (imgUrl.length > 0)
-      setCurrPhotos((currPhotos) => currPhotos.concat(imgUrl));
+    if (imgUrl.length > 0) setCurrImgs((prev) => [...prev, imgUrl]);
     setImgUrl("");
   };
 
+  const handleUpload = async () => {
+    if (!excceded) {
+      setUploading(true);
+      console.log("uploading....");
+      try {
+        for (let i = 0; i < currImgs.length; i++) {
+          if (currImgs[i] instanceof File) {
+            const data = new FormData();
+            data.append("file", currImgs[i]);
+            data.append("upload_preset", "upload");
+            const uploadRes = await org_axios.post(
+              "https://api.cloudinary.com/v1_1/omarnasser/upload",
+              data
+            );
+            console.log(currImgs[i], " uploaded");
+            console.log(uploadRes?.data?.url);
+            uploadedUrls.push(uploadRes?.data?.url);
+          } else {
+            uploadedUrls.push(currImgs[i]);
+          }
+        }
+        setUploading(false);
+        console.log("uploaded successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const handleSubmission = async (e) => {
     setSubmitting(true);
     e.preventDefault();
@@ -272,10 +310,14 @@ const SingleRoom = () => {
         const roomNumbers = rooms.concat(addedRoomNumbers);
         console.log(roomNumbers);
         console.log(files);
+        if (files || currImgs) {
+          await handleUpload();
+        }
+
         const updatedRoom = {
           ...room,
           ...info,
-          images: currPhotos,
+          images: uploadedUrls.length > 0 ? uploadedUrls : currImgs,
           roomNumbers,
         };
         await axios.put(`/rooms/${roomId}`, updatedRoom);
@@ -313,11 +355,7 @@ const SingleRoom = () => {
 
               <div className="slideWrapper">
                 <img
-                  src={
-                    allowedExtensions.test(room.images[slideNumber])
-                      ? `${process.env.PUBLIC_URL}/upload/rooms/${room.images[slideNumber]}`
-                      : room.images[slideNumber]
-                  }
+                  src={room.images[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -333,6 +371,14 @@ const SingleRoom = () => {
             <div className="loading">Loading Room info... </div>
           ) : error ? (
             <div className="loading">{error}</div>
+          ) : uploading ? (
+            <div className="uploading">
+              <img
+                className="uploadingHotel"
+                src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+              />
+              <div>Updating hotel</div>
+            </div>
           ) : !editMode ? (
             <div className="infoWrapper">
               <div className="info">
@@ -348,11 +394,7 @@ const SingleRoom = () => {
                           {image && (
                             <img
                               onClick={() => handleOpenImgSlider(i)}
-                              src={
-                                allowedExtensions.test(image)
-                                  ? `${process.env.PUBLIC_URL}/upload/rooms/${image}`
-                                  : image
-                              }
+                              src={image}
                               alt=""
                             />
                           )}
@@ -383,29 +425,27 @@ const SingleRoom = () => {
               <div className="top">
                 <div className="left">
                   <div className="images">
-                    {currPhotos &&
-                      currPhotos.map((photo, index) => {
-                        return (
-                          <div className="eachImg" key={index}>
-                            <img
-                              src={
-                                allowedExtensions.test(photo)
-                                  ? `${process.env.PUBLIC_URL}/upload/rooms/${photo}`
-                                  : photo
-                              }
-                              alt=""
-                              key={index}
-                              onClick={() => handleOpenImgSlider(index)}
-                            />
-                            <div
-                              className="removeIcon"
-                              onClick={() => handleRemoveImg(photo)}
-                            >
-                              <FontAwesomeIcon icon={faCircleXmark} />
-                            </div>
+                    {currImgs?.map((photo, index) => {
+                      return (
+                        <div className="eachImg" key={index}>
+                          <img
+                            src={
+                              photo instanceof File
+                                ? URL.createObjectURL(photo)
+                                : photo
+                            }
+                            key={index}
+                            onClick={() => handleOpenImgSlider(index)}
+                          />
+                          <div
+                            className="removeIcon"
+                            onClick={() => handleRemoveImg(photo)}
+                          >
+                            <FontAwesomeIcon icon={faCircleXmark} />
                           </div>
-                        );
-                      })}
+                        </div>
+                      );
+                    })}
                     <label htmlFor="file" style={{ cursor: "pointer" }}>
                       <DriveFolderUploadOutlinedIcon className="icon" />
                     </label>
@@ -416,6 +456,11 @@ const SingleRoom = () => {
                       onChange={(e) => setFiles(e.target.files)}
                       style={{ display: "none" }}
                     />
+                    {excceded && (
+                      <div className="exceededMsg">
+                        Please, select Img size less than 1 MB to be uploaded
+                      </div>
+                    )}
                   </div>
                   <div className="uploadUrl">
                     <input

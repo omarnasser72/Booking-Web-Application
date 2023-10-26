@@ -207,9 +207,6 @@ const Register = () => {
 
   return (
     <div className="register">
-      {/* <span className="logo" onClick={() => navigate("/")}>
-        My Nights
-      </span> */}
       <h1>Welcome to My Nights</h1>
       {/* <p
         ref={errRef}

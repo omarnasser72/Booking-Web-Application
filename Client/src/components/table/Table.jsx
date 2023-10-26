@@ -9,8 +9,6 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "../../axios";
 
-const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
-
 const List = () => {
   const [fetchedReservations, setFetchedReservations] = useState([]);
   const [reservations, setReservations] = useState([]);
@@ -91,7 +89,13 @@ const List = () => {
   return (
     <TableContainer component={Paper} className="table">
       {loading ? (
-        <div className="loading">loading Reservations ...</div>
+        <div className="loading">
+          <img
+            className="loadingReservations"
+            src="https://media.tenor.com/RnZ0wLwjWTAAAAAj/loading-buffering.gif"
+          />
+          <span>loading Reservations ...</span>
+        </div>
       ) : (
         <Table sx={{ minWidth: 650 }} aria-label="simple tabele">
           <TableHead>
@@ -114,9 +118,8 @@ const List = () => {
                   <div className="cellWrapper">
                     <img
                       src={
-                        reservation.userImg !== undefined ||
-                        allowedExtensions.test(reservation?.userImg)
-                          ? `${process.env.PUBLIC_URL}/upload/profileImages/${reservation.userImg}`
+                        reservation?.userImg
+                          ? reservation.userImg
                           : "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
                       }
                       alt=""

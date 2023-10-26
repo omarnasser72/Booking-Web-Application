@@ -1,8 +1,78 @@
 .new {
   display: flex;
   width: 100%;
+
+  .slider {
+    flex: 1;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #afa6a66c;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+
+    .slideWrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .sliderImg {
+        height: 80vh;
+        max-width: 150vh;
+      }
+    }
+
+    .closeImgSlider {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 30px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+
+    .leftArrow {
+      margin-right: 100px;
+      margin-left: 50px;
+      font-size: 40px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+
+    .rightArrow {
+      margin-left: 100px;
+      margin-right: 50px;
+      font-size: 40px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+  }
+
   .newContainer {
     flex: 6;
+
+    .uploading {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: x-large;
+
+      .uploadRoomIcon {
+        height: 60px;
+        width: 60px;
+      }
+    }
+
     .top,
     .bottom {
       color: yellow;
@@ -12,42 +82,121 @@
       box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
       margin: 20px;
       padding: 20px;
+
       .errmsg {
         background-color: lightpink;
         color: firebrick;
         font-weight: bold;
       }
+
       .left {
         flex: 1;
         text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-        img {
+        .images {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          .eachImg {
+            position: relative;
+
+            img {
+              cursor: pointer;
+              width: 100px;
+              height: 100px;
+              border-radius: 5px;
+            }
+
+            .removeIcon {
+              position: absolute;
+              top: -7%;
+              right: -15%;
+              cursor: pointer;
+            }
+          }
+
+          .exceededMsg {
+            color: rgb(224, 70, 70);
+          }
+        }
+
+        .uploadUrl {
+          height: 20px;
+
+          input {
+            border-radius: 5px;
+            border: 1px solid;
+            margin-right: 5px;
+          }
+
+          button {
+            border: none;
+            border-radius: 5px;
+            background-color: #fffb06;
+            font-weight: 700;
+            padding: 5px;
+            cursor: pointer;
+          }
+        }
+
+        .uploadImg {
           margin-top: 50px;
           width: 200px;
           height: 200px;
           border-radius: 50%;
           object-fit: cover;
         }
+
+        .upload {
+          width: 80%;
+          display: flex;
+          justify-content: end;
+
+          .icon {
+            cursor: pointer;
+          }
+        }
+
+        .uploading {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .uploadHotelIcon {
+            margin-left: 10px;
+            width: 40px;
+          }
+        }
       }
+
       .right {
         flex: 2;
         display: flex;
+
         form {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-around;
           gap: 20px;
+
           .formInput {
             width: 40%;
             gap: 20px;
+
             label {
               gap: 10px;
               display: flex;
               align-items: center;
+
               .icon {
                 cursor: pointer;
               }
             }
+
             input {
               width: 100%;
               padding: 5px;
@@ -58,6 +207,7 @@
               color: white;
               background-color: rgb(66, 66, 66);
             }
+
             .valid {
               color: limegreen;
             }
@@ -82,6 +232,7 @@
               position: absolute;
               left: -9999px;
             }
+
             .inputErrMsg {
               text-align: center;
               color: red;
@@ -90,6 +241,7 @@
               margin: 5px;
             }
           }
+
           button {
             width: 200px;
             padding: 5px 30px;
@@ -103,9 +255,11 @@
         }
       }
     }
+
     .sidebarWrapper {
       display: flex;
       align-items: center;
+
       .listOutBtn {
         background-color: white;
         color: #000;

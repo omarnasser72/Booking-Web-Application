@@ -404,7 +404,7 @@ const NewReservation = () => {
         } catch (err) {
           console.log(err);
         }
-        navigate("/reservations");
+        navigate("/adminDashboard/reservations");
       } catch (error) {
         console.log(error);
       }

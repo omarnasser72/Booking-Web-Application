@@ -23,7 +23,7 @@ const connect = async () => {
 };
 
 // MIDDLEWARES
-app.use(cors());
+app.use(cors({ origin: "*" }));
 // app.use(
 //   cors({
 //     origin: "https://bookingwebapp.onrender.com",
@@ -52,7 +52,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8888, () => {
+app.listen(8080, () => {
   connect();
   console.log("Connected with the backend...");
 });

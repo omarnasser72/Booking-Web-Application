@@ -1,6 +1,5 @@
 import "./adminList.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import Datatable from "../../components/datatable/Datatable";
 import { useState } from "react";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";

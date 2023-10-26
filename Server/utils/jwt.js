@@ -47,13 +47,11 @@ export const validateToken = (req, res, next) => {
 };
 
 export const verifyUser = (req, res, next) => {
-  console.log("req.headers:", req.headers);
   const accessToken = req.headers.authorization;
   if (!accessToken) next(createError(400, "no token exists"));
 
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
-    console.log(decoded);
     req.user = decoded;
     req.authenticated = true;
     if (req.user) {
@@ -73,7 +71,6 @@ export const verifyAdmin = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
-    console.log(decoded);
     req.user = decoded;
     req.authenticated = true;
     if (req?.user?.isAdmin) {

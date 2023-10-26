@@ -11,7 +11,10 @@ const FeaturedProperties = () => {
   return (
     <div className="fb">
       {loading ? (
-        "loading"
+        <img
+          className="uploadHotelIcon"
+          src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+        />
       ) : (
         <>
           {data.map((item) => (

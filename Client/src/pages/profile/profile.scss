@@ -15,24 +15,52 @@ body {
       gap: 30%;
 
       .info {
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         gap: 25%;
         position: fixed;
-        height: 100%;
+        height: 100vh;
         margin-right: 30%;
         background-color: rgb(66, 66, 66);
+
 
         .profileImg {
           position: absolute;
           top: 10px;
-          left: 50px;
+          left: 100px;
+          width: 100%;
+
+          .upload {
+            width: 100%;
+            display: flex;
+            font-size: smaller;
+            position: relative;
+
+            .uploadIcon {
+              cursor: pointer;
+            }
+
+            .removeImg {
+              cursor: pointer;
+              position: absolute;
+              bottom: 470%;
+              left: 32%;
+              z-index: 1;
+              font-size: x-large;
+            }
+          }
 
           img {
             width: 120px;
             height: 120px;
           }
+        }
+
+        .exceededMsg {
+          margin: 5px;
+          color: rgb(212, 75, 75);
         }
 
         form {
@@ -41,12 +69,13 @@ body {
           gap: 20px;
           justify-content: center;
           align-items: start;
-          margin-top: 60%;
+          margin-top: 40%;
+          margin-left: 0%;
 
           .formInput {
             display: flex;
             flex-direction: column;
-            margin-left: 20%;
+            margin-left: 15%;
 
             label {
               width: 100px;
@@ -75,11 +104,12 @@ body {
 
           .infoLabels {
             display: flex;
-            margin-left: 20%;
+            margin-left: 15%;
+            gap: 7px;
 
             label {
               width: 100px;
-              margin-right: 20px;
+              margin-right: 1%;
             }
 
             p {
@@ -87,35 +117,56 @@ body {
             }
           }
 
-          .Btn {
-            align-self: center;
-            width: 200px;
-            padding: 5px 30px;
-            border: none;
-            border-radius: 5px;
-            margin: 10px;
-            margin-left: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #000;
-            background-color: yellow;
-          }
+          .Btns {
+            display: flex;
+            height: fit-content;
 
-          button {
-            color: yellow;
+            .Btn {
+              align-self: center;
+              width: 150px;
+              padding: 5px 30px;
+              border: none;
+              border-radius: 5px;
+              margin: 10px;
+              margin-left: 30px;
+              cursor: pointer;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
+
+            .notAllowed {
+              align-self: center;
+              width: 150px;
+              padding: 5px 30px;
+              border: none;
+              border-radius: 5px;
+              margin: 10px;
+              margin-left: 30px;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
+
+            .notAllowed:hover {
+              align-self: center;
+              width: 150px;
+              padding: 5px 30px;
+              border: none;
+              border-radius: 5px;
+              margin: 10px;
+              margin-left: 30px;
+              cursor: not-allowed;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
           }
         }
       }
 
-      .title {
-        width: 100%;
-        background-color: rgb(66, 66, 66);
-        color: #fffb06;
-        padding-left: 0%;
-        cursor: pointer;
-      }
-
       .reservations {
+        flex: 2;
         width: 100%;
         height: 100vh;
         margin-left: 30%;
@@ -126,6 +177,14 @@ body {
         color: black;
         padding-bottom: 10%;
         position: relative;
+
+        .title {
+          width: 100%;
+          background-color: rgb(66, 66, 66);
+          color: #fffb06;
+          padding-left: 0%;
+          cursor: pointer;
+        }
 
         .eachReservation {
           height: 50vh;
@@ -168,8 +227,203 @@ body {
         }
 
         .loading {
+          width: 100%;
           text-align: center;
           font-size: xx-large;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .loadingReservations {
+            margin-top: 10px;
+            width: 60px;
+          }
+        }
+
+        .resSubTitle {
+          color: rgb(66, 66, 66);
+          margin: 3%;
+        }
+      }
+
+    }
+
+    .uploadContainerState {
+      width: 100%;
+      display: flex;
+      background-color: rgb(66, 66, 66);
+      color: #fffb06;
+
+      .uploading {
+        flex: 3;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 3%;
+        align-items: center;
+
+        .uploadingUser {
+          width: 80px;
+          height: 80px;
+        }
+
+      }
+
+      .reservations {
+        flex: 4;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-size: xx-large;
+        background-color: #fffb06da;
+        color: black;
+        padding-bottom: 10%;
+        position: relative;
+
+        .title {
+          width: 100%;
+          background-color: rgb(66, 66, 66);
+          color: #fffb06;
+          padding-left: 0%;
+          cursor: pointer;
+        }
+
+        .eachReservation {
+          height: 50vh;
+          box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
+          margin: 3%;
+          margin-left: 5%;
+          border-radius: 5px;
+          font-size: medium;
+          background-color: rgb(66, 66, 66);
+          color: #fffb06;
+          padding: 10px;
+          position: relative;
+
+          .property {
+            width: 100%;
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+
+            label {
+              font-weight: 600;
+              font-size: larger;
+            }
+          }
+
+          button {
+            position: absolute;
+            bottom: 10;
+            right: 0;
+            width: 200px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 800;
+            color: #000;
+            background-color: yellow;
+            margin: 20px;
+          }
+        }
+
+        .loading {
+          width: 100%;
+          text-align: center;
+          font-size: xx-large;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .loadingReservations {
+            margin-top: 10px;
+            width: 60px;
+          }
+        }
+
+        .resSubTitle {
+          color: rgb(66, 66, 66);
+          margin: 3%;
+        }
+      }
+
+      .uploadReservationsState {
+        flex: 8;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-size: xx-large;
+        background-color: #fffb06da;
+        color: black;
+        padding-bottom: 10%;
+        position: relative;
+
+        .title {
+          width: 100%;
+          background-color: rgb(66, 66, 66);
+          color: #fffb06;
+          padding-left: 0%;
+          cursor: pointer;
+        }
+
+        .eachReservation {
+          height: 50vh;
+          box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
+          margin: 3%;
+          margin-left: 5%;
+          border-radius: 5px;
+          font-size: medium;
+          background-color: rgb(66, 66, 66);
+          color: #fffb06;
+          padding: 10px;
+          position: relative;
+
+          .property {
+            width: 100%;
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+
+            label {
+              font-weight: 600;
+              font-size: larger;
+            }
+          }
+
+          button {
+            position: absolute;
+            bottom: 10;
+            right: 0;
+            width: 200px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 800;
+            color: #000;
+            background-color: yellow;
+            margin: 20px;
+          }
+        }
+
+        .loading {
+          width: 100%;
+          text-align: center;
+          font-size: xx-large;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .loadingReservations {
+            margin-top: 10px;
+            width: 60px;
+          }
         }
 
         .resSubTitle {

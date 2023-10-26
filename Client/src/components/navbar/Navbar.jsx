@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     const res = await axios.get("/auth/logout");
-    localStorage.removeItem("user");
+    localStorage.clear();
     navigate("/login");
   };
 
@@ -41,7 +41,7 @@ const Navbar = () => {
               className={imgClass}
               src={
                 user?.img
-                  ? `${process.env.PUBLIC_URL}/upload/profileImages/${user.img}`
+                  ? user.img
                   : "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
               }
               alt=""

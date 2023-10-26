@@ -36,6 +36,7 @@ import SingleRoom from "./pages/singleRoom/SingleRoom";
 import SingleReservation from "./pages/singleReservation/SingleReservation";
 import NewReservation from "./pages/newReservation/NewReservation";
 import AdminProfile from "./pages/adminProfile/AdminProfile";
+import ResetPwd from "./pages/resetPwd/ResetPwd";
 
 function App() {
   const ProtectedRoute = ({ element }) => {
@@ -70,6 +71,7 @@ function App() {
             <Route index element={<ProtectedRoute element={<Home />} />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="resetPassword" element={<ResetPwd />} />
             <Route path="" element={<Home />} />
             <Route
               path="Flights"

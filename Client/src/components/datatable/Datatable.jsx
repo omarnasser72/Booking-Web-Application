@@ -101,7 +101,13 @@ const Datatable = ({ columns }) => {
   return (
     <div className="datatable">
       {loading ? (
-        <div className="loading">loading...</div>
+        <div className="loading">
+          <img
+            className="uploadHotelIcon"
+            src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+          />
+          <span>loading...</span>
+        </div>
       ) : (
         <div className="wrapper">
           <div className="datatableTitle" onClick={() => navigate(`new`)}>
@@ -109,9 +115,6 @@ const Datatable = ({ columns }) => {
             <div className="link" onClick={() => navigate(`new`)}>
               Add New {path}
             </div>
-
-            {/* <Link to={`adminDashboard/${path}/new`} className="link">
-            </Link> */}
           </div>
           <DataGrid
             className="dataGrid"

@@ -88,7 +88,16 @@ const Widget = ({ type }) => {
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
-        <span className="counter">{loading ? "loading" : data.quantity}</span>
+        <span className="counter">
+          {loading ? (
+            <img
+              className="loadingWidget"
+              src="https://media.tenor.com/RnZ0wLwjWTAAAAAj/loading-buffering.gif"
+            />
+          ) : (
+            data.quantity
+          )}
+        </span>
         <span className="link" onClick={(e) => handleDataLink(e, data.link)}>
           {data.link}
         </span>

@@ -1,4 +1,5 @@
 import "./adminProfile.scss";
+import org_axios from "axios";
 import axios from "../../axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import { userInputs } from "../../formSource";
@@ -10,11 +11,11 @@ import {
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
@@ -27,19 +28,7 @@ const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const AdminProfile = () => {
-  const {
-    user: fetchedUser,
-    loading,
-    error,
-    reFetch,
-    dispatch,
-  } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [user, setUser] = useState(fetchedUser);
-  const [credentials, setCredentials] = useState({
-    username: user?.username,
-    password: undefined,
-  });
+  const { user, loading, error, dispatch } = useContext(AuthContext);
   const [info, setInfo] = useState({});
   const [file, setFile] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
@@ -50,17 +39,17 @@ const AdminProfile = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [phone, setPhone] = useState(fetchedUser?.phone);
+  const [phone, setPhone] = useState(user?.phone);
   const [validPhone, setValidPhone] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
   const [phoneTabbed, setPhoneTabbed] = useState(false);
 
-  const [city, setCity] = useState(fetchedUser?.city);
+  const [city, setCity] = useState(user?.city);
   const [validCity, setValidCity] = useState(false);
   const [cityFocus, setCityFocus] = useState(false);
   const [cityTabbed, setCityTabbed] = useState(false);
 
-  const [country, setCountry] = useState(fetchedUser?.country);
+  const [country, setCountry] = useState(user?.country);
   const [validCountry, setValidCountry] = useState(false);
   const [countryFocus, setCountryFocus] = useState(false);
   const [countryTabbed, setCountryTabbed] = useState(false);
@@ -85,7 +74,7 @@ const AdminProfile = () => {
   const [phoneExists, setPhoneExists] = useState(false);
 
   const [birthDate, setBirthDate] = useState(
-    fetchedUser?.birthDate ? new Date(fetchedUser.birthDate) : null
+    user?.birthDate ? new Date(user.birthDate) : null
   );
   const [birthDateFocus, setBirthDateFocus] = useState(false);
   const [birthDateTabbed, setBirthDateTabbed] = useState(false);
@@ -95,6 +84,12 @@ const AdminProfile = () => {
   minDate.setFullYear(minDate.getFullYear() - 16);
 
   const [sidebar, setSidebar] = useState(false);
+
+  const [currImg, setCurrImg] = useState(user?.img);
+  const [uploading, setUploading] = useState(false);
+  const [excceded, setExceeded] = useState(false);
+
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     userRef.current?.focus();
@@ -165,7 +160,14 @@ const AdminProfile = () => {
     if (birthDateFocus) setBirthDateTabbed(true);
   }, [phoneFocus, countryFocus, cityFocus, birthDateFocus]);
 
-  const [submitting, setSubmitting] = useState(false);
+  useEffect(() => {
+    setCurrImg(user?.img);
+  }, [user?.img]);
+
+  useEffect(() => {
+    console.log(file);
+    file.size > 1024 * 1024 ? setExceeded(true) : setExceeded(false);
+  }, [file]);
 
   const filteredInputs = userInputs.filter(
     (input) =>
@@ -197,6 +199,37 @@ const AdminProfile = () => {
   const handleChangePwdMode = async (e) => {
     setChangePwdMode(true);
   };
+  const handleRemoveImg = () => {
+    setCurrImg("");
+    setFile(false);
+    user.img = "";
+  };
+
+  let uploadedImgUrl = "";
+  const handleUpload = async () => {
+    if (!excceded) {
+      setUploading(true);
+      console.log("uploading....");
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await org_axios.post(
+          "https://api.cloudinary.com/v1_1/omarnasser/upload",
+          data
+        );
+        uploadedImgUrl = uploadRes?.data?.url;
+        setCurrImg(uploadRes?.data?.url);
+
+        console.log(currImg, " uploaded");
+        console.log(uploadRes?.data?.url);
+        console.log("uploaded successfully");
+      } catch (error) {
+        console.log(error);
+      }
+      setUploading(false);
+    }
+  };
 
   const handleUpdate = async (e) => {
     setSubmitting(true);
@@ -210,15 +243,22 @@ const AdminProfile = () => {
     } else {
       setUpdateBtn(false);
       try {
+        if (file) await handleUpload();
         const newUser = {
           ...user,
           ...info,
-          img: file ? file.name : user.img,
+          img: uploadedImgUrl || currImg,
         };
         console.log(newUser);
         setEditBtn(true);
         const res = await axios.put(`/users/${user._id}`, newUser);
-        setUser(newUser);
+        if (res.data) {
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: res.data.details,
+            accessToken: res.data.accessToken,
+          });
+        }
         setUpdateMode(false);
       } catch (error) {
         setErrMsg(error.response.data.message);
@@ -238,17 +278,15 @@ const AdminProfile = () => {
     } else {
       try {
         const updatedUser = {
-          ...fetchedUser,
           ...user,
           password: oldPwd,
           newPwd: newPwd,
         };
         console.log(updatedUser);
         const res = await axios.put(
-          `/users/changePwd/${fetchedUser._id}`,
+          `/users/changePwd/${user._id}`,
           updatedUser
         );
-        setUser(updatedUser);
         setChangePwdMode(false);
       } catch (error) {
         setErrMsg(error.response.data.message);
@@ -284,7 +322,23 @@ const AdminProfile = () => {
           <NavbarAdmin className="adminNavbar" />
         </div>
         {loading ? (
-          "Loading User Data...."
+          <div className="loading">
+            <img
+              className="uploadHotelIcon"
+              src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+            />
+            <span>loading...</span>
+          </div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : uploading ? (
+          <div className="uploading">
+            <img
+              className="uploadingUser"
+              src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+            />
+            <div>Updating Profile</div>
+          </div>
         ) : (
           <div className="adminInfoWrapper">
             {!changePwdMode && (
@@ -294,17 +348,16 @@ const AdminProfile = () => {
                   <div className="adminProfileImg">
                     <img
                       src={
-                        file.name !== undefined
-                          ? `${process.env.PUBLIC_URL}/upload/profileImages/${file.name}`
-                          : user?.img
-                          ? `${process.env.PUBLIC_URL}/upload/profileImages/${user.img}`
-                          : "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
+                        file && !excceded
+                          ? URL.createObjectURL(file)
+                          : currImg ||
+                            "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
                       }
                       alt="Profile"
                     />
                     {updateMode && (
                       <div className="upload">
-                        <label htmlFor="file" style={{ color: "#000" }}>
+                        <label htmlFor="file" className="uploadIcon">
                           <DriveFolderUploadOutlinedIcon className="icon" />
                         </label>
                         <input
@@ -313,7 +366,17 @@ const AdminProfile = () => {
                           onChange={(e) => setFile(e.target.files[0])}
                           style={{ display: "none" }}
                         />
+                        <FontAwesomeIcon
+                          className="removeImg"
+                          icon={faCircleXmark}
+                          onClick={handleRemoveImg}
+                        />
                       </div>
+                    )}
+                    {updateMode && excceded && (
+                      <p className="exceededMsg">
+                        Please, select Img size less than 1 MB to be uploaded
+                      </p>
                     )}
                   </div>
                   <form className="adminForm">
@@ -729,9 +792,14 @@ const AdminProfile = () => {
             )}
             {updateMode && !changePwdMode && (
               <div className="btnWrapper">
-                <button className="Btn" onClick={() => handleUpdate()}>
-                  Update
-                </button>
+                {!excceded && (
+                  <button
+                    className={!excceded ? "Btn" : "notAllowed"}
+                    onClick={() => handleUpdate()}
+                  >
+                    Update
+                  </button>
+                )}
                 <button className="Btn" onClick={() => setUpdateMode(false)}>
                   Cancel
                 </button>

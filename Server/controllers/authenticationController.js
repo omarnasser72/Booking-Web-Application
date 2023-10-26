@@ -5,22 +5,30 @@ import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { createToken } from "../utils/jwt.js";
+import { error, log } from "console";
 
-function generateRandomPassword(length) {
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+function generateRandomPassword() {
   const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_";
-  const password = [];
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+  let password = "";
 
-  for (let i = 0; i < length; i++) {
-    const randomIndex = crypto.randomInt(characters.length);
-    password.push(characters[randomIndex]);
+  while (true) {
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      password += characters.charAt(randomIndex);
+    }
+
+    if (PWD_REGEX.test(password)) {
+      return password;
+    } else {
+      // The generated password doesn't match the pattern, so generate a new one.
+      password = "";
+      createError(400, "can't create reset password");
+    }
   }
-
-  return password.join("");
 }
-
-const password = generateRandomPassword(12); // Change the length as needed
-console.log(password);
 
 export const register = async (req, res, next) => {
   try {
@@ -48,9 +56,7 @@ export const login = async (req, res, next) => {
     const { password, ...otherDetails } = user._doc;
     res
       .status(200)
-      .cookie("accessToken", token, {
-        domain: "booking-fwaz.onrender.com",
-      })
+      .cookie("accessToken", token)
       .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);
@@ -115,6 +121,54 @@ export const signup = async (req, res, next) => {
       if (err) next(err);
       else res.status(200).json({ "email sent": info.response });
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const forgetPwd = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const resetPwd = generateRandomPassword();
+
+      user.password = bcrypt.hashSync(resetPwd, 10);
+      await user.save();
+
+      console.log("process.env.EMAIL: ", process.env.EMAIL);
+      console.log("process.env.PASSWORD: ", process.env.PASSWORD);
+
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Reset Password",
+        html: `<h2>
+            Please, change your password after logging in
+            <div style="background-color: #fffb06; border: none; font-family: Nunito; width: fit-content; padding: 10px; justify-content: center; align-items: center">
+              ${resetPwd}
+            </div>
+          </h2>`,
+      };
+
+      transport.sendMail(mailOptions, function (err, info) {
+        if (err) next(err);
+        else res.status(200).json({ "email sent": info.response });
+      });
+    } else {
+      // Handle the case where the user with the provided email is not found.
+      res.status(404).json({ success: false, message: "User not found" });
+    }
   } catch (error) {
     next(error);
   }

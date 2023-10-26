@@ -2,12 +2,80 @@
   display: flex;
   width: 100%;
 
+  .slider {
+    flex: 1;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #afa6a66c;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+
+    .slideWrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .sliderImg {
+        height: 80vh;
+        max-width: 150vh;
+      }
+    }
+
+    .closeImgSlider {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 30px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+
+    .leftArrow {
+      margin-right: 100px;
+      margin-left: 50px;
+      font-size: 40px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+
+    .rightArrow {
+      margin-left: 100px;
+      margin-right: 50px;
+      font-size: 40px;
+      color: #4d4d4d;
+      cursor: pointer;
+    }
+  }
+
   .newContainer {
     flex: 6;
 
+    .uploading {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-size: x-large;
+
+      .uploadHotelIcon {
+        height: 60px;
+        width: 60px;
+      }
+    }
+
     .top,
     .bottom {
-      width: 100%;
+      //width: 100%;
       color: yellow;
       background-color: rgb(66, 66, 66);
       display: flex;
@@ -16,6 +84,8 @@
       margin: 20px;
       padding: 20px;
       gap: 20px;
+      justify-content: space-between;
+
       .errmsg {
         background-color: lightpink;
         color: firebrick;
@@ -25,19 +95,83 @@
       .left {
         flex: 1;
         text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-        img {
+        .images {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          .eachImg {
+            position: relative;
+
+            img {
+              cursor: pointer;
+              width: 100px;
+              height: 100px;
+              border-radius: 5px;
+            }
+
+            .removeIcon {
+              position: absolute;
+              top: -7%;
+              right: -15%;
+              cursor: pointer;
+            }
+          }
+
+          .exceededMsg {
+            color: rgb(224, 70, 70);
+          }
+        }
+
+        .uploadUrl {
+          height: 20px;
+
+          input {
+            border-radius: 5px;
+            border: 1px solid;
+            margin-right: 5px;
+          }
+
+          button {
+            border: none;
+            border-radius: 5px;
+            background-color: #fffb06;
+            font-weight: 700;
+            padding: 5px;
+            cursor: pointer;
+          }
+        }
+
+        .uploadImg {
           margin-top: 50px;
           width: 200px;
           height: 200px;
           border-radius: 50%;
           object-fit: cover;
         }
+
         .upload {
+          width: 80%;
           display: flex;
           justify-content: end;
+
           .icon {
             cursor: pointer;
+          }
+        }
+
+        .uploading {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .uploadHotelIcon {
+            margin-left: 10px;
+            width: 40px;
           }
         }
       }
@@ -45,10 +179,13 @@
       .right {
         flex: 2;
         width: 100%;
+        justify-content: center;
+
         form {
           display: flex;
           flex-wrap: wrap;
           gap: 20px;
+          justify-content: center;
 
           .formInput {
             width: 40%;
@@ -83,6 +220,7 @@
               border-radius: 5px;
               margin: 5px;
             }
+
             .roomType {
               input {
                 width: 15px;
@@ -90,8 +228,10 @@
             }
           }
 
+
           button {
-            width: 100%;
+            width: 80%;
+            align-self: center;
             padding: 5px 30px;
             border: none;
             border-radius: 5px;
@@ -100,13 +240,18 @@
             font-weight: 600;
             background-color: yellow;
           }
+
         }
       }
     }
+
     .sidebarWrapper {
       display: flex;
       align-items: center;
+
       .listOutBtn {
+        cursor: pointer;
+        border: none;
         background-color: white;
         color: #000;
         padding: 5px;

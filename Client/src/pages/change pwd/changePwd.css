@@ -12,26 +12,31 @@
   flex-direction: column;
   gap: 20px;
 }
+
 h1 {
   margin-bottom: 30px;
   color: #fffc55;
 }
+
 .labelInputWrapper {
-  /*width: 100%;*/
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .pwdLabel {
   color: #fffc55;
   width: 40%;
 }
+
 .changePwdInput {
   height: 10px;
   padding: 10px;
   border-radius: 5px;
-  margin: 0;
+  margin-left: 0%;
 }
+
 .submitBtn {
   display: flex;
   align-items: center;
@@ -48,6 +53,7 @@ h1 {
   border-radius: 5px;
   background-color: #fffc55;
 }
+
 .changePwdBtn:disabled {
   background-color: #fdfca7;
   cursor: none;
@@ -57,6 +63,7 @@ pre {
   width: 100%;
   display: flex;
 }
+
 p {
   cursor: pointer;
 }

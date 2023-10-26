@@ -5,13 +5,13 @@ export const userColumns = [
     headerName: "User",
     width: 200,
     renderCell: (params) => {
-      console.log(`${process.env.PUBLIC_URL}/upload/${params.row.img}`);
+      console.log(params?.row?.img);
       return (
         <div className="cellWithImg">
           <img
             src={
-              params.row.img || params.row.img !== undefined
-                ? `${process.env.PUBLIC_URL}/upload/${params.row.img}`
+              params?.row?.img
+                ? params.row.img
                 : "https://i.ibb.co/MBtjqXQ/no-avatar.gif"
             }
             alt=""
@@ -92,14 +92,13 @@ export const roomColumns = [
     headerName: "Images",
     width: 70,
     renderCell: (params) => {
-      // console.log("./upload/rooms/".concat(params.row.images[0]));
       return (
         <div className="cellWithImg">
           {params.row.images && (
             <img
               src={
-                params.row.img || params.row.img !== undefined
-                  ? "./upload/rooms/".concat(params.row.images[0])
+                params?.row?.img
+                  ? params.row.img
                   : "https://static.vecteezy.com/system/resources/thumbnails/008/547/655/small/bed-icon-logo-design-template-free-vector.jpg"
               }
               alt=""

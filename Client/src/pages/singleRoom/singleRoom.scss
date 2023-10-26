@@ -1,9 +1,11 @@
 .single {
   width: 100%;
   display: flex;
+
   .wrapper {
     width: 100%;
     display: flex;
+
     .singleContainer {
       flex: 6;
       width: 100%;
@@ -11,6 +13,26 @@
       flex-direction: column;
       justify-content: start;
       gap: 20px;
+
+      .loading {
+        align-self: center;
+        font-size: xx-large;
+      }
+
+      .uploading {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        .uploadingHotel {
+          width: 80px;
+        }
+      }
+
       .slider {
         position: sticky;
         top: 0;
@@ -22,16 +44,19 @@
         display: flex;
         align-items: center;
         object-fit: cover;
+
         .slideWrapper {
           width: 100%;
           height: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
+
           .sliderImg {
             height: 80vh;
           }
         }
+
         .closeImgSlider {
           position: absolute;
           top: 0px;
@@ -40,6 +65,7 @@
           color: #4d4d4d;
           cursor: pointer;
         }
+
         .leftArrow {
           margin-right: 100px;
           margin-left: 50px;
@@ -47,6 +73,7 @@
           color: #4d4d4d;
           cursor: pointer;
         }
+
         .rightArrow {
           margin-left: 100px;
           margin-right: 50px;
@@ -55,16 +82,19 @@
           cursor: pointer;
         }
       }
+
       .sideBar {
         width: 100%;
         height: 100%;
       }
+
       .sideNavbars {
         top: 0;
         width: 100%;
         display: flex;
         justify-content: space-between;
       }
+
       .infoWrapper {
         width: 80%;
         align-self: center;
@@ -74,8 +104,10 @@
         padding: 20px;
         margin-left: 20px;
         margin-bottom: 20px;
+
         .info {
           width: 100%;
+
           .editBtn {
             position: absolute;
             top: 0;
@@ -86,17 +118,21 @@
             padding: 5px;
             font-weight: 500;
           }
+
           .title {
             font-size: 20px;
             margin-bottom: 20px;
           }
+
           .item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
+
             .left {
               display: flex;
+
               .roomImage {
                 img {
                   cursor: pointer;
@@ -107,15 +143,19 @@
               }
             }
           }
+
           .right {
             .details {
               color: gray;
+
               .itemTitle {
                 color: black;
                 margin-bottom: 15px;
               }
+
               .detailItem {
                 margin-bottom: 15px;
+
                 .itemKey {
                   font-weight: 600;
                   margin-right: 10px;
@@ -125,12 +165,14 @@
           }
         }
       }
+
       .infoWrapperEditMode {
         flex: 6;
         width: 100%;
         -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
         box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
         position: relative;
+
         .editBtn {
           position: absolute;
           top: 0;
@@ -141,10 +183,12 @@
           padding: 5px;
           font-weight: 500;
         }
+
         .title {
           font-size: 20px;
           margin: 20px;
         }
+
         .top {
           flex: 1;
           display: flex;
@@ -160,18 +204,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
             .images {
               display: flex;
               flex-wrap: wrap;
               gap: 20px;
+
               .eachImg {
                 position: relative;
+
                 img {
                   cursor: pointer;
                   width: 100px;
                   height: 100px;
                   border-radius: 5px;
                 }
+
                 .removeIcon {
                   position: absolute;
                   top: -7%;
@@ -179,13 +227,19 @@
                   cursor: pointer;
                 }
               }
+
+              .exceededMsg {
+                color: rgb(224, 70, 70);
+              }
             }
+
             .uploadUrl {
               input {
                 border-radius: 5px;
                 border: 1px solid;
                 margin-right: 5px;
               }
+
               button {
                 border: none;
                 border-radius: 5px;
@@ -196,35 +250,43 @@
               }
             }
           }
+
           .right {
             width: 50%;
+
             form {
               display: flex;
               flex-wrap: wrap;
               justify-content: space-between;
               position: relative;
               margin: 10px;
+
               .eachInput {
                 width: 50%;
                 display: flex;
                 flex-direction: column;
+
                 input {
                   width: 80%;
                   border-radius: 5px;
                   border: 1px solid;
                 }
+
                 select {
                   width: 80%;
                   border-radius: 5px;
                 }
+
                 .react-datepicker__header {
                   background-color: #fffb06;
                 }
+
                 .birthDate {
                   input {
                     cursor: pointer;
                   }
                 }
+
                 .inputErrMsg {
                   width: 80%;
                   text-align: center;
@@ -234,10 +296,12 @@
                   margin: 5px;
                 }
               }
+
               .btns {
                 width: 100%;
                 display: flex;
                 justify-content: space-evenly;
+
                 .updateBtn {
                   width: 100px;
                   height: 30px;
@@ -248,6 +312,7 @@
                   font-weight: 800;
                   background-color: yellow;
                 }
+
                 .cancelBtn {
                   width: 100px;
                   height: 30px;
@@ -260,11 +325,13 @@
                 }
               }
             }
+
             .item {
               display: flex;
               align-items: center;
               gap: 10px;
               flex-direction: column;
+
               .topSection {
                 width: 100%;
                 display: flex;
@@ -272,13 +339,16 @@
                 justify-content: space-evenly;
                 gap: 20%;
                 margin-top: 5%;
+
                 .itemImg {
                   width: 100%;
+
                   img {
                     width: 150px;
                     height: 150px;
                     padding: 10px;
                   }
+
                   .removeIcon {
                     cursor: pointer;
                   }
@@ -287,17 +357,21 @@
 
               .details {
                 color: gray;
+
                 .itemTitle {
                   color: black;
                   margin-bottom: 15px;
                 }
+
                 .detailItem {
                   margin-bottom: 15px;
+
                   .itemKey {
                     font-weight: 600;
                     margin-right: 10px;
                   }
                 }
+
                 .roomList {
                   color: black;
                   font-size: larger;
@@ -305,11 +379,13 @@
                   display: flex;
                   flex-direction: column;
                   justify-content: space-evenly;
+
                   .room {
                     font-size: smaller;
                     display: flex;
                     color: gray;
                     gap: 50px;
+
                     .roomItem {
                       width: 150px;
                     }
@@ -319,6 +395,7 @@
             }
           }
         }
+
         .bottom {
           width: fit-content;
           margin-left: 20%;

@@ -47,7 +47,10 @@ const Featured = () => {
   return (
     <div className="featured">
       {loading ? (
-        "loading"
+        <img
+          className="uploadHotelIcon"
+          src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+        />
       ) : (
         <>
           <div className="featuredItem" onClick={() => handleProperty("cairo")}>

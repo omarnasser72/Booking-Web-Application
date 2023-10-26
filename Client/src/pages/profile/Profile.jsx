@@ -1,5 +1,6 @@
 import "./profile.scss";
 import axios from "../../axios";
+import org_axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { useContext, useEffect, useRef, useState } from "react";
 import { userInputs } from "../../formSource";
@@ -10,6 +11,7 @@ import {
   faCheck,
   faTimes,
   faInfoCircle,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
@@ -22,15 +24,8 @@ const CITY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 
 const Profile = () => {
-  const {
-    user: fetchedUser,
-    loading,
-    error,
-    reFetch,
-  } = useContext(AuthContext);
+  const { user, loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [user, setUser] = useState(fetchedUser);
-  const [userInfo, setUserInfo] = useState(null);
   const [info, setInfo] = useState({});
   const [file, setFile] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
@@ -42,15 +37,15 @@ const Profile = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(user?.phone);
   const [validPhone, setValidPhone] = useState(false);
   const [phoneFocus, setPhoneFocus] = useState(false);
 
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState(user?.city);
   const [validCity, setValidCity] = useState(false);
   const [cityFocus, setCityFocus] = useState(false);
 
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState(user?.country);
   const [validCountry, setValidCountry] = useState(false);
   const [countryFocus, setCountryFocus] = useState(false);
 
@@ -62,9 +57,15 @@ const Profile = () => {
   const [emailExists, setEmailExists] = useState(false);
   const [phoneExists, setPhoneExists] = useState(false);
 
-  const [BirthDate, setBirthDate] = useState(null);
+  const [BirthDate, setBirthDate] = useState(
+    user?.birthDate ? new Date(user.birthDate) : ""
+  );
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 16);
+
+  const [currImg, setCurrImg] = useState(user?.img);
+  const [uploading, setUploading] = useState(false);
+  const [excceded, setExceeded] = useState(false);
 
   console.log(reservations);
   console.log(reservationData);
@@ -125,6 +126,27 @@ const Profile = () => {
     );
   }, [reservationData]);
 
+  useEffect(() => {
+    setCurrImg(user?.img);
+  }, [user?.img]);
+
+  useEffect(() => {
+    console.log(file);
+    if (file) {
+      if (file?.size > 1024 * 1024) {
+        setExceeded(true);
+        setCurrImg(user?.img);
+      } else if (file?.size <= 1024 * 1024) {
+        setCurrImg(file);
+        setExceeded(false);
+      }
+    }
+  }, [file]);
+
+  useEffect(() => {
+    if (!updateMode) setExceeded(false);
+  }, [updateMode]);
+
   const filteredInputs = userInputs.filter(
     (input) =>
       input.id !== "username" && input.id !== "email" && input.id !== "password"
@@ -153,11 +175,40 @@ const Profile = () => {
     navigate(`/profile/changePwd`);
   };
 
-  const handleUpdate = async (e) => {
-    setSubmitting(true);
-    if (e) {
-      e.preventDefault();
+  const handleRemoveImg = () => {
+    setCurrImg("");
+    setFile(false);
+    user.img = "";
+  };
+  let uploadedImgUrl = "";
+
+  const handleUpload = async () => {
+    if (!excceded) {
+      setUploading(true);
+      console.log("uploading....");
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await org_axios.post(
+          "https://api.cloudinary.com/v1_1/omarnasser/upload",
+          data
+        );
+        uploadedImgUrl = uploadRes?.data?.url;
+        setCurrImg(uploadRes?.data?.url);
+
+        console.log(uploadRes?.data?.url);
+        console.log("uploaded successfully");
+        console.log(currImg, " uploaded");
+      } catch (error) {
+        console.log(error);
+      }
+      setUploading(false);
     }
+  };
+  const handleUpdate = async (e) => {
+    if (e) e.preventDefault();
+    setSubmitting(true);
     if (!(validCity && validCountry && validPhone)) {
       if (!validCity) setCityFocus(true);
       if (!validCountry) setCountryFocus(true);
@@ -166,16 +217,26 @@ const Profile = () => {
       setUpdateBtn(false);
       setUpdateMode(false);
       try {
+        if (file) {
+          console.log(file);
+          await handleUpload();
+        }
         const newUser = {
           ...user,
           ...info,
-          img: file ? file.name : user.img,
+          img: uploadedImgUrl || currImg,
         };
         try {
           console.log(newUser);
           setEditBtn(true);
           const res = await axios.put(`/users/${user._id}`, newUser);
-          setUser(newUser);
+          if (res.data) {
+            dispatch({
+              type: "LOGIN_SUCCESS",
+              payload: res.data.details,
+              accessToken: res.data.accessToken,
+            });
+          }
         } catch (err) {
           console.log(err);
         }
@@ -190,6 +251,7 @@ const Profile = () => {
       const reservationsRes = await axios.get(
         `/users/reservations/${user._id}`
       );
+      if (reservationsRes.data.length === 0) setReservationsLoading(false);
       const lastUpdatedReservations = reservationsRes.data;
       console.log(lastUpdatedReservations);
       setReservations(lastUpdatedReservations);
@@ -236,20 +298,20 @@ const Profile = () => {
     setReservationData(uniqueReservationData); // Moved outside the loop
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/users/${user._id}`);
-        localStorage.setItem("user", JSON.stringify(response.data));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await axios.get(`/users/${user._id}`);
+  //       localStorage.setItem("user", JSON.stringify(response.data));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    if (user) {
-      fetchUserData();
-    }
-  }, [user]);
+  //   if (user) {
+  //     fetchUserData();
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     getReservations();
@@ -303,35 +365,56 @@ const Profile = () => {
 
   return (
     <div className="Profile">
-      <div className="profileContainer">
+      <div className={!uploading ? "profileContainer" : "uploadContainerState"}>
         {loading ? (
           "Loading User Data...."
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : uploading ? (
+          <div className="uploading">
+            <img
+              className="uploadingUser"
+              src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+            />
+            <div>Updating Profile</div>
+          </div>
         ) : (
           <div className="info">
             <div className="profileImg">
               <img
                 src={
-                  file.name !== undefined
-                    ? `/upload/profileImages/${file.name}`
-                    : user?.img
-                    ? `${process.env.PUBLIC_URL}/upload/profileImages/${user.img}`
-                    : "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
+                  file && !excceded
+                    ? URL.createObjectURL(file)
+                    : currImg ||
+                      "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-18.jpg"
                 }
                 alt="Profile"
               />
-              <div className="upload">
-                <label htmlFor="file">
-                  <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                />
-              </div>
+              {updateMode && (
+                <div className="upload">
+                  <label htmlFor="file" className="uploadIcon">
+                    <DriveFolderUploadOutlinedIcon className="icon" />
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    style={{ display: "none" }}
+                  />
+                  <FontAwesomeIcon
+                    className="removeImg"
+                    icon={faCircleXmark}
+                    onClick={handleRemoveImg}
+                  />
+                </div>
+              )}
             </div>
             <form>
+              {excceded && (
+                <p className="exceededMsg">
+                  Please, select Img size less than 1 MB to be uploaded
+                </p>
+              )}
               <div className="infoLabels">
                 <label>Username:</label>
                 <p>{user.username}</p>
@@ -365,6 +448,7 @@ const Profile = () => {
                     <input
                       type="text"
                       id="phone"
+                      value={phone}
                       onChange={handleChange}
                       required
                       placeholder="012 5665 5648"
@@ -418,6 +502,7 @@ const Profile = () => {
                     <input
                       type="text"
                       id="country"
+                      value={country}
                       onChange={handleChange}
                       required
                       placeholder="USA"
@@ -463,6 +548,7 @@ const Profile = () => {
                     <input
                       type="text"
                       id="city"
+                      value={city}
                       onChange={handleChange}
                       required
                       placeholder="New York"
@@ -495,7 +581,7 @@ const Profile = () => {
                   </div>
                   <div className="formInput">
                     <label htmlFor="birthdate">Birthdate : </label>
-                    <br />
+
                     <div className="birthDate" style={{ cursor: "pointer" }}>
                       <div style={{ cursor: "pointer" }}>
                         <DatePicker
@@ -526,31 +612,50 @@ const Profile = () => {
                 </>
               )}
               {editBtn && (
-                <>
+                <div className="Btns">
                   <button className="Btn" onClick={handleEdit}>
                     Edit Profile
                   </button>
                   <button className="Btn" onClick={handleChangePwd}>
                     ChangePassword
                   </button>
-                </>
+                </div>
               )}
               {updateBtn && (
-                <button className="Btn" onClick={() => handleUpdate()}>
-                  Update
-                </button>
+                <div className="Btns">
+                  {!excceded && (
+                    <button
+                      className={!excceded ? "Btn" : "notAllowed"}
+                      onClick={() => handleUpdate()}
+                    >
+                      Update
+                    </button>
+                  )}
+                  <button className="Btn" onClick={() => setUpdateMode(false)}>
+                    Cancel
+                  </button>
+                </div>
               )}
             </form>
           </div>
         )}
         {
-          <div className="reservations" style={{ height: `${height}vh` }}>
+          <div
+            className={!uploading ? "reservations" : "uploadReservationsState"}
+            style={{ height: `${height}vh` }}
+          >
             <h2 className="title" onClick={() => navigate(`/`)}>
               My Nights
             </h2>
             {reservationsLoading ? (
               <>
-                <div className="loading">loading reservations...</div>
+                <div className="loading">
+                  <img
+                    className="loadingReservations"
+                    src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+                  />
+                  <span>loading reservations</span>
+                </div>
               </>
             ) : (
               <>
@@ -560,50 +665,56 @@ const Profile = () => {
                 >
                   Reservations:
                 </h4>
-                {reservationData?.map((reservation, index) => {
-                  if (Object.keys(reservation).length === 0) return null;
-                  return (
-                    <div
-                      className="eachReservation"
-                      key={index}
-                      id={reservation.id}
-                    >
-                      <div className="property">
-                        <label>Hotel:</label> <p>{reservation.hotel.name}</p>
-                      </div>
-                      <div className="property">
-                        <label>Room Type:</label>{" "}
-                        <span>{reservation.roomType.title}</span>
-                      </div>
-                      <div className="property">
-                        <label>Room Number:</label>{" "}
-                        <span>{reservation.roomNumber.number}</span>
-                      </div>
-                      <div className="property">
-                        <label>Duration:</label>{" "}
-                        <span>
-                          {`${format(
-                            new Date(reservation.startDate),
-                            "dd/MM/yyyy"
-                          )} to ${format(
-                            new Date(reservation.endDate),
-                            "dd/MM/yyyy"
-                          )}`}
-                        </span>
-                      </div>
-                      <div className="property">
-                        <label>Cost:</label> <span>{reservation.cost}</span>
-                      </div>
-                      <button
-                        className="Btn"
-                        data-reservation-id={reservation.id}
-                        onClick={handleDelete}
+                {!reservationData?.length ? (
+                  <div className="loading">
+                    <span>No reservations yet</span>
+                  </div>
+                ) : (
+                  reservationData?.map((reservation, index) => {
+                    if (Object.keys(reservation).length === 0) return null;
+                    return (
+                      <div
+                        className="eachReservation"
+                        key={index}
+                        id={reservation.id}
                       >
-                        Cancel Reservation
-                      </button>
-                    </div>
-                  );
-                })}
+                        <div className="property">
+                          <label>Hotel:</label> <p>{reservation.hotel.name}</p>
+                        </div>
+                        <div className="property">
+                          <label>Room Type:</label>{" "}
+                          <span>{reservation.roomType.title}</span>
+                        </div>
+                        <div className="property">
+                          <label>Room Number:</label>{" "}
+                          <span>{reservation.roomNumber.number}</span>
+                        </div>
+                        <div className="property">
+                          <label>Duration:</label>{" "}
+                          <span>
+                            {`${format(
+                              new Date(reservation.startDate),
+                              "dd/MM/yyyy"
+                            )} to ${format(
+                              new Date(reservation.endDate),
+                              "dd/MM/yyyy"
+                            )}`}
+                          </span>
+                        </div>
+                        <div className="property">
+                          <label>Cost:</label> <span>{reservation.cost}</span>
+                        </div>
+                        <button
+                          className="Btn"
+                          data-reservation-id={reservation.id}
+                          onClick={handleDelete}
+                        >
+                          Cancel Reservation
+                        </button>
+                      </div>
+                    );
+                  })
+                )}
               </>
             )}
           </div>

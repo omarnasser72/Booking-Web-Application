@@ -25,7 +25,10 @@ const PropertyList = () => {
   return (
     <div className="pList">
       {loading ? (
-        "loading"
+        <img
+          className="uploadHotelIcon"
+          src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+        />
       ) : (
         <>
           {data &&

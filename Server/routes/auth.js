@@ -1,5 +1,6 @@
 import Express from "express";
 import {
+  forgetPwd,
   login,
   logout,
   register,
@@ -17,4 +18,6 @@ router.post("/register", register);
 router.post("/login", login);
 //LOGOUT
 router.get("/logout", logout);
+//RESET
+router.post("/resetPwd", forgetPwd);
 export default router;

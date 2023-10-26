@@ -35,7 +35,6 @@ export const updateHotel = async (req, res, next) => {
     });
     if (nameExist.length > 0) next(createError(400, "Name Already exists"));
 
-    console.log("updatedData:", updatedData);
     const updatedHotel = await Hotel.findByIdAndUpdate(
       req.params.id,
       {

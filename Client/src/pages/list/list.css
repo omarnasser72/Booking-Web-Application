@@ -1,5 +1,5 @@
-.list {
-}
+.list {}
+
 .listContainer {
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@
   padding-bottom: 10px;
 }
 
-.listSearchItem > input {
+.listSearchItem>input {
   font-size: 14px;
   color: black;
   font-weight: 600;
@@ -62,7 +62,7 @@
   width: 250px;
 }
 
-.listSearchItem > span {
+.listSearchItem>span {
   height: 25px;
   cursor: pointer;
   display: flex;
@@ -76,6 +76,7 @@
   padding: 5px;
   gap: 5px;
 }
+
 .optionItem {
   font-size: 14px;
   display: flex;
@@ -88,7 +89,8 @@
   padding-right: 80px;
   width: 00%;
 }
-.optionItem > input {
+
+.optionItem>input {
   color: black;
   display: flex;
   width: 100px;
@@ -97,9 +99,10 @@
   margin-left: 5%;
 }
 
-.optionItem > input::placeholder {
+.optionItem>input::placeholder {
   color: black;
 }
+
 .searchBtn {
   cursor: pointer;
   border: none;
@@ -112,6 +115,21 @@
 .noResults {
   align-self: flex-start;
 }
+
 .footer {
-  margin-top: auto; /* Push the footer to the bottom */
+  margin-top: auto;
+  /* Push the footer to the bottom */
+}
+
+.loading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingHotels {
+  width: 70px;
+  margin-top: 10%;
 }

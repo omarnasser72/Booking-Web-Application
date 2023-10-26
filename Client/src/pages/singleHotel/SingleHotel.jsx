@@ -1,10 +1,9 @@
 import "./singleHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -21,6 +20,7 @@ import useFetch from "../../hooks/useFetch";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
+import org_axios from "axios";
 
 const HOTEL_REGEX = /^[A-Za-z0-9\s.'-]{3,}$/;
 const CITY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
@@ -100,12 +100,16 @@ const SingleHotel = () => {
   const [validRating, setValidRating] = useState(false);
   const [ratingFocus, setRatingFocus] = useState(false);
 
-  const [imgUrl, setImgUrl] = useState("");
-
   const [errMsg, setErrMsg] = useState("");
 
-  const [currPhotos, setCurrPhotos] = useState(hotel ? hotel.photos : []);
   const [fetchHotelPhotos, setFetchHotelPhotos] = useState(true);
+
+  const [imgUrl, setImgUrl] = useState("");
+  const [currImgs, setCurrImgs] = useState(hotel ? hotel.photos : []);
+  const uploadedUrls = [];
+  const [uploading, setUploading] = useState(false);
+  const [excceded, setExceeded] = useState(false);
+
   const [sidebar, setSidebar] = useState(false);
 
   const roomColumns = [
@@ -254,25 +258,25 @@ const SingleHotel = () => {
   }, [isImgSliderOpen]);
 
   useEffect(() => {
-    if (hotel && fetchHotelPhotos && currPhotos === undefined) {
-      setCurrPhotos(hotel.photos);
-      if (currPhotos !== undefined) setFetchHotelPhotos(false);
+    if (hotel && fetchHotelPhotos && currImgs === undefined) {
+      setCurrImgs(hotel.photos);
+      if (currImgs !== undefined) setFetchHotelPhotos(false);
     }
   }, [hotel]);
 
   useEffect(() => {
-    console.log(currPhotos);
-  }, [currPhotos]);
+    console.log("currImgs:", currImgs);
+  }, [currImgs]);
 
   useEffect(() => {
-    let fileNames = [];
     console.log(files);
+    setExceeded(false);
     if (files) {
-      for (let i = 0; i < files.length; i++) fileNames.push(files[i].name);
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].size > 1024 * 1024) setExceeded(true);
+        else setCurrImgs((currPhotos) => currPhotos.concat(files[i]));
+      }
     }
-    console.log(fileNames);
-    if (fileNames.length > 0)
-      setCurrPhotos((currPhotos) => currPhotos.concat(fileNames));
   }, [files]);
 
   const handleChange = (e) => {
@@ -288,6 +292,35 @@ const SingleHotel = () => {
     else if (e.target.id === "featured") setFeatured(e.target.value);
     else if (e.target.id === "photo") setImgUrl(e.target.value);
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleUpload = async () => {
+    if (!excceded) {
+      setUploading(true);
+      console.log("uploading....");
+      try {
+        for (let i = 0; i < currImgs.length; i++) {
+          if (currImgs[i] instanceof File) {
+            const data = new FormData();
+            data.append("file", currImgs[i]);
+            data.append("upload_preset", "upload");
+            const uploadRes = await org_axios.post(
+              "https://api.cloudinary.com/v1_1/omarnasser/upload",
+              data
+            );
+            console.log(currImgs[i], " uploaded");
+            console.log(uploadRes?.data?.url);
+            uploadedUrls.push(uploadRes?.data?.url);
+          } else {
+            uploadedUrls.push(currImgs[i]);
+          }
+        }
+        setUploading(false);
+        console.log("uploaded successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const handleSubmission = async (e) => {
@@ -319,15 +352,19 @@ const SingleHotel = () => {
       if (!validFeatured) setFeaturedFocus(true);
     } else {
       try {
-        const photos = Array.from(files).map((file) => file.name);
-        console.log(photos);
+        if (files || currImgs) {
+          await handleUpload();
+        }
+        const { photo } = info;
+        console.log(uploadedUrls);
         const newHotel = {
           ...hotel,
           ...info,
-          photos: currPhotos,
+          photos: uploadedUrls.length > 0 ? uploadedUrls : currImgs,
         };
         console.log(newHotel);
         const res = await axios.put(`/hotels/${hotelId}`, newHotel);
+        console.log(res);
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }
@@ -335,6 +372,7 @@ const SingleHotel = () => {
       } catch (error) {
         setErrMsg(error.response.data.message);
         console.log(error.response.data.message);
+        console.log(error);
       }
     }
   };
@@ -359,155 +397,158 @@ const SingleHotel = () => {
   };
 
   const handleRemoveImg = (selectedPhoto) => {
-    const updatedPhotos = currPhotos.filter((photo) => photo !== selectedPhoto);
-    setCurrPhotos(updatedPhotos);
-    console.log(currPhotos);
+    const updatedPhotos = currImgs.filter((photo) => photo !== selectedPhoto);
+    setCurrImgs(updatedPhotos);
+    console.log(currImgs);
   };
 
   const handleImgUrl = (e) => {
     e.preventDefault();
-
-    if (imgUrl.length > 0)
-      setCurrPhotos((currPhotos) => currPhotos.concat(imgUrl));
+    if (imgUrl.length > 0) setCurrImgs((prev) => [...prev, imgUrl]);
     setImgUrl("");
   };
 
   return (
     <div className="single">
-      <div className="wrapper">
-        {sidebar && <Sidebar />}
-        <div className="singleContainer">
-          <div className="sidebarBtn">
-            <button onClick={() => setSidebar(!sidebar)}>
-              <ListOutlinedIcon className="icon" />
-            </button>
-            <NavbarAdmin />
-          </div>
-          {isImgSliderOpen && (
-            <div className="slider">
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className="closeImgSlider"
-                onClick={() => setImgSlider(false)}
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowLeft}
-                className="leftArrow"
-                onClick={() => handleImgSliderMove("l")}
-              />
+      <h2>
+        <div style="background-color: #fffb06;border: none;fontFamily: Nunito;">
+          dggsdgdfsd
+        </div>
+      </h2>
+      {false && (
+        <div className="wrapper">
+          {sidebar && <Sidebar />}
+          <div className="singleContainer">
+            <div className="sidebarBtn">
+              <button onClick={() => setSidebar(!sidebar)}>
+                <ListOutlinedIcon className="icon" />
+              </button>
+              <NavbarAdmin />
+            </div>
+            {isImgSliderOpen && (
+              <div className="slider">
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="closeImgSlider"
+                  onClick={() => setImgSlider(false)}
+                />
+                <FontAwesomeIcon
+                  icon={faCircleArrowLeft}
+                  className="leftArrow"
+                  onClick={() => handleImgSliderMove("l")}
+                />
 
-              <div className="slideWrapper">
-                <img
-                  src={
-                    allowedExtensions.test(hotel.photos[slideNumber])
-                      ? `${process.env.PUBLIC_URL}/upload/hotels/${hotel.photos[slideNumber]}`
-                      : hotel.photos[slideNumber]
-                  }
-                  alt=""
-                  className="sliderImg"
+                <div className="slideWrapper">
+                  <img
+                    src={hotel.photos[slideNumber]}
+                    alt=""
+                    className="sliderImg"
+                  />
+                </div>
+                <FontAwesomeIcon
+                  icon={faCircleArrowRight}
+                  className="rightArrow"
+                  onClick={() => handleImgSliderMove("r")}
                 />
               </div>
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className="rightArrow"
-                onClick={() => handleImgSliderMove("r")}
-              />
-            </div>
-          )}
-          {loading ? (
-            <div className="loading">Loading Hotel info... </div>
-          ) : error ? (
-            <div className="loading">{error}</div>
-          ) : !editMode ? (
-            <div className="infoWrapper">
-              <button className="editBtn" onClick={() => setEditMode(true)}>
-                Edit
-              </button>
-              <h4 className="title">Information</h4>
-              <div className="top">
-                <div className="left">
-                  <div className="item">
-                    <div className="topSection">
-                      <div className="details">
-                        <div className="detailItem">
-                          <h2 className="itemTitle">{`${hotel.name}`}</h2>
-                          <h5 className="itemSubTitle">{`${hotel.desc}`}</h5>
-                        </div>
-                        <div className="detailItem">
-                          <span className="itemKey">Type:</span>
-                          <span className="itemValue">{`${hotel.type}`}</span>
-                        </div>
-                        <div className="detailItem">
-                          <span className="itemKey">Location:</span>
-                          <span className="itemValue">{`${hotel.city}, ${hotel.country}`}</span>
-                        </div>
-                        <div className="detailItem">
-                          <span className="itemKey">Address:</span>
-                          <span className="itemValue">{`${hotel.address}`}</span>
-                        </div>
-                        <div className="detailItem">
-                          <span className="itemKey">
-                            Distance from Mentioned City:
-                          </span>
-                          <span className="itemValue">{`${hotel.distance}`}</span>
-                        </div>
-                        <div className="detailItem">
-                          <span className="itemKey">Cheapest Room Price:</span>
-                          <span className="itemValue">{`${hotel.cheapestPrice}`}</span>
+            )}
+            {loading ? (
+              <div className="loading">Loading Hotel info... </div>
+            ) : error ? (
+              <div className="error">{error}</div>
+            ) : uploading ? (
+              <div className="uploading">
+                <img
+                  className="uploadingHotel"
+                  src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+                />
+                <div>Updating hotel</div>
+              </div>
+            ) : !editMode ? (
+              <div className="infoWrapper">
+                <button className="editBtn" onClick={() => setEditMode(true)}>
+                  Edit
+                </button>
+                <h4 className="title">Information</h4>
+                <div className="top">
+                  <div className="left">
+                    <div className="item">
+                      <div className="topSection">
+                        <div className="details">
+                          <div className="detailItem">
+                            <h2 className="itemTitle">{`${hotel.name}`}</h2>
+                            <h5 className="itemSubTitle">{`${hotel.desc}`}</h5>
+                          </div>
+                          <div className="detailItem">
+                            <span className="itemKey">Type:</span>
+                            <span className="itemValue">{`${hotel.type}`}</span>
+                          </div>
+                          <div className="detailItem">
+                            <span className="itemKey">Location:</span>
+                            <span className="itemValue">{`${hotel.city}, ${hotel.country}`}</span>
+                          </div>
+                          <div className="detailItem">
+                            <span className="itemKey">Address:</span>
+                            <span className="itemValue">{`${hotel.address}`}</span>
+                          </div>
+                          <div className="detailItem">
+                            <span className="itemKey">
+                              Distance from Mentioned City:
+                            </span>
+                            <span className="itemValue">{`${hotel.distance}`}</span>
+                          </div>
+                          <div className="detailItem">
+                            <span className="itemKey">
+                              Cheapest Room Price:
+                            </span>
+                            <span className="itemValue">{`${hotel.cheapestPrice}`}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="right">
-                  <div className="itemImg">
-                    {hotel.photos?.map((photo, index) => {
-                      return (
-                        <img
-                          src={
-                            allowedExtensions.test(photo)
-                              ? `${process.env.PUBLIC_URL}/upload/hotels/${photo}`
-                              : photo
-                          }
-                          alt=""
-                          key={index}
-                          onClick={() => handleOpenImgSlider(index)}
-                        />
-                      );
-                    })}
+                  <div className="right">
+                    <div className="itemImg">
+                      {hotel.photos?.map((photo, index) => {
+                        return (
+                          <img
+                            src={photo}
+                            key={index}
+                            onClick={() => handleOpenImgSlider(index)}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+                <div className="bottom">
+                  {hotel.rooms && (
+                    <div className="table">
+                      <DataGrid
+                        className="dataGrid"
+                        rows={rooms}
+                        columns={roomColumns}
+                        getRowId={(row) => row._id}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="bottom">
-                {hotel.rooms && (
-                  <div className="table">
-                    <DataGrid
-                      className="dataGrid"
-                      rows={rooms}
-                      columns={roomColumns}
-                      getRowId={(row) => row._id}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="infoWrapperEditMode">
-              <h4 className="title">Information</h4>
-              <div className="top">
-                <div className="left">
-                  <div className="images">
-                    {currPhotos &&
-                      currPhotos.map((photo, index) => {
+            ) : (
+              <div className="infoWrapperEditMode">
+                <h4 className="title">Information</h4>
+                <div className="top">
+                  <div className="left">
+                    <div className="images">
+                      {currImgs?.map((photo, index) => {
                         return (
                           <div className="eachImg" key={index}>
                             <img
                               src={
-                                allowedExtensions.test(photo)
-                                  ? `${process.env.PUBLIC_URL}/upload/hotels/${photo}`
+                                photo instanceof File
+                                  ? URL.createObjectURL(photo)
                                   : photo
                               }
-                              alt=""
                               key={index}
                               onClick={() => handleOpenImgSlider(index)}
                             />
@@ -520,506 +561,524 @@ const SingleHotel = () => {
                           </div>
                         );
                       })}
-                    <label htmlFor="file" style={{ cursor: "pointer" }}>
-                      <DriveFolderUploadOutlinedIcon className="icon" />
-                    </label>
-                    <input
-                      type="file"
-                      id="file"
-                      multiple
-                      onChange={(e) => setFiles(e.target.files)}
-                      style={{ display: "none" }}
-                    />
+                      <label htmlFor="file" style={{ cursor: "pointer" }}>
+                        <DriveFolderUploadOutlinedIcon className="icon" />
+                      </label>
+                      <input
+                        type="file"
+                        id="file"
+                        multiple
+                        onChange={(e) => setFiles(e.target.files)}
+                        style={{ display: "none" }}
+                      />
+                      {excceded && (
+                        <div className="exceededMsg">
+                          Please, select Img size less than 1 MB to be uploaded
+                        </div>
+                      )}
+                    </div>
+                    <div className="uploadUrl">
+                      <input
+                        id="photo"
+                        type="text"
+                        value={imgUrl}
+                        onChange={handleChange}
+                      />
+                      <button className="uploadImage" onClick={handleImgUrl}>
+                        Upload
+                      </button>
+                    </div>
                   </div>
-                  <div className="uploadUrl">
-                    <input
-                      id="photo"
-                      type="text"
-                      value={imgUrl}
-                      onChange={handleChange}
-                    />
-                    <button className="uploadImage" onClick={handleImgUrl}>
-                      Upload
-                    </button>
-                  </div>
-                </div>
-                <div className="right">
-                  <form>
-                    <div className="eachInput">
-                      <label htmlFor="name">
-                        Hotel Name:{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validHotelName ? "valid" : "hide"}
+                  <div className="right">
+                    <form>
+                      <div className="eachInput">
+                        <label htmlFor="name">
+                          Hotel Name:{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validHotelName ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validHotelName || (name === "" && !hotelNameFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          onChange={handleChange}
+                          autoComplete="off"
+                          required
+                          value={name}
+                          onFocus={() => setHotelNameFocus(true)}
+                          onBlur={() => setHotelNameFocus(false)}
+                          aria-invalid={validHotelName ? "false" : "true"}
+                          aria-describedby="uidnote"
                         />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="uidnote"
                           className={
-                            validHotelName || (name === "" && !hotelNameFocus)
-                              ? "hide"
-                              : "invalid"
+                            hotelNameFocus && name && !validHotelName
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least 3 characters.
+                          <br />
+                          Must begin with a letter.
+                          <br />
+                          Letters, numbers, underscores, hyphens allowed.
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {hotelNameExists ? errMsg : ""}
+                          {submitting && name === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="type">
+                          Type :{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validType && type ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={!validType && type ? "invalid" : "hide"}
+                          />
+                        </label>
+                        <select
+                          id="type"
+                          onChange={handleChange}
+                          onFocus={() => setTypeFocus(true)}
+                          value={type}
+                        >
+                          <option value="">Select Type</option>
+                          <option value="hotel">Hotel</option>
+                          <option value="apartment">Apartment</option>
+                          <option value="resort">Resort</option>
+                          <option value="villa">Villa</option>
+                          <option value="cabin">Cabin</option>
+                        </select>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="title">
+                          Title :{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validTitle && title ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              !validTitle && title ? "invalid" : "hide"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="title"
+                          onChange={handleChange}
+                          required
+                          value={title}
+                          aria-invalid={validTitle ? "false" : "true"}
+                          aria-describedby="titlenote"
+                          onFocus={() => setTitleFocus(true)}
+                          onBlur={() => setTitleFocus(false)}
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        onChange={handleChange}
-                        autoComplete="off"
-                        required
-                        value={name}
-                        onFocus={() => setHotelNameFocus(true)}
-                        onBlur={() => setHotelNameFocus(false)}
-                        aria-invalid={validHotelName ? "false" : "true"}
-                        aria-describedby="uidnote"
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          hotelNameFocus && name && !validHotelName
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least 3 characters.
-                        <br />
-                        Must begin with a letter.
-                        <br />
-                        Letters, numbers, underscores, hyphens allowed.
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {hotelNameExists ? errMsg : ""}
-                        {submitting && name === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="type">
-                        Type :{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validType && type ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          className={!validType && type ? "invalid" : "hide"}
-                        />
-                      </label>
-                      <select
-                        id="type"
-                        onChange={handleChange}
-                        onFocus={() => setTypeFocus(true)}
-                        value={type}
-                      >
-                        <option value="">Select Type</option>
-                        <option value="hotel">Hotel</option>
-                        <option value="apartment">Apartment</option>
-                        <option value="resort">Resort</option>
-                        <option value="villa">Villa</option>
-                        <option value="cabin">Cabin</option>
-                      </select>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="title">
-                        Title :{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validTitle && title ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          className={!validTitle && title ? "invalid" : "hide"}
-                        />
-                      </label>
-                      <input
-                        type="text"
-                        id="title"
-                        onChange={handleChange}
-                        required
-                        value={title}
-                        aria-invalid={validTitle ? "false" : "true"}
-                        aria-describedby="titlenote"
-                        onFocus={() => setTitleFocus(true)}
-                        onBlur={() => setTitleFocus(false)}
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          titleFocus && title && !validTitle
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least 3 characters.
-                        <br />
-                        Must begin with a letter.
-                        <br />
-                        Letters, numbers, underscores, hyphens allowed.
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && title === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="desc">
-                        Description:{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validDesc ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="uidnote"
                           className={
-                            validDesc || (!desc && !descFocus)
-                              ? "hide"
-                              : "invalid"
+                            titleFocus && title && !validTitle
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least 3 characters.
+                          <br />
+                          Must begin with a letter.
+                          <br />
+                          Letters, numbers, underscores, hyphens allowed.
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && title === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="desc">
+                          Description:{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validDesc ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validDesc || (!desc && !descFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="desc"
+                          onChange={handleChange}
+                          autoComplete="off"
+                          required
+                          value={desc}
+                          onFocus={() => setDescFocus(true)}
+                          onBlur={() => setDescFocus(false)}
+                          aria-invalid={validDesc ? "false" : "true"}
+                          aria-describedby="uidnote"
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="desc"
-                        onChange={handleChange}
-                        autoComplete="off"
-                        required
-                        value={desc}
-                        onFocus={() => setDescFocus(true)}
-                        onBlur={() => setDescFocus(false)}
-                        aria-invalid={validDesc ? "false" : "true"}
-                        aria-describedby="uidnote"
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          descFocus && desc && !validDesc
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least 10 characters.
-                        <br />
-                        at most 500 characters
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && desc === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="address">
-                        Address:{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validAddress && address ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="uidnote"
                           className={
-                            validAddress || (!address && !addressFocus)
-                              ? "hide"
-                              : "invalid"
+                            descFocus && desc && !validDesc
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least 10 characters.
+                          <br />
+                          at most 500 characters
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && desc === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="address">
+                          Address:{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={
+                              validAddress && address ? "valid" : "hide"
+                            }
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validAddress || (!address && !addressFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="address"
+                          onChange={handleChange}
+                          autoComplete="off"
+                          required
+                          value={address}
+                          onFocus={() => setAddressFocus(true)}
+                          onBlur={() => setAddressFocus(false)}
+                          aria-invalid={validHotelName ? "false" : "true"}
+                          aria-describedby="uidnote"
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        onChange={handleChange}
-                        autoComplete="off"
-                        required
-                        value={address}
-                        onFocus={() => setAddressFocus(true)}
-                        onBlur={() => setAddressFocus(false)}
-                        aria-invalid={validHotelName ? "false" : "true"}
-                        aria-describedby="uidnote"
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          addressFocus && address && !validAddress
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least 5 characters.
-                        <br />
-                        Letters, numbers, underscores, hyphens allowed.
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && address === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="city">
-                        City :{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validCity && city ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          className={!validCity && city ? "invalid" : "hide"}
-                        />
-                      </label>
-                      <input
-                        type="text"
-                        id="city"
-                        onChange={handleChange}
-                        required
-                        value={city}
-                        aria-invalid={validCity ? "false" : "true"}
-                        aria-describedby="citynote"
-                        onFocus={() => setCityFocus(true)}
-                        onBlur={() => setCityFocus(false)}
-                      />
-                      <p
-                        id="citynote"
-                        className={
-                          cityFocus && city && !validCity
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        please, enter valid city name
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && city === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="country">
-                        Country :{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validCountry && country ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="uidnote"
                           className={
-                            !validCountry && country ? "invalid" : "hide"
+                            addressFocus && address && !validAddress
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least 5 characters.
+                          <br />
+                          Letters, numbers, underscores, hyphens allowed.
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && address === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="city">
+                          City :{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validCity && city ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={!validCity && city ? "invalid" : "hide"}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="city"
+                          onChange={handleChange}
+                          required
+                          value={city}
+                          aria-invalid={validCity ? "false" : "true"}
+                          aria-describedby="citynote"
+                          onFocus={() => setCityFocus(true)}
+                          onBlur={() => setCityFocus(false)}
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="country"
-                        onChange={handleChange}
-                        value={country}
-                        required
-                        aria-invalid={validCountry ? "false" : "true"}
-                        aria-describedby="countrynote"
-                        onFocus={() => setCountryFocus(true)}
-                        onBlur={() => setCountryFocus(false)}
-                      />
-                      <p
-                        id="countrynote"
-                        className={
-                          countryFocus && country && !validCountry
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        please, enter valid country name
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && country === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="distance">
-                        Distance:{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validDistance ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="citynote"
                           className={
-                            validDistance || (!distance && !distanceFocus)
-                              ? "hide"
-                              : "invalid"
+                            cityFocus && city && !validCity
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          please, enter valid city name
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && city === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="country">
+                          Country :{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={
+                              validCountry && country ? "valid" : "hide"
+                            }
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              !validCountry && country ? "invalid" : "hide"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="country"
+                          onChange={handleChange}
+                          value={country}
+                          required
+                          aria-invalid={validCountry ? "false" : "true"}
+                          aria-describedby="countrynote"
+                          onFocus={() => setCountryFocus(true)}
+                          onBlur={() => setCountryFocus(false)}
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="distance"
-                        onChange={handleChange}
-                        autoComplete="off"
-                        required
-                        value={distance}
-                        onFocus={() => setDistanceFocus(true)}
-                        onBlur={() => setDistanceFocus(false)}
-                        aria-invalid={validDistance ? "false" : "true"}
-                        aria-describedby="uidnote"
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          distanceFocus && distance && !validDistance
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least a number.
-                        <br />
-                        Must end with km or mi.
-                        <br />
-                        numbers only are allowed.
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && distance === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label htmlFor="cheapestPrice">
-                        Cheapest Room's Price:{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          className={validPrice ? "valid" : "hide"}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="countrynote"
                           className={
-                            validPrice || (!cheapestPrice && !priceFocus)
-                              ? "hide"
-                              : "invalid"
+                            countryFocus && country && !validCountry
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          please, enter valid country name
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && country === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="distance">
+                          Distance:{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validDistance ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validDistance || (!distance && !distanceFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="distance"
+                          onChange={handleChange}
+                          autoComplete="off"
+                          required
+                          value={distance}
+                          onFocus={() => setDistanceFocus(true)}
+                          onBlur={() => setDistanceFocus(false)}
+                          aria-invalid={validDistance ? "false" : "true"}
+                          aria-describedby="uidnote"
                         />
-                      </label>
-                      <input
-                        type="text"
-                        id="cheapestPrice"
-                        onChange={handleChange}
-                        autoComplete="off"
-                        required
-                        value={cheapestPrice}
-                        onFocus={() => setPriceFocus(true)}
-                        onBlur={() => setPriceFocus(false)}
-                        aria-invalid={validPrice ? "false" : "true"}
-                        aria-describedby="uidnote"
-                      />
-                      <p
-                        id="uidnote"
-                        className={
-                          priceFocus && cheapestPrice && !validPrice
-                            ? "instructions"
-                            : "offscreen"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                        <br />
-                        at least a number.
-                        <br />
-                        numbers and dots are allowed.
-                      </p>
-                      <p
-                        ref={errRef}
-                        className="inputErrMsg"
-                        aria-live="assertive"
-                      >
-                        {submitting && distance === ""
-                          ? "This field is required"
-                          : ""}
-                      </p>
-                    </div>
-                    <div className="eachInput">
-                      <label>
-                        Featured{" "}
-                        <FontAwesomeIcon
-                          icon={faCheck}
+                        <p
+                          id="uidnote"
                           className={
-                            validFeatured && featured !== "" ? "valid" : "hide"
+                            distanceFocus && distance && !validDistance
+                              ? "instructions"
+                              : "offscreen"
                           }
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least a number.
+                          <br />
+                          Must end with km or mi.
+                          <br />
+                          numbers only are allowed.
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && distance === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label htmlFor="cheapestPrice">
+                          Cheapest Room's Price:{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={validPrice ? "valid" : "hide"}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validPrice || (!cheapestPrice && !priceFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          id="cheapestPrice"
+                          onChange={handleChange}
+                          autoComplete="off"
+                          required
+                          value={cheapestPrice}
+                          onFocus={() => setPriceFocus(true)}
+                          onBlur={() => setPriceFocus(false)}
+                          aria-invalid={validPrice ? "false" : "true"}
+                          aria-describedby="uidnote"
                         />
-                        <FontAwesomeIcon
-                          icon={faTimes}
+                        <p
+                          id="uidnote"
                           className={
-                            validFeatured || (featured === "" && !featuredFocus)
-                              ? "hide"
-                              : "invalid"
+                            priceFocus && cheapestPrice && !validPrice
+                              ? "instructions"
+                              : "offscreen"
                           }
-                        />
-                      </label>
-                      <select id="featured" onChange={handleChange}>
-                        <option value="">Select featured Option</option>
-                        <option value={false}>No</option>
-                        <option value={true}>Yes</option>
-                      </select>
-                    </div>
+                        >
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          <br />
+                          at least a number.
+                          <br />
+                          numbers and dots are allowed.
+                        </p>
+                        <p
+                          ref={errRef}
+                          className="inputErrMsg"
+                          aria-live="assertive"
+                        >
+                          {submitting && distance === ""
+                            ? "This field is required"
+                            : ""}
+                        </p>
+                      </div>
+                      <div className="eachInput">
+                        <label>
+                          Featured{" "}
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className={
+                              validFeatured && featured !== ""
+                                ? "valid"
+                                : "hide"
+                            }
+                          />
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            className={
+                              validFeatured ||
+                              (featured === "" && !featuredFocus)
+                                ? "hide"
+                                : "invalid"
+                            }
+                          />
+                        </label>
+                        <select id="featured" onChange={handleChange}>
+                          <option value="">Select featured Option</option>
+                          <option value={false}>No</option>
+                          <option value={true}>Yes</option>
+                        </select>
+                      </div>
 
-                    <div className="btns">
-                      <button className="updateBtn" onClick={handleSubmission}>
-                        Update
-                      </button>
-                      <button
-                        className="cancelBtn"
-                        onClick={() => setEditMode(false)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
+                      <div className="btns">
+                        <button
+                          className="updateBtn"
+                          onClick={handleSubmission}
+                        >
+                          Update
+                        </button>
+                        <button
+                          className="cancelBtn"
+                          onClick={() => setEditMode(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

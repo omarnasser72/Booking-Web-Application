@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
 import { useState, useEffect } from "react";
-const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
-
 const SearchItem = ({ item }) => {
   const [rateCategory, setRateCategory] = useState("");
 
@@ -22,9 +20,9 @@ const SearchItem = ({ item }) => {
     <div className="searchItem">
       <img
         src={
-          allowedExtensions.test(item.photos[0])
-            ? `${process.env.PUBLIC_URL}/upload/hotels/${item.photos[0]}`
-            : item.photos[0]
+          item?.photos[0]
+            ? item.photos[0]
+            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwhz0_e6EWHiNkQgz9bGrMFZfxfj2AmWbFWw&usqp=CAU"
         }
         alt=""
         className="searchItemImg"

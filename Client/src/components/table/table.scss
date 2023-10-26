@@ -3,13 +3,26 @@
     text-align: center;
     align-self: center;
     font-size: x-large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(245, 245, 159);
+
+    .loadingReservations {
+      width: 50px;
+      margin: 5px;
+    }
   }
+
   .tableCell {
     background-color: rgb(245, 245, 159);
   }
+
   .cellWrapper {
     display: flex;
     align-items: center;
+
     .image {
       width: 32px;
       height: 32px;
@@ -18,13 +31,16 @@
       margin-right: 10px;
     }
   }
+
   .status {
     padding: 5px;
     border-radius: 5px;
+
     &.Approved {
       color: green;
       background-color: rgb(129, 235, 129);
     }
+
     &.Pending {
       border: 1px solid;
       color: rgb(185, 185, 18);

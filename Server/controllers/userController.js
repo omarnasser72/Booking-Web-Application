@@ -2,12 +2,14 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
+import { createToken } from "../utils/jwt.js";
 
 export const changePwd = async (req, res, next) => {
   try {
     const email = req.body.email;
-    const { newPwd } = req.body;
+    const newPwd = req.body.newPwd;
     const user = await User.findById(req.params.id);
+
     if (!bcrypt.compareSync(req.body.password, user.password))
       return next(createError(400, "Wrong Password !"));
 
@@ -78,7 +80,7 @@ export const updateUser = async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
       user = { ...req.body, password: hashedPassword };
     } else {
-      user = req.body;
+      user = { ...req.body, password: currentUser.password };
     }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -87,7 +89,10 @@ export const updateUser = async (req, res, next) => {
       },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+    console.log(updatedUser._doc);
+    const { password, ...otherDetails } = updatedUser._doc;
+    const token = createToken(user);
+    res.status(200).json({ accessToken: token, details: { ...otherDetails } });
     const transport = nodemailer.createTransport({
       service: "gmail",
       auth: {

@@ -1,8 +1,10 @@
 .new {
   display: flex;
   width: 100%;
+
   .newContainer {
     flex: 6;
+
     .topUser,
     .bottomUser {
       color: yellow;
@@ -13,11 +15,13 @@
       box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
       margin: 20px;
       padding: 20px;
+
       .errmsg {
         background-color: lightpink;
         color: firebrick;
         font-weight: bold;
       }
+
       .left {
         flex: 1;
         text-align: center;
@@ -29,18 +33,27 @@
           border-radius: 50%;
           object-fit: cover;
         }
+
         .upload {
           display: flex;
           justify-content: end;
+          margin-right: 20%;
+
           .icon {
             cursor: pointer;
           }
         }
+
+        .exceededMsg {
+          color: rgb(224, 70, 70);
+        }
       }
+
       .right {
         flex: 2;
         display: flex;
         justify-content: center;
+
         form {
           width: 100%;
           display: flex;
@@ -52,14 +65,17 @@
           .formInput {
             width: 40%;
             gap: 20px;
+
             label {
               gap: 10px;
               display: flex;
               align-items: center;
+
               .icon {
                 cursor: pointer;
               }
             }
+
             input {
               width: 100%;
               padding: 5px;
@@ -71,6 +87,7 @@
               background-color: rgb(66, 66, 66);
             }
           }
+
           .inputErrMsg {
             text-align: center;
             color: red;
@@ -78,8 +95,9 @@
             border-radius: 5px;
             margin: 5px;
           }
+
           .submitBtn {
-            width: 200px;
+            width: 300px;
             padding: 5px 30px;
             border: none;
             border-radius: 5px;
@@ -91,9 +109,11 @@
         }
       }
     }
+
     .sidebarWrapper {
       display: flex;
       align-items: center;
+
       .listOutBtn {
         background-color: white;
         color: #000;
@@ -102,6 +122,7 @@
     }
   }
 }
+
 .valid {
   color: limegreen;
 }

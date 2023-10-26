@@ -1,6 +1,5 @@
 import "./singleUser.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
@@ -17,7 +16,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRef } from "react";
 import { useEffect } from "react";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import axios from "axios";
+import axios from "../../axios";
+import org_axios from "axios";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -61,10 +61,15 @@ const SingleUser = () => {
 
   const [submitting, setSubmitting] = useState(false);
 
+  const [currImg, setCurrImg] = useState(user?.img);
+  const [uploading, setUploading] = useState(false);
+
   const [birthDate, setBirthDate] = useState(user.birthDate);
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 16);
   const [age, setAge] = useState("");
+
+  const [excceded, setExceeded] = useState(false);
 
   useEffect(() => {
     console.log(user);
@@ -93,10 +98,6 @@ const SingleUser = () => {
     setValidCountry(COUNTRY_REGEX.test(country));
   }, [country]);
 
-  useEffect(() => {
-    console.log(file);
-  }, [file]);
-
   //calculate age
   useEffect(() => {
     if (birthDate) {
@@ -124,6 +125,15 @@ const SingleUser = () => {
     console.log(info);
   }, [info]);
 
+  useEffect(() => {
+    setCurrImg(user?.img);
+  }, [user?.img]);
+
+  useEffect(() => {
+    console.log(file);
+    file.size > 1024 * 1024 ? setExceeded(true) : setExceeded(false);
+  }, [file]);
+
   const handleChange = (e) => {
     if (e.target.id === "email") setEmail(e.target.value);
     else if (e.target.id === "phone") setPhone(e.target.value);
@@ -139,10 +149,37 @@ const SingleUser = () => {
   };
 
   const handleRemoveImg = () => {
+    setCurrImg("");
     setFile(false);
-    user.img = undefined;
+    user.img = "";
   };
 
+  let uploadedImgUrl = "";
+  const handleUpload = async () => {
+    if (!excceded) {
+      setUploading(true);
+      console.log("uploading....");
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await org_axios.post(
+          "https://api.cloudinary.com/v1_1/omarnasser/upload",
+          data
+        );
+        uploadedImgUrl = uploadRes?.data?.url;
+        setCurrImg(uploadRes?.data?.url);
+
+        console.log(currImg, " uploaded");
+        console.log(uploadRes?.data?.url);
+        console.log("uploaded successfully");
+      } catch (error) {
+        console.log(error);
+      }
+      setUploading(false);
+    }
+  };
+  console.log(currImg);
   const handleSubmission = async (e) => {
     setSubmitting(true);
     e.preventDefault();
@@ -154,11 +191,11 @@ const SingleUser = () => {
     } else {
       try {
         console.log(file, file.name);
-
+        if (file) await handleUpload();
         const newUser = {
           ...user,
           ...info,
-          img: file ? file.name : "",
+          img: uploadedImgUrl || currImg,
         };
         const { username } = newUser;
         console.log(newUser);
@@ -166,7 +203,7 @@ const SingleUser = () => {
         console.log(res);
         setEditMode(false);
       } catch (error) {
-        setErrMsg(error.response.data.message);
+        setErrMsg(error?.response?.data?.message);
         console.log(error);
       }
     }
@@ -186,9 +223,23 @@ const SingleUser = () => {
             <NavbarAdmin />
           </div>
           {loading ? (
-            "loading..."
+            <div className="loading">
+              <img
+                className="uploadHotelIcon"
+                src="https://media.tenor.com/hlKEXPvlX48AAAAj/loading-loader.gif"
+              />
+              <span>loading...</span>
+            </div>
           ) : error ? (
-            error
+            <div className="error">{error}</div>
+          ) : uploading ? (
+            <div className="uploading">
+              <img
+                className="uploadingUser"
+                src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+              />
+              <div>Updating User</div>
+            </div>
           ) : !editMode ? (
             <div className="infoWrapper">
               <button className="editBtn" onClick={() => setEditMode(true)}>
@@ -200,9 +251,8 @@ const SingleUser = () => {
                   <div className="itemImg">
                     <img
                       src={
-                        user.img !== "" && user.img !== undefined
-                          ? `${process.env.PUBLIC_URL}/upload/${user.img}`
-                          : `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
+                        currImg ||
+                        `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
                       }
                       alt=""
                     />
@@ -239,13 +289,11 @@ const SingleUser = () => {
                   <div className="itemImg">
                     <img
                       src={
-                        file
+                        file && !excceded
                           ? URL.createObjectURL(file)
-                          : user.img !== undefined
-                          ? `${process.env.PUBLIC_URL}/upload/${user.img}`
-                          : `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
+                          : currImg ||
+                            `https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg`
                       }
-                      alt=""
                     />
                     <label htmlFor="file" style={{ cursor: "pointer" }}>
                       <DriveFolderUploadOutlinedIcon className="icon" />
@@ -261,6 +309,11 @@ const SingleUser = () => {
                       icon={faCircleXmark}
                       onClick={handleRemoveImg}
                     />
+                    {excceded && (
+                      <div className="exceededMsg">
+                        Please, select Img size less than 1 MB to be uploaded
+                      </div>
+                    )}
                   </div>
                   <form>
                     <div className="eachInput">

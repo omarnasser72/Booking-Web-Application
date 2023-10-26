@@ -1,10 +1,8 @@
 import "./newUser.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState, useRef } from "react";
 import axios from "../../axios";
-import { userInputs } from "../../formSource";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -78,10 +76,14 @@ const NewUser = () => {
   const [emailExists, setEmailExists] = useState(false);
   const [phoneExists, setPhoneExists] = useState(false);
 
+  const [currImg, setCurrImg] = useState("");
   const [age, setAge] = useState("");
   const [birthDate, setBirthDate] = useState(null);
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 16);
+
+  const [submitting, setSubmitting] = useState(false);
+  const [excceded, setExceeded] = useState(false);
 
   useEffect(() => {
     userRef.current?.focus();
@@ -139,6 +141,11 @@ const NewUser = () => {
     } else setPhoneExists(false);
   }, [errMsg]);
 
+  useEffect(() => {
+    console.log(file);
+    file.size > 1024 * 1024 ? setExceeded(true) : setExceeded(false);
+  }, [file]);
+
   const handleChange = (e) => {
     if (e.target.id === "username") setUsername(e.target.value);
     else if (e.target.id === "password") setPwd(e.target.value);
@@ -150,28 +157,33 @@ const NewUser = () => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const [submitting, setSubmitting] = useState(false);
+  const handleUpload = async () => {
+    if (!excceded) {
+      console.log("uploading....");
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await org_axios.post(
+          "https://api.cloudinary.com/v1_1/omarnasser/upload",
+          data
+        );
+        console.log("uploaded successfully");
+        console.log(uploadRes);
+        setCurrImg(uploadRes?.data?.url);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   const handleClick = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    // const data = new FormData();
-
-    // data.append("file", file);
-    // data.append("upload_preset", "omarup");
-    // data.append("folder", "upload");
+    if (file) handleUpload();
     try {
-      /*const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dyrrfclr2/image/upload",
-        data
-      );
-      const d = await uploadRes.json();
-      console.log(d);
-      //console.log(uploadRes.data);
-      const { secure_url } = uploadRes.data;
-        */
       const newUser = {
         ...info,
-        img: file.name,
+        img: currImg,
         age: age,
       };
       console.log(newUser);
@@ -180,7 +192,7 @@ const NewUser = () => {
       if (res.data.success === false) {
         setErrMsg("Signup was not successful."); // Set an appropriate error message
       } else {
-        navigate("adminDashboard/users");
+        navigate("/adminDashboard/users");
       }
     } catch (error) {
       setErrMsg(error.response.data.message);
@@ -207,11 +219,10 @@ const NewUser = () => {
           <div className="left">
             <img
               src={
-                file
+                file && !excceded
                   ? URL.createObjectURL(file)
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
-              alt=""
             />
             <div className="upload">
               <label htmlFor="file">
@@ -224,6 +235,11 @@ const NewUser = () => {
                 style={{ display: "none" }}
               />
             </div>
+            {excceded && (
+              <div className="exceededMsg">
+                Please, select Img size less than 1 MB to be uploaded
+              </div>
+            )}
           </div>
           <div className="right">
             <form action="">

@@ -135,11 +135,7 @@ const Hotel = () => {
 
                 <div className="slideWrapper">
                   <img
-                    src={
-                      allowedExtensions.test(hotel.photos[slideNumber])
-                        ? `${process.env.PUBLIC_URL}/upload/hotels/${hotel.photos[slideNumber]}`
-                        : hotel.photos[slideNumber]
-                    }
+                    src={hotel.photos[slideNumber]}
                     alt=""
                     className="sliderImg"
                   />
@@ -198,11 +194,7 @@ const Hotel = () => {
                   <div className="hotelImageWrapper" key={i}>
                     <img
                       onClick={() => handleOpenImgSlider(i)}
-                      src={
-                        allowedExtensions.test(photo)
-                          ? `${process.env.PUBLIC_URL}/upload/hotels/${photo}`
-                          : photo
-                      }
+                      src={photo}
                       alt=""
                       className="hotelImg"
                     />

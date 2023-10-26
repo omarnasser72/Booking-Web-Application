@@ -147,7 +147,13 @@ const List = () => {
           </div>
           <div className="listResult">
             {loading ? (
-              <h3>loading</h3>
+              <div className="loading">
+                <img
+                  className="loadingHotels"
+                  src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+                />
+                <div>loading hotels</div>
+              </div>
             ) : (
               <>
                 {hotels.length > 0 ? (
