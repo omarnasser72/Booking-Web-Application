@@ -48,28 +48,22 @@ export const validateToken = (req, res, next) => {
 };
 
 export const verifyUser = async (req, res, next) => {
-  let accessToken = req.headers.authorization;
+  let accessToken = req.headers.authorization || req.cookies["accessToken"];
 
-  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    await delay(2000); // 2000 milliseconds (2 seconds) delay
-  }
-
-  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken)) {
+  if (!accessToken || accessToken === null || !jwtRegex.test(accessToken))
     next(createError(400, "Invalid or missing token"));
-  } else {
-    try {
-      const decoded = jwt.verify(accessToken, process.env.JWT);
-      req.user = decoded;
-      req.authenticated = true;
-      if (req.user) {
-        next();
-      } else {
-        return next(createError(403, "You aren't a user"));
-      }
-    } catch (error) {
-      next(error);
+
+  try {
+    const decoded = jwt.verify(accessToken, process.env.JWT);
+    req.user = decoded;
+    req.authenticated = true;
+    if (req.user) {
+      next();
+    } else {
+      return next(createError(403, "You aren't a user"));
     }
+  } catch (error) {
+    next(error);
   }
 };
 

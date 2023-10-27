@@ -1,7 +1,7 @@
 import orgaxios from "axios";
 
-const axios = orgaxios.create({ baseURL: "https://booking-fwaz.onrender.com" });
-//const axios = orgaxios.create({ baseURL: "http://localhost:8080" });
+//const axios = orgaxios.create({ baseURL: "https://booking-fwaz.onrender.com" });
+const axios = orgaxios.create({ baseURL: "http://localhost:8080" });
 
 // Function to wait for a specified duration in milliseconds
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
