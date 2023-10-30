@@ -70,65 +70,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="resetPassword" element={<ResetPwd />} />
-            <Route
-              path="Flights"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="CarRental"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="AirportTaxies"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="Attractions"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route path="/profile">
-              <Route index element={<ProtectedRoute element={<Profile />} />} />
-              <Route
-                path="changePwd"
-                element={<ProtectedRoute element={<ChangePwd />} />}
-              />
-            </Route>
-
-            <Route
-              path="/hotels"
-              element={<ProtectedRoute element={<List />} />}
-            />
-            <Route
-              path="/hotels/:id"
-              element={<ProtectedRoute element={<Hotel />} />}
-            />
-            <Route
-              path="/hotels/reservation/:id"
-              element={<ProtectedRoute element={<Reservation />} />}
-            />
-            <Route path="/ListAll/">
-              <Route
-                path="hotels"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-              <Route
-                path="apartments"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-              <Route
-                path="resorts"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-              <Route
-                path="villas"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-              <Route
-                path="cabins"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-            </Route>
-            <Route path="/adminDashboard">
+            <Route path="adminDashboard">
               <Route path="login" element={<Login />} />
               <Route
                 index
@@ -213,6 +155,64 @@ function App() {
                   element={<ProtectedRoute element={<NewReservation />} />}
                 />
               </Route>
+            </Route>
+            <Route
+              path="Flights"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="CarRental"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="AirportTaxies"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="Attractions"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route path="/profile">
+              <Route index element={<ProtectedRoute element={<Profile />} />} />
+              <Route
+                path="changePwd"
+                element={<ProtectedRoute element={<ChangePwd />} />}
+              />
+            </Route>
+
+            <Route
+              path="/hotels"
+              element={<ProtectedRoute element={<List />} />}
+            />
+            <Route
+              path="/hotels/:id"
+              element={<ProtectedRoute element={<Hotel />} />}
+            />
+            <Route
+              path="/hotels/reservation/:id"
+              element={<ProtectedRoute element={<Reservation />} />}
+            />
+            <Route path="/ListAll/">
+              <Route
+                path="hotels"
+                element={<ProtectedRoute element={<ListType />} />}
+              />
+              <Route
+                path="apartments"
+                element={<ProtectedRoute element={<ListType />} />}
+              />
+              <Route
+                path="resorts"
+                element={<ProtectedRoute element={<ListType />} />}
+              />
+              <Route
+                path="villas"
+                element={<ProtectedRoute element={<ListType />} />}
+              />
+              <Route
+                path="cabins"
+                element={<ProtectedRoute element={<ListType />} />}
+              />
             </Route>
           </Route>
         </Routes>
