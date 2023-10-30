@@ -10,43 +10,6 @@ export const createToken = (user) => {
   return accessToken;
 };
 
-export const validateToken = (req, res, next) => {
-  console.log("req.headers:", req.headers);
-  const cookieHeader = req.headers.cookie;
-
-  if (!cookieHeader) {
-    next(createError(400, "no token exists"));
-  } else {
-    const cookies = cookieHeader.split("; ");
-    let accessToken;
-
-    for (const cookie of cookies) {
-      const [name, value] = cookie.split("=");
-      if (name === "accessToken") {
-        accessToken = value;
-        break;
-      }
-    }
-    console.log("req.headers:", req.headers);
-    if (!accessToken) accessToken = req.headers.authorization;
-    if (!accessToken) next(createError(400, "no token exists"));
-
-    try {
-      const decoded = jwt.verify(accessToken, process.env.JWT);
-      console.log(decoded);
-      req.user = decoded;
-      req.authenticated = true;
-      if (req.user) {
-        next();
-      } else {
-        return next(createError(403, "You aren't user"));
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-};
-
 export const verifyUser = async (req, res, next) => {
   let accessToken = req.headers.authorization || req.cookies["accessToken"];
 
@@ -84,5 +47,42 @@ export const verifyAdmin = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
+  }
+};
+
+export const validateToken = (req, res, next) => {
+  console.log("req.headers:", req.headers);
+  const cookieHeader = req.headers.cookie;
+
+  if (!cookieHeader) {
+    next(createError(400, "no token exists"));
+  } else {
+    const cookies = cookieHeader.split("; ");
+    let accessToken;
+
+    for (const cookie of cookies) {
+      const [name, value] = cookie.split("=");
+      if (name === "accessToken") {
+        accessToken = value;
+        break;
+      }
+    }
+    console.log("req.headers:", req.headers);
+    if (!accessToken) accessToken = req.headers.authorization;
+    if (!accessToken) next(createError(400, "no token exists"));
+
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT);
+      console.log(decoded);
+      req.user = decoded;
+      req.authenticated = true;
+      if (req.user) {
+        next();
+      } else {
+        return next(createError(403, "You aren't user"));
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 };

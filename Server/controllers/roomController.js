@@ -2,6 +2,7 @@ import Room from "../models/Room.js";
 import Hotel from "../models/Hotel.js";
 import { createError } from "../utils/error.js";
 import { login } from "./authenticationController.js";
+import Reservation from "../models/Reservation.js";
 
 export const createRoom = async (req, res, next) => {
   const hotelId = req.params.hotelId;
@@ -57,16 +58,19 @@ export const deleteRoom = async (req, res, next) => {
   try {
     const exist = await Room.findById(req.params.id);
     if (!exist) res.status(404).json("this room isn't found");
-    console.log(exist);
+
     const hotelId = await Hotel.findById(exist.hotelId);
+
     await Room.findByIdAndDelete(req.params.id);
-    try {
-      await Hotel.findByIdAndUpdate(hotelId, {
-        $pull: { rooms: req.params.id },
-      });
-    } catch (error) {
-      next(err);
-    }
+
+    await Hotel.findByIdAndUpdate(hotelId, {
+      $pull: { rooms: req.params.id },
+    });
+
+    await Reservation.findOneAndDelete({
+      roomTypeId: req.params.id,
+    });
+
     res.status(200).json("Deleted Successfully");
   } catch (error) {
     next(error);
@@ -144,11 +148,14 @@ export const deleteRoomReservation = async (req, res, next) => {
 
     const updatedUnavailableDates = targetRoomNumber.unavailableDates.filter(
       (date) => {
+        console.log("date:", date, "\n");
         // Check if date is outside the range of startDate and endDate
-        return (
-          date.getTime() < startDate.getTime() ||
-          date.getTime() > endDate.getTime()
-        );
+        if (date) {
+          return (
+            date.getTime() < startDate.getTime() ||
+            date.getTime() > endDate.getTime()
+          );
+        }
       }
     );
     console.log(updatedUnavailableDates);

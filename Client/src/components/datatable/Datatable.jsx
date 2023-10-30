@@ -6,6 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import axios from "../../axios";
 import moment from "moment";
 import "moment-timezone";
+import Swal from "sweetalert2";
 
 const Datatable = ({ columns }) => {
   const navigate = useNavigate();
@@ -67,6 +68,13 @@ const Datatable = ({ columns }) => {
       }
       await axios.delete(`/${path}/${id}`);
       setList(list.filter((item) => item._id !== id));
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `${path.slice(0, -1)} has deleted successfully`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.log(error.response.data);
     }
