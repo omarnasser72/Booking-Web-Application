@@ -56,6 +56,7 @@ export const updateRoomAvailability = async (req, res, next) => {
 export const deleteRoom = async (req, res, next) => {
   const hotelId = req.params.hotelId;
   try {
+    console.log("room._id: ", req.params.id);
     const exist = await Room.findById(req.params.id);
     if (!exist) res.status(404).json("this room isn't found");
 
@@ -67,11 +68,12 @@ export const deleteRoom = async (req, res, next) => {
       $pull: { rooms: req.params.id },
     });
 
-    await Reservation.findOneAndDelete({
+    // Use deleteMany to delete all reservations matching the query
+    await Reservation.deleteMany({
       roomTypeId: req.params.id,
     });
 
-    res.status(200).json("Deleted Successfully");
+    return res.status(200).json("Deleted Successfully");
   } catch (error) {
     next(error);
   }
@@ -122,6 +124,7 @@ export const getRoomNumbers = async (req, res, next) => {
 export const deleteRoomReservation = async (req, res, next) => {
   try {
     //const hotelId = req.params.id;
+    console.log("deleteRoomReservation");
     const roomId = req.params.id;
     const roomNumberId = req.params.roomNumberId;
     const startDate = new Date(req.params.startDate);
@@ -130,39 +133,41 @@ export const deleteRoomReservation = async (req, res, next) => {
 
     const room = await Room.findById(req.params.id);
     console.log("room:", room);
-
-    let targetRoomNumber = null;
-    for (const roomNumber of room.roomNumbers) {
-      console.log(roomNumber._id.toString(), roomNumberId);
-      if (roomNumber._id.toString() === roomNumberId) {
-        targetRoomNumber = roomNumber;
-        break;
-      }
-    }
-    console.log("targetRoomNumber:", targetRoomNumber);
-    if (targetRoomNumber === null)
-      return res.status(404).json({ message: "room Number doesn't exist" });
-    const roomNumberIndex = room.roomNumbers.findIndex(
-      (roomNumber) => roomNumber._id.toString() === roomNumberId
-    );
-
-    const updatedUnavailableDates = targetRoomNumber.unavailableDates.filter(
-      (date) => {
-        console.log("date:", date, "\n");
-        // Check if date is outside the range of startDate and endDate
-        if (date) {
-          return (
-            date.getTime() < startDate.getTime() ||
-            date.getTime() > endDate.getTime()
-          );
+    if (room) {
+      let targetRoomNumber = null;
+      for (const roomNumber of room?.roomNumbers) {
+        console.log(roomNumber?._id?.toString(), roomNumberId);
+        if (roomNumber?._id?.toString().trim() === roomNumberId.trim()) {
+          console.log("found");
+          targetRoomNumber = roomNumber;
+          break;
         }
       }
-    );
-    console.log(updatedUnavailableDates);
+      console.log("targetRoomNumber:", targetRoomNumber);
+      if (targetRoomNumber === null)
+        return res.status(404).json({ message: "room Number doesn't exist" });
+      const roomNumberIndex = room.roomNumbers.findIndex(
+        (roomNumber) => roomNumber?._id?.toString() === roomNumberId
+      );
 
-    targetRoomNumber.unavailableDates = updatedUnavailableDates;
+      const updatedUnavailableDates = targetRoomNumber.unavailableDates.filter(
+        (date) => {
+          console.log("date:", date, "\n");
+          // Check if date is outside the range of startDate and endDate
+          if (date) {
+            return (
+              date.getTime() < startDate.getTime() ||
+              date.getTime() > endDate.getTime()
+            );
+          }
+        }
+      );
+      console.log(updatedUnavailableDates);
 
-    await room.save();
+      targetRoomNumber.unavailableDates = updatedUnavailableDates;
+      console.log(11111111);
+      await room.save();
+    }
     res.status(200).json({ message: "Reservation Dates deleted successfully" });
   } catch (error) {
     next(error);

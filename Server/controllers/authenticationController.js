@@ -56,12 +56,7 @@ export const login = async (req, res, next) => {
     const { password, ...otherDetails } = user._doc;
     res
       .status(200)
-      .cookie("accessToken", token, {
-        domain: "onrender.com",
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-      })
+      .cookie("accessToken", token)
       .json({ accessToken: token, details: { ...otherDetails } });
   } catch (error) {
     next(error);

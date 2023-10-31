@@ -1,6 +1,8 @@
 import Hotel from "../models/Hotel.js";
+import Reservation from "../models/Reservation.js";
 import Room from "../models/Room.js";
 import { createError } from "../utils/error.js";
+import { deleteRoom } from "./roomController.js";
 
 export const createHotel = async (req, res, next) => {
   const newHotel = new Hotel(req.body);
@@ -49,15 +51,49 @@ export const updateHotel = async (req, res, next) => {
   }
 };
 
-export const deleteHotel = async (req, res, next) => {
+const deleteRoomForHotel = async (req, res, next) => {
   try {
-    await Hotel.findByIdAndDelete(req.params.id);
+    console.log("room._id: ", req.params.id);
+    const exist = await Room.findById(req.params.id);
+    if (!exist) res.status(404).json("this room isn't found");
 
-    await Reservation.findOneAndDelete({
+    const hotelId = await Hotel.findById(exist.hotelId);
+
+    await Room.findByIdAndDelete(req.params.id);
+
+    await Hotel.findByIdAndUpdate(hotelId, {
+      $pull: { rooms: req.params.id },
+    });
+
+    await Reservation.deleteMany({
       roomTypeId: req.params.id,
     });
 
-    res.status(200).json("Deleted Successfully");
+    console.log(exist, "deleted successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteHotel = async (req, res, next) => {
+  try {
+    const hotelId = req.params.id;
+    const hotel = await Hotel.findById(hotelId);
+    console.log("hotel: ", hotel);
+    const rooms = hotel?.rooms;
+
+    for (const room of rooms) {
+      try {
+        req.params.id = room; // Update the parameter for the room being deleted
+        await deleteRoomForHotel(req, res, next);
+      } catch (error) {
+        next(error);
+      }
+    }
+
+    await Hotel.findByIdAndDelete(hotelId);
+
+    return res.status(200).json("Deleted Successfully");
   } catch (error) {
     next(error);
   }
