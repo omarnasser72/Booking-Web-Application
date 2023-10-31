@@ -85,6 +85,7 @@ const NewUser = () => {
 
   const [submitting, setSubmitting] = useState(false);
   const [excceded, setExceeded] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     userRef.current?.focus();
@@ -179,6 +180,7 @@ const NewUser = () => {
   };
   const handleClick = async (e) => {
     e.preventDefault();
+    setUploading(true);
     setSubmitting(true);
     if (file) handleUpload();
     try {
@@ -195,6 +197,7 @@ const NewUser = () => {
       } else {
         navigate("/adminDashboard/users");
       }
+      setUploading(false);
     } catch (error) {
       setErrMsg(error.response.data.message);
       console.log(error);
@@ -213,369 +216,431 @@ const NewUser = () => {
           </div>
           <NavbarAdmin />
         </div>
-        <div className="topUser">
-          <h3>Add New User</h3>
-        </div>
-        <div className="bottomUser" style={{ height: "100vh" }}>
-          <div className="left">
+
+        {uploading ? (
+          <div className="uploading">
             <img
-              src={
-                file && !excceded
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              }
+              className="uploadHotelIcon"
+              src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
             />
-            <div className="upload">
-              <label htmlFor="file">
-                <DriveFolderUploadOutlinedIcon className="icon" />
-              </label>
-              <input
-                type="file"
-                id="file"
-                onChange={(e) => setFile(e.target.files[0])}
-                style={{ display: "none" }}
-              />
+            <label>adding User </label>
+          </div>
+        ) : (
+          <>
+            <div className="topUser">
+              <h3>Add New User</h3>
             </div>
-            {excceded && (
-              <div className="exceededMsg">
-                Please, select Img size less than 1 MB to be uploaded
-              </div>
-            )}
-          </div>
-          <div className="right">
-            <form action="">
-              <div className="formInput">
-                <label htmlFor="username">
-                  Username :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validName ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={validName || !username ? "hide" : "invalid"}
-                  />
-                </label>
-                <input
-                  type="text"
-                  placeholder="username"
-                  id="username"
-                  onChange={handleChange}
-                  autoComplete="off"
-                  required
-                  onFocus={() => setUsernameFocus(true)}
-                  onBlur={() => setUsernameFocus(false)}
-                  aria-invalid={validName ? "false" : "true"}
-                  aria-describedby="uidnote"
-                />
-                <p
-                  id="uidnote"
-                  className={
-                    usernameFocus && username && !validName
-                      ? "instructions"
-                      : "offscreen"
+            <div className="bottomUser" style={{ height: "100vh" }}>
+              <div className="left">
+                <img
+                  src={
+                    file && !excceded
+                      ? URL.createObjectURL(file)
+                      : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
                   }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  4 to 24 characters.
-                  <br />
-                  Must begin with a letter.
-                  <br />
-                  Letters, numbers, underscores, hyphens allowed.
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {usernameExists ? errMsg : ""}
-                  {submitting && username === ""
-                    ? "This field is required"
-                    : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="password">
-                  Password :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validPwd ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={validPwd || !pwd ? "hide" : "invalid"}
-                  />
-                </label>
-                <input
-                  type="password"
-                  placeholder="********"
-                  id="password"
-                  onChange={handleChange}
-                  autoComplete="off"
-                  required
-                  onFocus={() => setPwdFocus(true)}
-                  onBlur={() => setPwdFocus(false)}
-                  aria-invalid={validPwd ? "false" : "true"}
-                  aria-describedby="pwdnote"
                 />
-                <p
-                  id="pwdnote"
-                  className={
-                    pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  8 to 24 characters.
-                  <br />
-                  Must include uppercase and lowercase letters, a number and a
-                  special character.
-                  <br />
-                  Allowed special characters:{" "}
-                  <span aria-label="exclamation mark">!</span>{" "}
-                  <span aria-label="at symbol">@</span>{" "}
-                  <span aria-label="hashtag">#</span>{" "}
-                  <span aria-label="dollar sign">$</span>{" "}
-                  <span aria-label="percent">%</span>
-                </p>
-
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {submitting && pwd === "" ? "This field is required" : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="confirmPwd">
-                  Confirm Password:{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validMatch && matchPwd ? "valid" : "hide"}
+                <div className="upload">
+                  <label htmlFor="file">
+                    <DriveFolderUploadOutlinedIcon className="icon" />
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    style={{ display: "none" }}
                   />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={!validMatch && matchPwd ? "invalid" : "hide"}
-                  />
-                </label>
-                <input
-                  type="password"
-                  id="confirmPwd"
-                  placeholder="********"
-                  onChange={handleChange}
-                  required
-                  aria-invalid={validMatch ? "false" : "true"}
-                  aria-describedby="confirmnote"
-                  onFocus={() => setMatchFocus(true)}
-                  onBlur={() => setMatchFocus(false)}
-                />
-                <p
-                  id="confirmnote"
-                  className={
-                    matchFocus && matchPwd && !validMatch
-                      ? "instructions"
-                      : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  Must match the first password input field.
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {!validMatch && !matchFocus ? "password doesn't match" : ""}
-                  {submitting && matchPwd === ""
-                    ? "This field is required"
-                    : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="email">
-                  Email :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validEmail && email ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={!validEmail && email ? "invalid" : "hide"}
-                  />
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  onChange={handleChange}
-                  defaultValue={email}
-                  required
-                  placeholder="khalid@example.com"
-                  aria-invalid={validEmail ? "false" : "true"}
-                  //aria-describedby="confirmnote"
-                  onFocus={() => setEmailFocus(true)}
-                  onBlur={() => setEmailFocus(false)}
-                />
-                <p
-                  id="confirmnote"
-                  className={
-                    emailFocus && email && !validEmail
-                      ? "instructions"
-                      : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  please, enter valid email such as:
-                  <br />
-                  example@mail.com
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {emailExists ? errMsg : ""}
-                  {submitting && email === "" ? "This field is required" : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="phone">
-                  Phone :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validPhone && phone ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={!validPhone && phone ? "invalid" : "hide"}
-                  />
-                </label>
-                <input
-                  type="text"
-                  id="phone"
-                  onChange={handleChange}
-                  required
-                  placeholder="012 5665 5648"
-                  aria-invalid={validPhone ? "false" : "true"}
-                  aria-describedby="phonenote"
-                  onFocus={() => setPhoneFocus(true)}
-                  onBlur={() => setPhoneFocus(false)}
-                />
-                <p
-                  id="phonenote"
-                  className={
-                    phoneFocus && phone && !validPhone
-                      ? "instructions"
-                      : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  please, enter valid phone like this:
-                  <br />
-                  012 5665 5648
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {phoneExists ? errMsg : ""}
-
-                  {submitting && phone === "" ? "This field is required" : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="country">
-                  Country :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validCountry && country ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={!validCountry && country ? "invalid" : "hide"}
-                  />
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  onChange={handleChange}
-                  required
-                  placeholder="USA"
-                  aria-invalid={validCountry ? "false" : "true"}
-                  aria-describedby="countrynote"
-                  onFocus={() => setCountryFocus(true)}
-                  onBlur={() => setCountryFocus(false)}
-                />
-                <p
-                  id="countrynote"
-                  className={
-                    countryFocus && country && !validCountry
-                      ? "instructions"
-                      : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  please, enter valid country name
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {submitting && country === "" ? "This field is required" : ""}
-                </p>
-              </div>
-              <div className="formInput">
-                <label htmlFor="city">
-                  City :{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validCity && city ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={!validCity && city ? "invalid" : "hide"}
-                  />
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  onChange={handleChange}
-                  required
-                  placeholder="New York"
-                  aria-invalid={validCity ? "false" : "true"}
-                  aria-describedby="citynote"
-                  onFocus={() => setCityFocus(true)}
-                  onBlur={() => setCityFocus(false)}
-                />
-                <p
-                  id="citynote"
-                  className={
-                    cityFocus && city && !validCity
-                      ? "instructions"
-                      : "offscreen"
-                  }
-                >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <br />
-                  please, enter valid city name
-                </p>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {submitting && city === "" ? "This field is required" : ""}
-                </p>
-              </div>
-              <div className="birthDate">
-                <label htmlFor="birthdate">Birthdate : </label>
-                <br />
-                <div className="" style={{ cursor: "pointer", width: "100%" }}>
-                  <DatePicker
-                    selected={birthDate}
-                    onChange={(date) => setBirthDate(date)}
-                    dateFormat="MM/dd/yyyy"
-                    placeholderText="Select a birthdate"
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={100}
-                    dropdownMode="select"
-                    maxDate={minDate} // Set min date to 16 years ago
-                  />
-                  <br />
                 </div>
-                <p ref={errRef} className="inputErrMsg" aria-live="assertive">
-                  {submitting && birthDate === null
-                    ? "This field is required"
-                    : ""}
-                </p>
+                {excceded && (
+                  <div className="exceededMsg">
+                    Please, select Img size less than 1 MB to be uploaded
+                  </div>
+                )}
               </div>
-              <br />
-              <button className="submitBtn" onClick={handleClick}>
-                Submit
-              </button>
-            </form>
-          </div>
-        </div>
+              <div className="right">
+                <form action="">
+                  <div className="formInput">
+                    <label htmlFor="username">
+                      Username :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validName ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={validName || !username ? "hide" : "invalid"}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="username"
+                      id="username"
+                      onChange={handleChange}
+                      autoComplete="off"
+                      required
+                      onFocus={() => setUsernameFocus(true)}
+                      onBlur={() => setUsernameFocus(false)}
+                      aria-invalid={validName ? "false" : "true"}
+                      aria-describedby="uidnote"
+                    />
+                    <p
+                      id="uidnote"
+                      className={
+                        usernameFocus && username && !validName
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      4 to 24 characters.
+                      <br />
+                      Must begin with a letter.
+                      <br />
+                      Letters, numbers, underscores, hyphens allowed.
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {usernameExists ? errMsg : ""}
+                      {submitting && username === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="password">
+                      Password :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validPwd ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={validPwd || !pwd ? "hide" : "invalid"}
+                      />
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="********"
+                      id="password"
+                      onChange={handleChange}
+                      autoComplete="off"
+                      required
+                      onFocus={() => setPwdFocus(true)}
+                      onBlur={() => setPwdFocus(false)}
+                      aria-invalid={validPwd ? "false" : "true"}
+                      aria-describedby="pwdnote"
+                    />
+                    <p
+                      id="pwdnote"
+                      className={
+                        pwdFocus && pwd && !validPwd
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      8 to 24 characters.
+                      <br />
+                      Must include uppercase and lowercase letters, a number and
+                      a special character.
+                      <br />
+                      Allowed special characters:{" "}
+                      <span aria-label="exclamation mark">!</span>{" "}
+                      <span aria-label="at symbol">@</span>{" "}
+                      <span aria-label="hashtag">#</span>{" "}
+                      <span aria-label="dollar sign">$</span>{" "}
+                      <span aria-label="percent">%</span>
+                    </p>
+
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {submitting && pwd === "" ? "This field is required" : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="confirmPwd">
+                      Confirm Password:{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validMatch && matchPwd ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={!validMatch && matchPwd ? "invalid" : "hide"}
+                      />
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPwd"
+                      placeholder="********"
+                      onChange={handleChange}
+                      required
+                      aria-invalid={validMatch ? "false" : "true"}
+                      aria-describedby="confirmnote"
+                      onFocus={() => setMatchFocus(true)}
+                      onBlur={() => setMatchFocus(false)}
+                    />
+                    <p
+                      id="confirmnote"
+                      className={
+                        matchFocus && matchPwd && !validMatch
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      Must match the first password input field.
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {!validMatch && !matchFocus
+                        ? "password doesn't match"
+                        : ""}
+                      {submitting && matchPwd === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="email">
+                      Email :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validEmail && email ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={!validEmail && email ? "invalid" : "hide"}
+                      />
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      onChange={handleChange}
+                      defaultValue={email}
+                      required
+                      placeholder="khalid@example.com"
+                      aria-invalid={validEmail ? "false" : "true"}
+                      //aria-describedby="confirmnote"
+                      onFocus={() => setEmailFocus(true)}
+                      onBlur={() => setEmailFocus(false)}
+                    />
+                    <p
+                      id="confirmnote"
+                      className={
+                        emailFocus && email && !validEmail
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      please, enter valid email such as:
+                      <br />
+                      example@mail.com
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {emailExists ? errMsg : ""}
+                      {submitting && email === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="phone">
+                      Phone :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validPhone && phone ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={!validPhone && phone ? "invalid" : "hide"}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id="phone"
+                      onChange={handleChange}
+                      required
+                      placeholder="012 5665 5648"
+                      aria-invalid={validPhone ? "false" : "true"}
+                      aria-describedby="phonenote"
+                      onFocus={() => setPhoneFocus(true)}
+                      onBlur={() => setPhoneFocus(false)}
+                    />
+                    <p
+                      id="phonenote"
+                      className={
+                        phoneFocus && phone && !validPhone
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      please, enter valid phone like this:
+                      <br />
+                      012 5665 5648
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {phoneExists ? errMsg : ""}
+
+                      {submitting && phone === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="country">
+                      Country :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validCountry && country ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          !validCountry && country ? "invalid" : "hide"
+                        }
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id="country"
+                      onChange={handleChange}
+                      required
+                      placeholder="USA"
+                      aria-invalid={validCountry ? "false" : "true"}
+                      aria-describedby="countrynote"
+                      onFocus={() => setCountryFocus(true)}
+                      onBlur={() => setCountryFocus(false)}
+                    />
+                    <p
+                      id="countrynote"
+                      className={
+                        countryFocus && country && !validCountry
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      please, enter valid country name
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {submitting && country === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="city">
+                      City :{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validCity && city ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={!validCity && city ? "invalid" : "hide"}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id="city"
+                      onChange={handleChange}
+                      required
+                      placeholder="New York"
+                      aria-invalid={validCity ? "false" : "true"}
+                      aria-describedby="citynote"
+                      onFocus={() => setCityFocus(true)}
+                      onBlur={() => setCityFocus(false)}
+                    />
+                    <p
+                      id="citynote"
+                      className={
+                        cityFocus && city && !validCity
+                          ? "instructions"
+                          : "offscreen"
+                      }
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <br />
+                      please, enter valid city name
+                    </p>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {submitting && city === ""
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <div className="birthDate">
+                    <label htmlFor="birthdate">Birthdate : </label>
+                    <br />
+                    <div
+                      className=""
+                      style={{ cursor: "pointer", width: "100%" }}
+                    >
+                      <DatePicker
+                        selected={birthDate}
+                        onChange={(date) => setBirthDate(date)}
+                        dateFormat="MM/dd/yyyy"
+                        placeholderText="Select a birthdate"
+                        showYearDropdown
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        dropdownMode="select"
+                        maxDate={minDate} // Set min date to 16 years ago
+                      />
+                      <br />
+                    </div>
+                    <p
+                      ref={errRef}
+                      className="inputErrMsg"
+                      aria-live="assertive"
+                    >
+                      {submitting && birthDate === null
+                        ? "This field is required"
+                        : ""}
+                    </p>
+                  </div>
+                  <br />
+                  <button className="submitBtn" onClick={handleClick}>
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

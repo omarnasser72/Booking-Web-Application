@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
 import { createToken } from "../utils/jwt.js";
+import Reservation from "../models/Reservation.js";
 
 export const changePwd = async (req, res, next) => {
   try {

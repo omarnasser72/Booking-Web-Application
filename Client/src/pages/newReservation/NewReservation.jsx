@@ -82,6 +82,8 @@ const NewReservation = () => {
   const [success, setSuccess] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
+  const [uploading, setUploading] = useState(false);
+
   useEffect(() => {
     console.log(selectedDates);
   }, [selectedDates]);
@@ -344,6 +346,7 @@ const NewReservation = () => {
 
   const handleSubmition = async (e) => {
     e.preventDefault();
+    setUploading(true);
     if (
       !(
         validUser &&
@@ -404,6 +407,7 @@ const NewReservation = () => {
         } catch (err) {
           console.log(err);
         }
+        setUploading(false);
         navigate("/adminDashboard/reservations");
       } catch (error) {
         console.log(error);
@@ -423,217 +427,235 @@ const NewReservation = () => {
           </div>
           <NavbarAdmin />
         </div>
-        <div className="top">
-          <h3>Add New Reservation</h3>
-        </div>
-        <div className="bottom">
-          <form action="">
-            <p
-              ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
-            <div className="wrapper">
-              <div className="formInput">
-                <label>
-                  User{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validUser && user !== "" ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={
-                      validUser || (user === "" && !userFocus)
-                        ? "hide"
-                        : "invalid"
-                    }
-                  />
-                </label>
-                <select
-                  name="userId"
-                  onChange={handleChange}
-                  value={userId}
-                  onFocus={() => setUserFocus(true)}
+
+        {uploading ? (
+          <div className="uploading">
+            <img
+              className="uploadHotelIcon"
+              src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+            />
+            <label>adding Reservation </label>
+          </div>
+        ) : (
+          <>
+            <div className="top">
+              <h3>Add New Reservation</h3>
+            </div>
+            <div className="bottom">
+              <form action="">
+                <p
+                  ref={errRef}
+                  className={errMsg ? "errmsg" : "offscreen"}
+                  aria-live="assertive"
                 >
-                  {usersLoading ? (
-                    <option>loading</option>
-                  ) : (
-                    <>
-                      <option value="">Select user</option>
-                      {users.map((user) => (
-                        <option value={user._id}>{user.username}</option>
-                      ))}
-                    </>
+                  {errMsg}
+                </p>
+                <div className="wrapper">
+                  <div className="formInput">
+                    <label>
+                      User{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={validUser && user !== "" ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          validUser || (user === "" && !userFocus)
+                            ? "hide"
+                            : "invalid"
+                        }
+                      />
+                    </label>
+                    <select
+                      name="userId"
+                      onChange={handleChange}
+                      value={userId}
+                      onFocus={() => setUserFocus(true)}
+                    >
+                      {usersLoading ? (
+                        <option>loading</option>
+                      ) : (
+                        <>
+                          <option value="">Select user</option>
+                          {users.map((user) => (
+                            <option value={user._id}>{user.username}</option>
+                          ))}
+                        </>
+                      )}
+                    </select>
+                  </div>
+                  <div className="formInput">
+                    <label>
+                      Hotel{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={
+                          validHotel && hotel && hotelFocus !== ""
+                            ? "valid"
+                            : "hide"
+                        }
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          validHotel || (hotel === "" && !hotelFocus)
+                            ? "hide"
+                            : "invalid"
+                        }
+                      />
+                    </label>
+                    <select
+                      name="hotelId"
+                      onChange={handleChange}
+                      value={hotelId}
+                      defaultValue={""}
+                      onFocus={() => setHotelFocus(true)}
+                    >
+                      {hotelsLoading ? (
+                        <option>loading</option>
+                      ) : (
+                        <>
+                          <option value="">Select a hotel</option>
+                          {hotels.map((hotel) => (
+                            <option value={hotel._id}>{hotel.name}</option>
+                          ))}
+                        </>
+                      )}
+                    </select>
+                  </div>
+                </div>
+                <div className="wrapper">
+                  <div className="formInput">
+                    <label>
+                      Room Type:{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={
+                          validRoomType && roomType !== "" && roomTypeFocus
+                            ? "valid"
+                            : "hide"
+                        }
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          validRoomType || (roomType === "" && !roomTypeFocus)
+                            ? "hide"
+                            : "invalid"
+                        }
+                      />
+                    </label>
+                    <select
+                      name="roomTypeId"
+                      onChange={handleChange}
+                      value={roomTypeId}
+                      onFocus={() => setRoomTypeFocus(true)}
+                    >
+                      <option value="">Select a room</option>
+                      {rooms &&
+                        rooms.map((room) => (
+                          <option value={room._id}>{room.title}</option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="formInput">
+                    <label>
+                      Room Number:{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={
+                          validRoomNumber &&
+                          roomNumber !== "" &&
+                          roomNumberFocus
+                            ? "valid"
+                            : "hide"
+                        }
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          validRoomNumber ||
+                          (roomNumber === "" && !roomNumberFocus)
+                            ? "hide"
+                            : "invalid"
+                        }
+                      />
+                    </label>
+                    <select
+                      name="roomNumberId"
+                      onChange={handleChange}
+                      onFocus={() => setRoomNumberFocus(true)}
+                    >
+                      <option value="">Select a room number</option>
+                      {roomNumbers &&
+                        roomNumbers.map((roomNumber) => (
+                          <option value={roomNumber._id}>
+                            {roomNumber.number}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="dateRange">
+                  <div className="headerDate" onClick={handleCalendar}>
+                    <label>
+                      Duration of Reservation:{" "}
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={
+                          validDates && dates !== "" && dateFocus
+                            ? "valid"
+                            : "hide"
+                        }
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        className={
+                          validDates ||
+                          (((dates.startDate === undefined &&
+                            dates.endDate === undefined) ||
+                            dates === "") &&
+                            !dateFocus)
+                            ? "hide"
+                            : "invalid"
+                        }
+                      />
+                      <br />
+                    </label>
+                    <FontAwesomeIcon icon={faCalendarDays} />
+                    <span
+                      className="headerSearchText"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      {`${format(dateRange.startDate, "dd/MM/yyyy ")}`} to
+                      {`${format(dateRange.endDate, " dd/MM/yyyy")}`}
+                    </span>
+                  </div>
+                  {openCalender && (
+                    <DateRange
+                      editableDateInputs={true}
+                      onChange={handleDateSelection}
+                      moveRangeOnFirstSelection={false}
+                      ranges={[dateRange]}
+                      className="date"
+                      minDate={new Date()}
+                      disabledDates={roomNumberId ? disabledDates : currentDay}
+                    />
                   )}
-                </select>
-              </div>
-              <div className="formInput">
-                <label>
-                  Hotel{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={
-                      validHotel && hotel && hotelFocus !== ""
-                        ? "valid"
-                        : "hide"
-                    }
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={
-                      validHotel || (hotel === "" && !hotelFocus)
-                        ? "hide"
-                        : "invalid"
-                    }
-                  />
-                </label>
-                <select
-                  name="hotelId"
-                  onChange={handleChange}
-                  value={hotelId}
-                  defaultValue={""}
-                  onFocus={() => setHotelFocus(true)}
-                >
-                  {hotelsLoading ? (
-                    <option>loading</option>
-                  ) : (
-                    <>
-                      <option value="">Select a hotel</option>
-                      {hotels.map((hotel) => (
-                        <option value={hotel._id}>{hotel.name}</option>
-                      ))}
-                    </>
-                  )}
-                </select>
-              </div>
-            </div>
-            <div className="wrapper">
-              <div className="formInput">
-                <label>
-                  Room Type:{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={
-                      validRoomType && roomType !== "" && roomTypeFocus
-                        ? "valid"
-                        : "hide"
-                    }
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={
-                      validRoomType || (roomType === "" && !roomTypeFocus)
-                        ? "hide"
-                        : "invalid"
-                    }
-                  />
-                </label>
-                <select
-                  name="roomTypeId"
-                  onChange={handleChange}
-                  value={roomTypeId}
-                  onFocus={() => setRoomTypeFocus(true)}
-                >
-                  <option value="">Select a room</option>
-                  {rooms &&
-                    rooms.map((room) => (
-                      <option value={room._id}>{room.title}</option>
-                    ))}
-                </select>
-              </div>
+                </div>
 
-              <div className="formInput">
-                <label>
-                  Room Number:{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={
-                      validRoomNumber && roomNumber !== "" && roomNumberFocus
-                        ? "valid"
-                        : "hide"
-                    }
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={
-                      validRoomNumber || (roomNumber === "" && !roomNumberFocus)
-                        ? "hide"
-                        : "invalid"
-                    }
-                  />
-                </label>
-                <select
-                  name="roomNumberId"
-                  onChange={handleChange}
-                  onFocus={() => setRoomNumberFocus(true)}
-                >
-                  <option value="">Select a room number</option>
-                  {roomNumbers &&
-                    roomNumbers.map((roomNumber) => (
-                      <option value={roomNumber._id}>
-                        {roomNumber.number}
-                      </option>
-                    ))}
-                </select>
-              </div>
+                <div className="wrapper">
+                  <button className="submitBtn" onClick={handleSubmition}>
+                    Submit
+                  </button>
+                </div>
+              </form>
             </div>
-
-            <div className="dateRange">
-              <div className="headerDate" onClick={handleCalendar}>
-                <label>
-                  Duration of Reservation:{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={
-                      validDates && dates !== "" && dateFocus ? "valid" : "hide"
-                    }
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={
-                      validDates ||
-                      (((dates.startDate === undefined &&
-                        dates.endDate === undefined) ||
-                        dates === "") &&
-                        !dateFocus)
-                        ? "hide"
-                        : "invalid"
-                    }
-                  />
-                  <br />
-                </label>
-                <FontAwesomeIcon icon={faCalendarDays} />
-                <span
-                  className="headerSearchText"
-                  style={{ marginLeft: "5px" }}
-                >
-                  {`${format(dateRange.startDate, "dd/MM/yyyy ")}`} to
-                  {`${format(dateRange.endDate, " dd/MM/yyyy")}`}
-                </span>
-              </div>
-              {openCalender && (
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={handleDateSelection}
-                  moveRangeOnFirstSelection={false}
-                  ranges={[dateRange]}
-                  className="date"
-                  minDate={new Date()}
-                  disabledDates={roomNumberId ? disabledDates : currentDay}
-                />
-              )}
-            </div>
-
-            <div className="wrapper">
-              <button className="submitBtn" onClick={handleSubmition}>
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
+          </>
+        )}
       </div>
       <div className="errMsg">{error}</div>
     </div>

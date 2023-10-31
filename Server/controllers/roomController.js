@@ -62,8 +62,6 @@ export const deleteRoom = async (req, res, next) => {
 
     const hotelId = await Hotel.findById(exist.hotelId);
 
-    await Room.findByIdAndDelete(req.params.id);
-
     await Hotel.findByIdAndUpdate(hotelId, {
       $pull: { rooms: req.params.id },
     });
@@ -72,6 +70,8 @@ export const deleteRoom = async (req, res, next) => {
     await Reservation.deleteMany({
       roomTypeId: req.params.id,
     });
+
+    await Room.findByIdAndDelete(req.params.id);
 
     return res.status(200).json("Deleted Successfully");
   } catch (error) {
@@ -162,10 +162,9 @@ export const deleteRoomReservation = async (req, res, next) => {
           }
         }
       );
-      console.log(updatedUnavailableDates);
+      console.log("updatedUnavailableDates: ", updatedUnavailableDates);
 
       targetRoomNumber.unavailableDates = updatedUnavailableDates;
-      console.log(11111111);
       await room.save();
     }
     res.status(200).json({ message: "Reservation Dates deleted successfully" });
