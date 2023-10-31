@@ -119,6 +119,9 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
+    await Reservation.deleteMany({
+      userId: req.params.id,
+    });
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("Deleted Successfully");
   } catch (error) {
