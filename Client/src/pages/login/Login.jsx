@@ -9,11 +9,13 @@ import {
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Login = () => {
+  const history = useHistory();
   const [credentials, setCredentials] = useState({
     username: undefined,
     password: undefined,
@@ -74,9 +76,8 @@ const Login = () => {
             accessToken: res.data.accessToken,
           });
           res.data.details.isAdmin === true
-            ? (window.location.href = "adminDashboard")
-            : //? navigate("/adminDashboard/")
-              (window.location.href = "/");
+            ? navigate("/adminDashboard/")
+            : (window.location.href = "/");
           //: navigate("/");
         } else {
           dispatch({
