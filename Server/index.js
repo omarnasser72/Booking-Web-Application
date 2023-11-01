@@ -9,6 +9,11 @@ import reservationsRoute from "./routes/reservations.js";
 import rateRoute from "./routes/hotelRates.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { fileURLToPath } from "url"; // Import the 'fileURLToPath' function
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url); // Get the current module's filename
+const __dirname = path.dirname(__filename); // Get the directory name
 
 const app = express();
 dotenv.config();
@@ -16,7 +21,7 @@ dotenv.config();
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO);
-    console.log("connected to the database");
+    console.log("Connected to the database");
   } catch (error) {
     throw error;
   }
@@ -31,7 +36,6 @@ app.use(cors({ origin: "*" }));
 // );
 
 app.use(cookieParser());
-// To send JSON to Express, we have to use its middleware
 app.use(express.json());
 
 app.use("/auth", authRoute);
@@ -52,7 +56,16 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8080, () => {
+// Serve static assets (e.g., CSS, JavaScript, images)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Serve the main HTML file for all other routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+const port = process.env.PORT;
+app.listen(port, () => {
   connect();
-  console.log("Connected with the backend...");
+  console.log(`Server is running on port ${port}`);
 });
