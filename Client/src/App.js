@@ -70,21 +70,12 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="resetPassword" element={<ResetPwd />} />
           <Route path="adminDashboard">
-<<<<<<< HEAD
-            <Route
-              index
-              element={<ProtectedAdminRoute element={<AdminHome />} />}
-            />
-            <Route path="login" element={<Login />} />
-            <Route
-=======
             <Route path="login" element={<Login />} />
             <Route
               index
               element={<ProtectedAdminRoute element={<AdminHome />} />}
             />
             <Route
->>>>>>> 2aa36c3 (trying hashrouter)
               path="adminProfile"
               element={<ProtectedAdminRoute element={<AdminProfile />} />}
             />
