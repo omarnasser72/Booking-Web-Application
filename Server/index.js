@@ -56,14 +56,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Serve static assets (e.g., CSS, JavaScript, images)
-app.use(express.static(path.join(__dirname, "public")));
-
-// Serve the main HTML file for all other routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 const port = process.env.PORT;
 app.listen(port, () => {
   connect();

@@ -59,164 +59,162 @@ function App() {
 
   return (
     <AuthContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/Booking-Web-app">
-            <Route index element={<Login />} />
-          </Route>
+      <Routes>
+        <Route path="/Booking-Web-app">
+          <Route index element={<Login />} />
+        </Route>
 
-          <Route path="/">
-            <Route index element={<ProtectedRoute element={<Home />} />} />
+        <Route path="/">
+          <Route index element={<ProtectedRoute element={<Home />} />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="resetPassword" element={<ResetPwd />} />
+          <Route path="adminDashboard">
             <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="resetPassword" element={<ResetPwd />} />
-            <Route path="adminDashboard">
-              <Route path="login" element={<Login />} />
+            <Route
+              index
+              element={<ProtectedAdminRoute element={<AdminHome />} />}
+            />
+            <Route
+              path="adminProfile"
+              element={<ProtectedAdminRoute element={<AdminProfile />} />}
+            />
+            <Route path="users">
               <Route
                 index
-                element={<ProtectedAdminRoute element={<AdminHome />} />}
+                element={
+                  <ProtectedAdminRoute
+                    element={<AdminList columns={userColumns} />}
+                  />
+                }
               />
               <Route
-                path="adminProfile"
-                element={<ProtectedAdminRoute element={<AdminProfile />} />}
+                path=":userId"
+                element={<ProtectedAdminRoute element={<SingleUser />} />}
               />
-              <Route path="users">
-                <Route
-                  index
-                  element={
-                    <ProtectedAdminRoute
-                      element={<AdminList columns={userColumns} />}
-                    />
-                  }
-                />
-                <Route
-                  path=":userId"
-                  element={<ProtectedAdminRoute element={<SingleUser />} />}
-                />
-                <Route
-                  path="new"
-                  element={<ProtectedAdminRoute element={<NewUser />} />}
-                />
-              </Route>
-              <Route path="hotels">
-                <Route
-                  index
-                  element={
-                    <ProtectedAdminRoute
-                      element={<AdminList columns={hotelColumns} />}
-                    />
-                  }
-                />
-
-                <Route
-                  path=":hotelId"
-                  element={<ProtectedAdminRoute element={<SingleHotel />} />}
-                />
-                <Route
-                  path="new"
-                  element={<ProtectedAdminRoute element={<NewHotel />} />}
-                />
-              </Route>
-              <Route path="rooms">
-                <Route
-                  index
-                  element={
-                    <ProtectedAdminRoute
-                      element={<AdminList columns={roomColumns} />}
-                    />
-                  }
-                />
-
-                <Route
-                  path=":roomId"
-                  element={<ProtectedAdminRoute element={<SingleRoom />} />}
-                />
-                <Route
-                  path="new"
-                  element={<ProtectedAdminRoute element={<NewRoom />} />}
-                />
-              </Route>
-              <Route path="reservations">
-                <Route
-                  index
-                  element={
-                    <ProtectedAdminRoute
-                      element={<AdminList columns={reservationColumns} />}
-                    />
-                  }
-                />
-
-                <Route
-                  path=":reservationId"
-                  element={<ProtectedRoute element={<SingleReservation />} />}
-                />
-                <Route
-                  path="new"
-                  element={<ProtectedRoute element={<NewReservation />} />}
-                />
-              </Route>
-            </Route>
-            <Route
-              path="Flights"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="CarRental"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="AirportTaxies"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route
-              path="Attractions"
-              element={<ProtectedRoute element={<ListType />} />}
-            />
-            <Route path="/profile">
-              <Route index element={<ProtectedRoute element={<Profile />} />} />
               <Route
-                path="changePwd"
-                element={<ProtectedRoute element={<ChangePwd />} />}
+                path="new"
+                element={<ProtectedAdminRoute element={<NewUser />} />}
               />
             </Route>
+            <Route path="hotels">
+              <Route
+                index
+                element={
+                  <ProtectedAdminRoute
+                    element={<AdminList columns={hotelColumns} />}
+                  />
+                }
+              />
 
-            <Route
-              path="/hotels"
-              element={<ProtectedRoute element={<List />} />}
-            />
-            <Route
-              path="/hotels/:id"
-              element={<ProtectedRoute element={<Hotel />} />}
-            />
-            <Route
-              path="/hotels/reservation/:id"
-              element={<ProtectedRoute element={<Reservation />} />}
-            />
-            <Route path="/ListAll/">
               <Route
-                path="hotels"
-                element={<ProtectedRoute element={<ListType />} />}
+                path=":hotelId"
+                element={<ProtectedAdminRoute element={<SingleHotel />} />}
               />
               <Route
-                path="apartments"
-                element={<ProtectedRoute element={<ListType />} />}
+                path="new"
+                element={<ProtectedAdminRoute element={<NewHotel />} />}
+              />
+            </Route>
+            <Route path="rooms">
+              <Route
+                index
+                element={
+                  <ProtectedAdminRoute
+                    element={<AdminList columns={roomColumns} />}
+                  />
+                }
+              />
+
+              <Route
+                path=":roomId"
+                element={<ProtectedAdminRoute element={<SingleRoom />} />}
               />
               <Route
-                path="resorts"
-                element={<ProtectedRoute element={<ListType />} />}
+                path="new"
+                element={<ProtectedAdminRoute element={<NewRoom />} />}
+              />
+            </Route>
+            <Route path="reservations">
+              <Route
+                index
+                element={
+                  <ProtectedAdminRoute
+                    element={<AdminList columns={reservationColumns} />}
+                  />
+                }
+              />
+
+              <Route
+                path=":reservationId"
+                element={<ProtectedRoute element={<SingleReservation />} />}
               />
               <Route
-                path="villas"
-                element={<ProtectedRoute element={<ListType />} />}
-              />
-              <Route
-                path="cabins"
-                element={<ProtectedRoute element={<ListType />} />}
+                path="new"
+                element={<ProtectedRoute element={<NewReservation />} />}
               />
             </Route>
           </Route>
-        </Routes>
-      </BrowserRouter>
+          <Route
+            path="Flights"
+            element={<ProtectedRoute element={<ListType />} />}
+          />
+          <Route
+            path="CarRental"
+            element={<ProtectedRoute element={<ListType />} />}
+          />
+          <Route
+            path="AirportTaxies"
+            element={<ProtectedRoute element={<ListType />} />}
+          />
+          <Route
+            path="Attractions"
+            element={<ProtectedRoute element={<ListType />} />}
+          />
+          <Route path="/profile">
+            <Route index element={<ProtectedRoute element={<Profile />} />} />
+            <Route
+              path="changePwd"
+              element={<ProtectedRoute element={<ChangePwd />} />}
+            />
+          </Route>
+
+          <Route
+            path="/hotels"
+            element={<ProtectedRoute element={<List />} />}
+          />
+          <Route
+            path="/hotels/:id"
+            element={<ProtectedRoute element={<Hotel />} />}
+          />
+          <Route
+            path="/hotels/reservation/:id"
+            element={<ProtectedRoute element={<Reservation />} />}
+          />
+          <Route path="/ListAll/">
+            <Route
+              path="hotels"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="apartments"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="resorts"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="villas"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+            <Route
+              path="cabins"
+              element={<ProtectedRoute element={<ListType />} />}
+            />
+          </Route>
+        </Route>
+      </Routes>
     </AuthContextProvider>
   );
 }
