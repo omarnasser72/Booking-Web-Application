@@ -56,6 +56,14 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Serve static files
+app.use(express.static(path.join(__dirname, "build")));
+
+// Handle routing by serving index.html for all routes
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 const port = process.env.PORT;
 app.listen(port, () => {
   connect();

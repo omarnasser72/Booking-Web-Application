@@ -70,11 +70,11 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="resetPassword" element={<ResetPwd />} />
           <Route path="adminDashboard">
-            <Route path="login" element={<Login />} />
             <Route
               index
               element={<ProtectedAdminRoute element={<AdminHome />} />}
             />
+            <Route path="login" element={<Login />} />
             <Route
               path="adminProfile"
               element={<ProtectedAdminRoute element={<AdminProfile />} />}
