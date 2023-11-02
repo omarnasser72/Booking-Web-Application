@@ -89,3 +89,30 @@ api takes hotel's id and search if exists in database it deletes it</p>
 <p>we use only verifyUser middleware in this route</p>
 <h2>Reservation Route</h2>
 <p>with getReservation we use verifyUser middleware and with the rest apis we use verifyAdmin</p>
+<h2>Front-end side</h2>
+<h3>Components</h3>
+<h4>NavbarAdmin</h4>
+<p>this belongs to Admin Dashboard which contains Admin profile image (when clicked it  takes you to Admin profile page) </p>
+<h4>Navbar</h4>
+<p>this belongs to userDashboard which contains Admin profile image (when you hover on it shows you view profile which takes you to user profile page and logout) </p>
+<h4>Header</h4>
+<p>this belongs to userDashboard which contains Stays, Flights, CarRentals, Airport taxies, Attractions, about section, signin/register button (takes you to login page) and Search Bar which contains <ul><li>destination </li><li>calendar </li><li>Options(no of adults and children) </li><li>Search button </li></ul></p>
+
+<h4>MailList</h4>
+<p>this belongs to userDashboard which contains email input and sign up button which takes you to register page and fill email field with field typed in email input</p>
+<h4>Footer</h4>
+<p>this belongs to userDashboard
+Contains Countries, regions, cities, districts, places of Interest, Airports and hotelw</p>
+
+<h4>Featured</h4>
+<p>this belongs to userDashboard
+Contains cities with it's number of properties </p>
+<h4>FeaturedProperties</h4>
+<p>this belongs to userDashboard
+Contains featured hotels with it's name, photo, city, cheapest price, rate</p>
+<h4>PropertyList</h4>
+<p>this belongs to userDashboard
+Contains properties like hotels, villas, apartments, cabins each with it's count</p>
+<h4>SearchItem</h4>
+<p>this belongs to userDashboard
+Contains image and description which has name, distance from city center, taxi options, cancel options and rate if it has</p>
