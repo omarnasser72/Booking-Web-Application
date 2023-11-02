@@ -116,3 +116,15 @@ Contains properties like hotels, villas, apartments, cabins each with it's count
 <h4>SearchItem</h4>
 <p>this belongs to userDashboard
 Contains image and description which has name, distance from city center, taxi options, cancel options and rate if it has</p>
+<h4>Reserve</h4>
+<p>this belongs to userDashboard
+Contains change date duration button which open calendar to specify reservation duration and hotel's rooms types with it's room numbers the available ones based on search criteria and unavailable ones and Reserve button to reserve selected rooms</p>
+<h4>Widget</h4>
+<p>this belongs to adminDashboard
+Contains items (users, hotels, rooms, reservations) each with it's quantity and link to it's page</p>
+<h4>Table</h4>
+<p>this belongs to adminDashboard
+Contains table of latest reservations that has been submitted each row with informational data instead of ids including(user's profile image, username, hotel's name, roomType's name, room Number, Duration, cost of reservation ) </p>
+<h4>Datatable</h4>
+<p>this belongs to adminDashboard
+Contains data the user request in url like users, hotels, rooms and reservations each row has view(to open detailed page for that item of data) , delete(to delete that item of data) </p>
