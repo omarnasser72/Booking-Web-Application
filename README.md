@@ -39,7 +39,7 @@ userId(to identify which user rate this value with this rate)  </p>
 <p>Let's talk about each</p>
 <p><strong>changePwd</strong> api this api takes <strong>id, email, old and new passwords</strong> from request sent and check for user if it exists first then it trys to match the old password with the one stored in database<br/> after passing these 2 steps we update the user with the data sent and encrypting new password before storing it<br/>after doing that successfully we use nodemailer to sent to user's email message informing him that the password has changed then senting new updated user in json format in response</p>
 <p><strong>updateUser</strong> api takes id and updated user checks if username or email or phone of anyother user except current one already exists in database if none of them exists we update user with the new object sent and using nodemailer we sent to user that profile has been updated successfully</p>
-<p><strong>deleteUser</strong> api takes user's id from params and delete user</p>
+<p><strong>deleteUser</strong> api takes user's id from params delete all user's reservations and delete user</p>
 <p><strong>getUser</strong>api takes user's id from params and search for user using user's id and return it if exists</p>
 <p><strong>getAllUsers</strong> api return all users from datebase</p>
 
@@ -48,12 +48,13 @@ userId(to identify which user rate this value with this rate)  </p>
 <strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong><p><strong>signup</strong> api takes user object and check if the username, email, phone already exists in database if not we save new user in and hash password before saving it in database using bycrypt then using node mailer we send mail to the user's email informing him that he has registered on our webapp</p>
 <strong>login</strong> api takes credentials for logging in represented in (username, password ) and search for user using username in database if exists it signs new token and extracts password, is Admin and return other information in the user object</p>
 <p><strong>logout</strong> api it resets access Token to empty</p>
+<p><strong>forgetPwd</strong>takes email of user and generate random password using generateRandomPwd function and set user's password to this random password and send this password to user's email</p>
 <h3>Hotel Controller</h3>
 <strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong>
 <p><strong>createHotel</strong> api takes hotel object and check if it's name doesn't exist it saves it on database</p>
 <p><strong>updateHotel</strong> api takes updated data and retrieve previous state of the hotel then calculates new rate value after that it checks if the new name in updated data doesn't exist it update the hotel with the new data and saves it in database</p>
 <p><strong>deleteHotel</strong>
-api takes hotel's id and search if exists in database it deletes it</p>
+api takes hotel's id of hotel has rooms it iterate over it and delete each room using deleteRoomForHotel function this function delete the room and pull it from hotel doc in database and delete all reservations that related to it if exists and search if exists in database it deletes it</p>
 <p><strong>getHotel</strong> api return the hotel if exists using hotelId</p>
 <p><strong>getAllHotels</strong> api get all hotels in database and return at max the max Limit sent by the user in frontend</p>
 <p><strong>getHotels</strong> api takes max, min, city to search for all hotels that their names begin with city send by the user (not just the equal to it), have cheapestPrice that falls between min and max and returns them</p>
@@ -67,6 +68,14 @@ api takes hotel's id and search if exists in database it deletes it</p>
 <p><strong>getRate</strong> api return the hotelRate using hotelRateId if exists</p>
 <p><strong>getAllRates</strong> api return all hotel Rates from database</p>
 <p><strong>deleteRate</strong> api deletes rate using rateId if exists</p>
+<h3>Room Controller</h3>
+<p><strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong></p>
+<p><strong>createRoom</strong>
+This api takes hotelId and room object then adds it to database and add it's ID to rooms attribute in the hotel </p>
+<p><strong>updateRoom</strong>
+This api takes room object then updates it in database</p>
+<p><strong>updateRoomAvailability</strong>
+This api takes roomId, roomNumberId, dates(reservation duration dates) and push it to unavailableDates attribute in roomNumber</p>
 <h2>Utils</h2>
 <h4>error.js</h4>
 <p>exports createError function creates new object of Error and sets status and message properties with the calling ones and return the error</p>
