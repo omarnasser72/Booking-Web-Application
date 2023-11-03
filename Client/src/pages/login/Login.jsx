@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "../../axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -38,6 +38,7 @@ const Login = () => {
 
   useEffect(() => {
     useRef.current?.focus();
+    localStorage.setItem("needsReload", "true");
   }, []);
 
   useEffect(() => {
@@ -74,9 +75,9 @@ const Login = () => {
             accessToken: res.data.accessToken,
           });
           res.data.details.isAdmin === true
-            ? //? (window.location.href = "#/dashboardChoice")
-              navigate("/dashboardChoice")
-            : (window.location.href = "/");
+            ? navigate("/dashboardChoice") //(window.location.href = "#/dashboardChoice")
+            : // navigate("/dashboardChoice")
+              (window.location.href = "/");
           //: navigate("/");
         } else {
           dispatch({

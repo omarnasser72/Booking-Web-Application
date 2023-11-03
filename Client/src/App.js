@@ -60,10 +60,6 @@ function App() {
   return (
     <AuthContextProvider>
       <Routes>
-        <Route path="/Booking-Web-app">
-          <Route index element={<Login />} />
-        </Route>
-
         <Route path="/">
           <Route index element={<ProtectedRoute element={<Home />} />} />
           <Route path="login" element={<Login />} />
