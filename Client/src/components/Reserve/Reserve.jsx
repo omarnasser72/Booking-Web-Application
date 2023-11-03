@@ -128,7 +128,7 @@ const Reserve = ({ hotelId }) => {
   const isAvailable = (roomNumber, maxPeople) => {
     console.log(roomNumber.unavailableDates);
     console.log(allDates);
-    const isFound = roomNumber.unavailableDates.some((date) =>
+    const isFound = roomNumber?.unavailableDates?.some((date) =>
       allDates.includes(new Date(date).getTime())
     );
     console.log(noOfPeople);

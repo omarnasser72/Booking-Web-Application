@@ -74,7 +74,6 @@ function App() {
             element={<ProtectedAdminRoute element={<DashboardChoice />} />}
           />
           <Route path="adminDashboard">
-            <Route path="login" element={<Login />} />
             <Route
               index
               element={<ProtectedAdminRoute element={<AdminHome />} />}
