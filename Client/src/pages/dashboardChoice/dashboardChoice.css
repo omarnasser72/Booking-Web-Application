@@ -1,0 +1,23 @@
+.dashboardChoice {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(66, 66, 66);
+  gap: 10%;
+}
+
+.choiceBtn {
+  font-size: large;
+  border: none;
+  padding: 15px 35px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #fffc55;
+}
+
+.choiceBtn:disabled {
+  background-color: #fdfca7;
+  cursor: none;
+}

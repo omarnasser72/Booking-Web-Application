@@ -74,7 +74,7 @@ const Login = () => {
             accessToken: res.data.accessToken,
           });
           res.data.details.isAdmin === true
-            ? navigate("/adminDashboard")
+            ? navigate("/dashboardChoice")
             : //? (window.location.href = "/adminDashboard")
               (window.location.href = "/");
           //: navigate("/");

@@ -35,7 +35,7 @@ import SingleReservation from "./pages/singleReservation/SingleReservation";
 import NewReservation from "./pages/newReservation/NewReservation";
 import AdminProfile from "./pages/adminProfile/AdminProfile";
 import ResetPwd from "./pages/resetPwd/ResetPwd";
-
+import DashboardChoice from "./pages/dashboardChoice/DashboardChoice";
 function App() {
   const ProtectedRoute = ({ element }) => {
     const { user } = useContext(AuthContext);
@@ -69,6 +69,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="resetPassword" element={<ResetPwd />} />
+          <Route
+            path="dashboardChoice"
+            element={<ProtectedAdminRoute element={<DashboardChoice />} />}
+          />
           <Route path="adminDashboard">
             <Route path="login" element={<Login />} />
             <Route
