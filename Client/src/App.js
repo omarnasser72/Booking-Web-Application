@@ -36,12 +36,20 @@ import NewReservation from "./pages/newReservation/NewReservation";
 import AdminProfile from "./pages/adminProfile/AdminProfile";
 import ResetPwd from "./pages/resetPwd/ResetPwd";
 import DashboardChoice from "./pages/dashboardChoice/DashboardChoice";
+import VerifyEmail from "./pages/verifyEmail/VerifyEmail";
 function App() {
   const ProtectedRoute = ({ element }) => {
     const { user } = useContext(AuthContext);
-    const isLoginOrRegister =
-      useLocation().pathname.match(/^(login|register)$/);
-    if (user || isLoginOrRegister) {
+    const { pathname } = useLocation();
+
+    const isLoginOrRegister = pathname.match(/^(\/login|\/register)$/); // Note the leading slashes
+
+    if (
+      user ||
+      isLoginOrRegister ||
+      pathname.startsWith("/verifyEmail") ||
+      pathname.match(/^(\/login|\/register)$/)
+    ) {
       return element; // Return the provided element directly
     }
     return <Navigate to="/login" />;
@@ -60,11 +68,12 @@ function App() {
   return (
     <AuthContextProvider>
       <Routes>
+        <Route path="/verifyEmail" element={<VerifyEmail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/resetPassword" element={<ResetPwd />} />
         <Route path="/">
-          <Route index element={<ProtectedRoute element={<Home />} />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="resetPassword" element={<ResetPwd />} />
+          <Route path="" element={<ProtectedRoute element={<Home />} />} />
           <Route
             path="dashboardChoice"
             element={<ProtectedAdminRoute element={<DashboardChoice />} />}

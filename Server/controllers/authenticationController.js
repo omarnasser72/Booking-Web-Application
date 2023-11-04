@@ -3,9 +3,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
+import crypto, { verify } from "crypto";
 import { createToken } from "../utils/jwt.js";
 import { error, log } from "console";
+import PendingUser from "../models/PendingUser.js";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -52,6 +53,9 @@ export const login = async (req, res, next) => {
     if (!bcrypt.compareSync(req.body.password, user.password))
       return next(createError(400, "Wrong Password!"));
 
+    const pendingUser = await PendingUser.findOne({ email: req.body.email });
+    if (pendingUser) return next(createError(400, "Email not verified yet"));
+
     const token = createToken(user);
     const { password, ...otherDetails } = user._doc;
     res
@@ -94,12 +98,27 @@ export const signup = async (req, res, next) => {
     if (phoneExist.length > 0) throw createError(400, "Phone Already exists");
 
     console.log("before creating object");
+
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
     });
     console.log("newUser:", newUser);
     const savedUser = await newUser.save();
+
+    const pendingUser = new PendingUser({
+      userId: newUser._id,
+      email: newUser.email,
+    });
+
+    console.log("PendingUser:", pendingUser);
+    const pendingUserExists = await PendingUser.findOne({
+      userId: newUser._id,
+    });
+    if (pendingUserExists)
+      throw createError(400, "Pending User Already exists");
+    else await pendingUser.save();
+
     res.status(200).json(savedUser);
 
     const transport = nodemailer.createTransport({
@@ -114,9 +133,11 @@ export const signup = async (req, res, next) => {
       from: process.env.EMAIL,
       to: email,
       subject: "Registration",
-      html: "<h2>You registered on My Nights web app</h2>",
+      html: `<link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    /><h2>You registered on My Nights web app</h2><p><button style="background-color: #fffb06; border: none; width: fit-content; padding: 10px; justify-content: center; align-items: center"><a href="${process.env.LOCAL_CLIENT_URL}/#verifyEmail?id=${pendingUser._id}" style="text-decoration:none; color:rgb(66,66,66); font-size:large; font-weight:500;">Verify Your Email</a></button></p>`,
     };
-
     transport.sendMail(mailOptions, function (err, info) {
       if (err) next(err);
       else res.status(200).json({ "email sent": info.response });
@@ -169,6 +190,25 @@ export const forgetPwd = async (req, res, next) => {
       // Handle the case where the user with the provided email is not found.
       res.status(404).json({ success: false, message: "User not found" });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPendingUser = async (req, res, next) => {
+  try {
+    const pendingUser = await PendingUser.findById(req.params.id);
+    res.status(200).json(pendingUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyEmail = async (req, res, next) => {
+  try {
+    console.log(req?.params);
+    await PendingUser.deleteOne({ email: req.params.email });
+    res.status(200).json({ message: `${req.body.email} is verified` });
   } catch (error) {
     next(error);
   }

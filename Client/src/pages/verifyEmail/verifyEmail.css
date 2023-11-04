@@ -1,0 +1,98 @@
+.VerifyEmail {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgb(66, 66, 66);
+}
+
+.emailBtnWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin-bottom: 10%;
+  color: #fffc55;
+}
+
+.loginInput {
+  height: 30px;
+  padding: 10px;
+}
+
+.verifyBtn {
+  border: none;
+  padding: 10px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #fffc55;
+}
+
+.verifyBtn:disabled {
+  background-color: #fdfca7;
+  cursor: none;
+}
+
+
+pre {
+  width: 100%;
+  display: flex;
+}
+
+.emailBtnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 15%;
+}
+
+.emailSec {
+  cursor: pointer;
+  color: #fffc55;
+}
+
+.logInErrMsg {
+  text-align: center;
+  color: red;
+  background-color: lightpink;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.valid {
+  color: limegreen;
+}
+
+.invalid {
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
+.instructions {
+  color: #fffc55;
+  background-color: #000;
+  border-radius: 5px;
+  position: relative;
+  bottom: -10px;
+  padding: 5px;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.inputErrMsg {
+  text-align: center;
+  color: red;
+  background-color: lightpink;
+  border-radius: 5px;
+  margin: 5px;
+}

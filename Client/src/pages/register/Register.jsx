@@ -128,6 +128,7 @@ const Register = () => {
       setPhoneExists(true);
       setValidPhone(false);
     } else setPhoneExists(false);
+    console.log(errMsg);
   }, [errMsg]);
 
   const navigate = useNavigate();
@@ -182,8 +183,9 @@ const Register = () => {
         console.log(res);
         navigate("/");
       } catch (error) {
-        setErrMsg(error);
+        setErrMsg(error?.response?.data?.message);
         console.log(error);
+        console.log(error?.response?.data?.message);
       }
     }
   };
