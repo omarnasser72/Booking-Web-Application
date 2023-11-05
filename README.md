@@ -137,3 +137,18 @@ Contains table of latest reservations that has been submitted each row with info
 <h4>Datatable</h4>
 <p>this belongs to adminDashboard
 Contains data the user request in url like users, hotels, rooms and reservations each row has view(to open detailed page for that item of data) , delete(to delete that item of data) </p>
+<h4>Datatable</h4>
+<p>this belongs to adminDashboard
+Contains data the user request in url like users, hotels, rooms and reservations each row has view(to open detailed page for that item of data) , delete(to delete that item of data) </p>
+<h2>Context</h2>
+<h4>Auth Context</h4>
+<p>this context is used to authenticate user using useReducer hook that checks if there is user and access token in local storage and update them as soon as dispatch is called their states changes if the user has successful login it will return payload and token if it fails it will return sets them to null and return error if the user logged out it will sets them to initial state</p>
+
+<h4>Search Context</h4>
+<p>this context is used in searching user using useReducer hook that checks if there is user using dispatch has new search it sets new state to search state and update them as soon as dispatch is called their states changes to new state</p>
+<h2>Hooks</h2>
+<h4>usefetch</h4>
+<p>this fetch data using axios but provides loading and error to axios function that can help in handling user requests during use of the application, also it provides reFetch function to reFetch same data whenever being called</p>
+<h2>Pages</h2>
+<h4>Login</h4>
+<p>it's for user login using username and password whenever these inputs states change they're being tested with proper regex to handle the incorrect input and display instructions for them when they fail these regex, also display error message that till user what is wrong like (user not found, wrong password, etc.) </p>
