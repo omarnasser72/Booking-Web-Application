@@ -37,6 +37,7 @@ import AdminProfile from "./pages/adminProfile/AdminProfile";
 import ResetPwd from "./pages/resetPwd/ResetPwd";
 import DashboardChoice from "./pages/dashboardChoice/DashboardChoice";
 import VerifyEmail from "./pages/verifyEmail/VerifyEmail";
+import NewPwd from "./pages/newPwd/newPwd";
 function App() {
   const ProtectedRoute = ({ element }) => {
     const { user } = useContext(AuthContext);
@@ -72,6 +73,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/resetPassword" element={<ResetPwd />} />
+        <Route path="/newPassword" element={<NewPwd />} />
         <Route path="/">
           <Route path="" element={<ProtectedRoute element={<Home />} />} />
           <Route

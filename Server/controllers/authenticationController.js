@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import bcrypt from "bcrypt";
+import bcrypt, { hashSync } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 import nodemailer from "nodemailer";
@@ -195,6 +195,44 @@ export const forgetPwd = async (req, res, next) => {
   }
 };
 
+export const resetPwd = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email });
+    const userToken = createToken(user);
+
+    if (user) {
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Reset Password",
+        html: `<h2>
+            <div style="background-color: #fffb06; border: none; font-family: Nunito; width: fit-content; padding: 10px; justify-content: center; align-items: center">
+              <a style="text-decoration: none; color:#000; font-family: Nunito;" href="${process.env.CLIENT_URL}/#/newPassword?token=${userToken}">Reset Password</a>
+            </div>
+          </h2>`,
+      };
+
+      transport.sendMail(mailOptions, function (err, info) {
+        if (err) next(err);
+        else res.status(200).json({ "email sent": info.response });
+      });
+    } else {
+      res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getPendingUser = async (req, res, next) => {
   try {
     const pendingUser = await PendingUser.findById(req.params.id);
@@ -209,6 +247,24 @@ export const verifyEmail = async (req, res, next) => {
     console.log(req?.params);
     await PendingUser.deleteOne({ email: req.params.email });
     res.status(200).json({ message: `${req.body.email} is verified` });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserInfo = async (req, res, next) => {
+  console.log(req.query.token);
+  const token = req.query.token;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT);
+    console.log(decoded);
+    req.user = decoded;
+    req.authenticated = true;
+    if (req.user) {
+      res.status(200).json(req.user.id);
+    } else {
+      next(createError(403, "You aren't user"));
+    }
   } catch (error) {
     next(error);
   }

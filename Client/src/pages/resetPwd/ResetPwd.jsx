@@ -21,9 +21,8 @@ const ResetPwd = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  // const [resetPwd, setResetPwd] = useState("");
-  // const [validRestPwd, setValidResetPwd] = useState(false);
-  // const [resetPwdFocus, setResetPwdFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
   const [sentPwd, setSentPwd] = useState(false);
@@ -37,16 +36,12 @@ const ResetPwd = () => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
 
-  // useEffect(() => {
-  //   console.log(validRestPwd);
-  // }, [resetPwd]);
-
   const handleChange = (e) => {
     if (e.target.id === "email") setEmail(e.target.value);
-    //else if (e.target.id === "password") setResetPwd(e.target.value);
   };
 
   const handleClick = async (e) => {
+    setLoading(true);
     setSubmitting(true);
     e.preventDefault();
     if (!validEmail) {
@@ -63,8 +58,9 @@ const ResetPwd = () => {
         else {
           setSentPwd(true);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
+        setError(err);
       }
     }
   };
@@ -103,7 +99,11 @@ const ResetPwd = () => {
           {submitting && email === "" ? "This field is required" : ""}
         </p>
 
-        <button className="loginBtn" onClick={handleClick}>
+        <button
+          className="loginBtn"
+          onClick={handleClick}
+          disabled={loading || error}
+        >
           {!sentPwd ? "Reset Password" : "Resend"}
         </button>
       </div>

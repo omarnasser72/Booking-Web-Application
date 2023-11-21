@@ -4,6 +4,7 @@ import {
   deleteUser,
   getAllUsers,
   getUser,
+  newPwd,
   updateUser,
 } from "../controllers/userController.js";
 
@@ -12,6 +13,7 @@ import {
   getUserReservations,
 } from "../controllers/reservationController.js";
 import { validateToken, verifyAdmin, verifyUser } from "../utils/jwt.js";
+import { resetPwd } from "../controllers/authenticationController.js";
 
 const router = Express.Router();
 
@@ -30,6 +32,8 @@ router.get("/checkAdmin/:id", verifyAdmin, (req, res, next) => {
 //UPDATE
 router.put("/:id", verifyUser, updateUser);
 router.put("/changePwd/:id", verifyUser, changePwd);
+router.put("/newPwd/:id", newPwd);
+
 //DELETE
 router.delete("/:id", verifyAdmin, deleteUser);
 //GET

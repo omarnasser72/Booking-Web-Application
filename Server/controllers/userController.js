@@ -51,6 +51,39 @@ export const changePwd = async (req, res, next) => {
   }
 };
 
+export const newPwd = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.password = bcrypt.hashSync(req.body.newPwd, 10);
+
+    const updatedUser = await user.save();
+
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: updatedUser.email,
+      subject: "Changing Password",
+      html: "<h2>You have changed your password on My Nights web app</h2>",
+    };
+
+    transport.sendMail(mailOptions, function (err, info) {
+      if (err) next(err);
+      //console.log("email sent:", info.response);
+    });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const updateUser = async (req, res, next) => {
   try {
     const email = req.body.email;
