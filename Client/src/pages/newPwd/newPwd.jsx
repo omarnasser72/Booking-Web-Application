@@ -85,7 +85,7 @@ const NewPwd = () => {
     setSubmitting(true);
     e.preventDefault();
     if (!validNewPwd && !validMatch) {
-      if (!validNewPwd) setOldPwdFocus(true);
+      if (!validNewPwd) setNewPwdFocus(true);
       if (!validMatch) setMatchFocus(true);
     } else {
       try {
