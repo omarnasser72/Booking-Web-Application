@@ -137,3 +137,26 @@ Contains table of latest reservations that has been submitted each row with info
 <h4>Datatable</h4>
 <p>this belongs to adminDashboard
 Contains data the user request in url like users, hotels, rooms and reservations each row has view(to open detailed page for that item of data) , delete(to delete that item of data) </p>
+<h4>Datatable</h4>
+<p>this belongs to adminDashboard
+Contains data the user request in url like users, hotels, rooms and reservations each row has view(to open detailed page for that item of data) , delete(to delete that item of data) </p>
+<h2>Context</h2>
+<h4>Auth Context</h4>
+<p>this context is used to authenticate user using useReducer hook that checks if there is user and access token in local storage and update them as soon as dispatch is called their states changes if the user has successful login it will return payload and token if it fails it will return sets them to null and return error if the user logged out it will sets them to initial state</p>
+
+<h4>Search Context</h4>
+<p>this context is used in searching user using useReducer hook that checks if there is user using dispatch has new search it sets new state to search state and update them as soon as dispatch is called their states changes to new state</p>
+<h2>Hooks</h2>
+<h4>usefetch</h4>
+<p>this fetch data using axios but provides loading and error to axios function that can help in handling user requests during use of the application, also it provides reFetch function to reFetch same data whenever being called</p>
+<h2>Pages</h2>
+<h4>Login</h4>
+<p>it's for user login using username and password whenever these inputs states change they're being tested with proper regex to handle the incorrect input and display instructions for them when they fail these regex, also display error message that till user what is wrong like (user not found, wrong password, etc.) </p>
+<h4>Register</h4>
+<p>this page is for user registration to the app contains input for each attribute to the user model like login page each input is being test for it's proper regex whenever it's state changes and display the corresponding instructions when it fails to meet that regex when submitting the form it if there is an error for any attribute like (username already exists, email already exists, phone already exists, etc) it will be displayed beneath it's corresponding attribute when submission occurs if the user upload photo it will be uploaded to cloudinary before adding user to the app</p>
+<h4>Home</h4>
+<p>this is the home page for the user when logged in the Admin also can enter this page if he wants it contains set of compenents We have mentioned earlier in Compenents section they are Navbar, Header, Featured, PropertyList, FeaturedProperties, MailList and Footer</p>
+<h4>List</h4>
+<p>this page contains filter options and number of search Item that fits the filter options like min, max, no of adults and children and search query in case there is no hotel holds these filters it won't show searchItem in see Availability it will take you to the hotel page to see more details about the hotel or to reserve room in that hotel also contains 2 compenents header and navbar</p>
+<h4>Hotel</h4>
+<p>this page display the detailed info about the hotel including images and cost for 1 night or for the selected days if exists and also contains 5 compenents header, Navbar, MailList and footer and the last and the important one is Reserve which opens Hotel rooms to select we have talked about it in the Compenents section </p>
