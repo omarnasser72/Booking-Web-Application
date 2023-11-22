@@ -19,6 +19,7 @@
 
 @media screen and (max-width: 440px) {
   .Home {
+    overflow-x: hidden;
     background-color: #fffc55;
   }
 
