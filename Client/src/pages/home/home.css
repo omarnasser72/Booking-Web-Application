@@ -2,6 +2,7 @@
   width: 100%;
   background-color: #fffc55;
 }
+
 .homeContainer {
   margin-top: 50px;
   display: flex;
@@ -14,4 +15,22 @@
   width: 1024px;
   font-size: x-large;
   font-family: fantasy;
+}
+
+@media screen and (max-width: 440px) {
+  .Home {
+    background-color: #fffc55;
+  }
+
+  .homeContainer {
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .homeTitle {
+    font-size: x-large;
+    font-family: fantasy;
+  }
 }

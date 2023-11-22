@@ -1,14 +1,18 @@
 .adminList {
   display: flex;
   width: 100%;
+
   .adminListContainer {
     flex: 6;
+
     .sidebarWrapper {
       width: 100%;
       display: flex;
+
       .sidebarBtn {
         margin-top: 10px;
         color: rgb(66, 66, 66);
+
         button {
           cursor: pointer;
           background-color: #fff;
@@ -16,8 +20,41 @@
           border: none;
         }
       }
+
       .adminNavbar {
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .adminList {
+    display: flex;
+    width: 50%;
+
+    .adminListContainer {
+      flex: 6;
+
+      .sidebarWrapper {
+        width: 100%;
+        display: flex;
+
+        .sidebarBtn {
+          margin-top: 10px;
+          color: rgb(66, 66, 66);
+
+          button {
+            cursor: pointer;
+            background-color: #fff;
+            border-radius: 5px;
+            border: none;
+          }
+        }
+
+        .adminNavbar {
+          width: 100%;
+        }
       }
     }
   }

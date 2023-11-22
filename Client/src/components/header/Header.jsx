@@ -99,9 +99,9 @@ const Header = ({ type }) => {
           <div className="about">
             Here, you will find best hotel that fits you
           </div>
-          <button className="headerBtn" onClick={() => navigate("/login")}>
+          {/* <button className="headerBtn" onClick={() => navigate("/login")}>
             Sign in / Register
-          </button>
+          </button> */}
           <div className="headerSearch">
             <div className="headerSearchItem">
               <FontAwesomeIcon icon={faBed} className="headerIcon" />
