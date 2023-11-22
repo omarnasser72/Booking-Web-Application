@@ -199,8 +199,8 @@
 
   .about {
     display: block;
-    margin-left: 2%;
-    padding-bottom: 4%;
+    margin: 5%;
+    padding-bottom: 9%;
     font-size: small;
     font-family: Courier, monospace;
   }
@@ -219,15 +219,15 @@
 
   .headerSearch {
     display: flex;
+    align-self: center;
     align-items: center;
     justify-content: start;
     font-size: x-small;
-    width: 80%;
-    height: 19px;
+    width: fit-content;
+    height: fit-content;
     padding: 4px 4px;
     position: absolute;
     bottom: -20px;
-    right: 60px;
     background-color: #fff;
     border: 3px solid #fffb06;
     border-radius: 15px;
