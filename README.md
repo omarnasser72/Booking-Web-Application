@@ -181,3 +181,10 @@ It's not supported yet</p>
 <p>this is the homepage for adminDashboard contains a set of components: AdminNavbar, sidebar, List and widget. There four widget components where each one has a type: user, hotels, rooms and reservations. It also contains a list of latest reservations including user's info and reservation's info </p>
 <h4>AdminList</h4>
 <p>this page contains sidebar, navbarAdmin and Data Table component which list according to type parameter as users, rooms, hotels and reservations</p>
+<h4>SingleHotel</h4>
+<p>this page for the hotel info and images also contains if exist list of hotel's rooms info
+By clicking on edit button all the modifiable information can be changed by the Admin as well as hotel's images where admin can delete or add photos using images link and upload it using upload button or upload it from local storage and it's updated by clicking on update button or cancel update by clicking on cancel button note that all fields must match it's regex and it's being validate as we talked in earlier validation </p>
+<h4>SingleRoom</h4>
+<p>this page for the room's info and images by clicking on edit button all modifiable information Admin will be able to change it also room's images you can delete or upload new images from local storage and upload icon or image link and upload button it's updated by clicking on update button or cancel it by clicking on cancel button note that all fields are validated before submitting updates using regex for each corresponding field in room number field you can add room numbers for this type of room </p>
+<h4>SingleReservation</h4>
+<p>this page is for reservation info by clicking on edit button Admin can change duration of reservation by clicking on cancel duration won't change </p>
