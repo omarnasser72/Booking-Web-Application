@@ -394,12 +394,14 @@
 
   .date {
     position: absolute;
-    top: 50px;
+    top: 29px;
+    right: 0px;
   }
 
   .options {
     position: absolute;
-    top: 50px;
+    top: 32px;
+    right: 0px;
     background-color: white;
     color: #494949;
     border-radius: 5px;
