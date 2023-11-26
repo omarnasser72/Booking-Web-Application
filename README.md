@@ -150,6 +150,7 @@ Contains data the user request in url like users, hotels, rooms and reservations
 <h4>usefetch</h4>
 <p>this fetch data using axios but provides loading and error to axios function that can help in handling user requests during use of the application, also it provides reFetch function to reFetch same data whenever being called</p>
 <h2>Pages</h2>
+<h3>pages client user's able to access</h3>
 <h4>Login</h4>
 <p>it's for user login using username and password whenever these inputs states change they're being tested with proper regex to handle the incorrect input and display instructions for them when they fail these regex, also display error message that till user what is wrong like (user not found, wrong password, etc.) </p>
 <h4>Register</h4>
@@ -160,3 +161,30 @@ Contains data the user request in url like users, hotels, rooms and reservations
 <p>this page contains filter options and number of search Item that fits the filter options like min, max, no of adults and children and search query in case there is no hotel holds these filters it won't show searchItem in see Availability it will take you to the hotel page to see more details about the hotel or to reserve room in that hotel also contains 2 compenents header and navbar</p>
 <h4>Hotel</h4>
 <p>this page display the detailed info about the hotel including images and cost for 1 night or for the selected days if exists and also contains 5 compenents header, Navbar, MailList and footer and the last and the important one is Reserve which opens Hotel rooms to select we have talked about it in the Compenents section </p>
+<h4>ListType</h4>
+<p>this page display list according to type sent to it. 
+It's not supported yet</p>
+<h4>Reservation</h4>
+<p>this page is for reservation process it contains two components navbar and Reserve </p>
+<h4>Profile</h4>
+<p>this page is spitted into two halves first half on the left side contains user's info, profile page and two buttons one for update user's info and profile image and the other navigates to changePwd page where you can change your password, the second half contains user's reservations where you can see each reservation's info and cancel it if you want using cancel button </p>
+<h4>Verify Email</h4>
+<p>this page is for email verification after registration process where it sent to email used in registration after clicking verify button your account is activated </p>
+<h4>ResetPwd</h4>
+<p>this page is used in case of forgetting password after you enter your email and click reset button an email is sent to you where you can create new password for your account </p>
+<h4>NewPwd</h4>
+<p>this page is used for creating new password in case user forget and it can be sent only using the link sent to your email </p>
+<h3>pages Admin user only can access</h3>
+<h4>Dashboard Choice</h4>
+<p>this page is displayed after successful login for the Admin where Admin choose either to navigate to userDashboard or adminDashboard</p>
+<h4>AdminHome</h4>
+<p>this is the homepage for adminDashboard contains a set of components: AdminNavbar, sidebar, List and widget. There four widget components where each one has a type: user, hotels, rooms and reservations. It also contains a list of latest reservations including user's info and reservation's info </p>
+<h4>AdminList</h4>
+<p>this page contains sidebar, navbarAdmin and Data Table component which list according to type parameter as users, rooms, hotels and reservations</p>
+<h4>SingleHotel</h4>
+<p>this page for the hotel info and images also contains if exist list of hotel's rooms info
+By clicking on edit button all the modifiable information can be changed by the Admin as well as hotel's images where admin can delete or add photos using images link and upload it using upload button or upload it from local storage and it's updated by clicking on update button or cancel update by clicking on cancel button note that all fields must match it's regex and it's being validate as we talked in earlier validation </p>
+<h4>SingleRoom</h4>
+<p>this page for the room's info and images by clicking on edit button all modifiable information Admin will be able to change it also room's images you can delete or upload new images from local storage and upload icon or image link and upload button it's updated by clicking on update button or cancel it by clicking on cancel button note that all fields are validated before submitting updates using regex for each corresponding field in room number field you can add room numbers for this type of room </p>
+<h4>SingleReservation</h4>
+<p>this page is for reservation info by clicking on edit button Admin can change duration of reservation by clicking on cancel duration won't change </p>
