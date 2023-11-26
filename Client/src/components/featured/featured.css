@@ -30,3 +30,45 @@
   bottom: 20px;
   left: 20px;
 }
+
+@media screen and (max-width: 440px) {
+  .featured {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0px;
+    padding: 0px;
+    z-index: 1;
+  }
+
+  .featuredItem {
+    cursor: pointer;
+    position: relative;
+    color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 93px;
+    height: 250px;
+  }
+
+  .featuredImg {
+    width: 100px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .featuredTitles {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+  }
+
+  .placesTitles {
+    font-size: 15px;
+    margin-bottom: 0px;
+  }
+
+  .propertiesNo {
+    font-size: 12px;
+  }
+
+}

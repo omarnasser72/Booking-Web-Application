@@ -60,8 +60,8 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Cairo</h1>
-              <h2>{data[0]} properties</h2>
+              <h1 className="placesTitles">Cairo</h1>
+              <h2 className="propertiesNo">{data[0]} properties</h2>
             </div>
           </div>
           <div className="featuredItem" onClick={() => handleProperty("giza")}>
@@ -71,8 +71,8 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Giza</h1>
-              <h2>{data[1]} properties</h2>
+              <h1 className="placesTitles">Giza</h1>
+              <h2 className="propertiesNo">{data[1]} properties</h2>
             </div>
           </div>
 
@@ -86,8 +86,8 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Alexandria</h1>
-              <h2>{data[2]} properties</h2>
+              <h1 className="placesTitles">Alexandria</h1>
+              <h2 className="propertiesNo">{data[2]} properties</h2>
             </div>
           </div>
           <div className="featuredItem" onClick={() => handleProperty("aswan")}>
@@ -97,8 +97,8 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Aswan</h1>
-              <h2>{data[3]} properties</h2>
+              <h1 className="placesTitles">Aswan</h1>
+              <h2 className="propertiesNo">{data[3]} properties</h2>
             </div>
           </div>
         </>

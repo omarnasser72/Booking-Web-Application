@@ -5,6 +5,7 @@
   justify-content: center;
   position: relative;
   z-index: 2;
+  padding-bottom: 50px;
 }
 
 .headerContainer {
@@ -161,6 +162,7 @@
     justify-content: center;
     position: relative;
     z-index: 2;
+    padding-bottom: 35px;
   }
 
   .headerContainer {}
@@ -199,8 +201,8 @@
 
   .about {
     display: block;
-    margin: 5%;
-    padding-bottom: 9%;
+    margin: 2% 5%;
+    margin-bottom: 0%;
     font-size: small;
     font-family: Courier, monospace;
   }
@@ -231,7 +233,7 @@
     background-color: #fff;
     border: 3px solid #fffb06;
     border-radius: 15px;
-    position: relative;
+    position: absolute;
   }
 
   .headerIcon {
@@ -406,19 +408,26 @@
     color: #494949;
     border-radius: 5px;
     box-shadow: 0px 0px 10px -5px;
+    z-index: 1;
   }
 
   .optionItem {
-    width: 200px;
+    width: fit-content;
     justify-content: space-between;
     display: flex;
     margin: 7px;
   }
 
+  .optionText {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
   .optionCounter {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
+    font-size: 12px;
   }
 
   .optionCounterBtn {
