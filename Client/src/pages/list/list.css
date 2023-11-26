@@ -116,10 +116,6 @@
   align-self: flex-start;
 }
 
-.footer {
-  margin-top: auto;
-  /* Push the footer to the bottom */
-}
 
 .loading {
   width: 100%;

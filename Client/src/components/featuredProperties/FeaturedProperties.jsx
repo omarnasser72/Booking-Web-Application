@@ -4,6 +4,7 @@ import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   const { data, loading, error } = useFetch(`/hotels?featured=true&max=3`);
+  console.log(data);
   if (error) console.log(error);
   const navigate = useNavigate();
   const handleClick = (hotelId) => {

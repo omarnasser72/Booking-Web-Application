@@ -19,7 +19,7 @@ const Home = () => {
       <Header />
       <div className="homeContainer">
         <Featured />
-        <h1 className="homeTitle">Browse By Property</h1>
+        <h1 className="homeTitle">Browse By Category</h1>
         <PropertyList />
         <h1 className="homeTitle">Home guest adore</h1>
         <FeaturedProperties />

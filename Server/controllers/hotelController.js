@@ -131,6 +131,18 @@ export const getHotels = async (req, res, next) => {
   }
 };
 
+export const getFeaturedHotels = async (req, res, next) => {
+  const { max, featured } = req.query;
+  try {
+    const hotels = await Hotel.find({
+      featured: featured,
+    }).limit(Number(max));
+    res.status(200).json(hotels);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const countByCity = async (req, res, next) => {
   const cities = await req.query.cities.split(",");
   try {

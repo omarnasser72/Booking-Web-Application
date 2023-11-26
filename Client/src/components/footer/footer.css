@@ -1,7 +1,6 @@
 .footer {
   background-color: rgb(66, 66, 66);
   width: 100%;
-
   color: #fffb00;
   margin-top: -5%;
   align-items: center;
@@ -10,7 +9,7 @@
 
 .fLists {
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   display: flex;
   margin-bottom: 50px;
 }
@@ -18,12 +17,13 @@
 .fList {
   list-style: none;
 }
+
 .fListItem {
   cursor: pointer;
   margin-bottom: 10px;
 }
 
-.footer > span {
+.footer>span {
   margin-left: 34%;
   padding: 30px;
 }
@@ -31,4 +31,47 @@
 .link {
   color: #fffb00;
   text-decoration: none;
+}
+
+@media screen and (max-width: 440px) {
+  .footer {
+    width: 100%;
+    background-color: rgb(66, 66, 66);
+    color: #fffb00;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
+  .fLists {
+    width: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    margin-left: 0px;
+    margin-bottom: 0px;
+  }
+
+  .fList {
+    list-style: none;
+    width: max-content;
+    padding: 0px;
+  }
+
+  .fListItem {
+    cursor: pointer;
+    margin-bottom: 0px;
+  }
+
+  .footer>span {
+    width: 100%;
+    align-self: center;
+    font-size: 7px;
+    margin: 5% 25%;
+    padding: 15px;
+  }
+
+  .link {
+    font-size: 5px;
+    color: #fffb00;
+    text-decoration: none;
+  }
 }

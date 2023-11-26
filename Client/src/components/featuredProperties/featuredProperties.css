@@ -22,6 +22,7 @@
 .fbName {
   font-weight: bold;
 }
+
 .fbCity {
   font-weight: 300;
 }
@@ -30,12 +31,67 @@
   font-weight: 550;
   gap: 6px;
 }
-.fbRating > button {
+
+.fbRating>button {
   background-color: #000000;
   color: #f1ff2b;
   border-radius: 5px;
   margin-right: 7px;
 }
-.fbRating > span {
+
+.fbRating>span {
   font-size: 14px;
+}
+
+@media screen and (max-width: 440px) {
+  .fb {
+    width: fit-content;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+  }
+
+  .fbItem {
+    width: 120px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fbImg {
+    width: 75%;
+    height: 50%;
+  }
+
+  .fbName {
+    width: fit-content;
+    font-weight: bold;
+  }
+
+  .fbCity {
+    width: fit-content;
+    font-weight: 300;
+  }
+
+  .fbPrice {
+    font-size: 11px;
+    width: fit-content;
+    font-weight: 550;
+    gap: 6px;
+  }
+
+  .fbRating {
+    width: fit-content;
+  }
+
+  .fbRating>button {
+    background-color: #000000;
+    color: #f1ff2b;
+    border-radius: 5px;
+    margin-right: 7px;
+  }
+
+  .fbRating>span {
+    font-size: 14px;
+  }
 }

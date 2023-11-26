@@ -12,9 +12,10 @@
 }
 
 .homeTitle {
-  width: 1024px;
+  color: #000;
   font-size: x-large;
-  font-family: fantasy;
+  align-self: self-start;
+  margin: 2% 12%;
 }
 
 @media screen and (max-width: 440px) {
@@ -31,7 +32,17 @@
   }
 
   .homeTitle {
-    font-size: x-large;
-    font-family: fantasy;
+    color: #000;
+    font-size: large;
+    align-self: self-start;
+    margin: 2% 4%;
+  }
+
+  .pList {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
   }
 }

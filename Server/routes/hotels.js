@@ -5,6 +5,7 @@ import {
   createHotel,
   deleteHotel,
   getAllHotles,
+  getFeaturedHotels,
   getHotel,
   getHotelRooms,
   getHotels,
@@ -25,9 +26,9 @@ router.delete("/:id", verifyAdmin, deleteHotel);
 router.get("/find/:id", verifyUser, getHotel);
 // GET HOTELS
 router.get("/", verifyUser, (req, res) => {
-  Object.keys(req.query).length !== 0
-    ? getHotels(req, res)
-    : getAllHotles(req, res);
+  if (Object.keys(req.query).length === 3) getHotels(req, res);
+  else if (Object.keys(req.query).length === 2) getFeaturedHotels(req, res);
+  else getAllHotles(req, res);
 });
 
 //-----------------------

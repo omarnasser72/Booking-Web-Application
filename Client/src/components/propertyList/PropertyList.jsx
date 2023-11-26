@@ -41,8 +41,7 @@ const PropertyList = () => {
               >
                 <img src={image} alt="" className="pListImg" />
                 <div className="pListTitle">
-                  <h1>{data[i]?.type}</h1>
-                  <h2>
+                  <h2 className="propertyNo">
                     {data[i]?.count} {data[i]?.type}s
                   </h2>
                 </div>
