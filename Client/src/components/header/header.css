@@ -231,6 +231,7 @@
     background-color: #fff;
     border: 3px solid #fffb06;
     border-radius: 15px;
+    position: relative;
   }
 
   .headerIcon {
@@ -241,6 +242,127 @@
     width: 60%;
     color: #3b3b3b;
     cursor: pointer;
+  }
+
+  .rdrCalendarWrapper {
+    position: absolute;
+    top: 20px;
+    z-index: 2;
+    height: auto;
+    width: 199px;
+    color: #000000;
+    font-size: 12px;
+  }
+
+  .rdrDateDisplayItemActive {
+    height: fit-content;
+    border-color: currentColor;
+  }
+
+  .rdrDateDisplayItemActive input {
+    font-size: x-small;
+    color: #7d888d;
+  }
+
+  .rdrMonthAndYearWrapper {
+    width: 201px;
+    align-items: center;
+    height: 76px;
+    padding-top: 10px;
+  }
+
+  .rdrNextPrevButton {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 0 0.833em;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: #EFF2F7;
+  }
+
+  .rdrMonthAndYearPickers {
+    position: absolute;
+    right: 97px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: -15px;
+    font-weight: 600;
+  }
+
+  .rdrMonthPicker,
+  .rdrYearPicker {
+    font-size: x-small;
+    width: 57px;
+    margin: 0 5px;
+  }
+
+  .rdrMonthAndYearPickers select {
+    width: 99px;
+    font-size: 12px;
+  }
+
+  .rdrDateDisplayItem+.rdrDateDisplayItem {
+    height: fit-content;
+    margin-left: 0.833em;
+  }
+
+  .rdrYearPicker {
+    font-size: xx-small;
+    width: 55px;
+    margin: 0 5px;
+  }
+
+  .rdrMonthsVertical {
+    height: fit-content;
+    flex-direction: column;
+  }
+
+  .rdrMonth {
+    width: 193px;
+    padding: 0 0.833em 1.666em 0.833em;
+  }
+
+  .rdrMonthsVertical {
+    height: 200px;
+    flex-direction: column;
+  }
+
+  .rdrNextButton i {
+    margin: 0 0 0 0px;
+    border-width: 4px 4px 4px 6px;
+    border-color: transparent transparent transparent rgb(52, 73, 94);
+    transform: translate(3px, 0px);
+  }
+
+  .rdrWeekDays {
+    width: 57% !important;
+    display: flex;
+  }
+
+  .rdrDays {
+    width: 188px;
+    height: 169px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .rdrDay {
+    font-size: 10px !important;
+    width: 27px;
+    font-size: xx-small;
+    background: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 0;
+    padding: 0;
+    line-height: 3.000em;
+    height: 3em;
+    text-align: center;
+    color: #1d2429;
   }
 
   .headerSearchItem {
