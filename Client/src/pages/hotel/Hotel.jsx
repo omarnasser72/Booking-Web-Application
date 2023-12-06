@@ -207,15 +207,19 @@ const Hotel = () => {
                   <p className="hotelDesc">{hotel.desc}</p>
                 </div>
                 <div className="hotelDetailsPrice">
-                  <h1>Perfect for a {days}-night stay!</h1>
-                  <span>
+                  <h1 className="hotelDays">
+                    Perfect for a {days}-night stay!
+                  </h1>
+                  <span className="addressDetails">
                     Located in the real heart of Krakow, this property has an
                     excellent location score of 9.8!
                   </span>
-                  <h2>
+                  <h2 className="costInDetails">
                     <b>${days * hotel.cheapestPrice}</b> ({days} nights)
                   </h2>
-                  <button onClick={handleReserve}>Book Now</button>
+                  <button className="bookBtn" onClick={handleReserve}>
+                    Book Now
+                  </button>
                 </div>
               </div>
             </div>

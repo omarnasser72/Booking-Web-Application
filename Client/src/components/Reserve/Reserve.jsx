@@ -207,8 +207,8 @@ const Reserve = ({ hotelId }) => {
               Change Date Duration
             </button>
           </div>
-          <div className="selectRooms">
-            <h1>Select rooms:</h1>
+          <div>
+            <h1 className="selectRooms">Select rooms:</h1>
           </div>
           <div className="reservationRooms">
             {rooms?.map((room) => (
