@@ -247,7 +247,7 @@
   }
 
   .date {
-    height: 350px;
+    height: 360px;
     position: absolute;
     top: 29px;
     right: 0px;
@@ -257,7 +257,7 @@
     position: absolute;
     top: 20px;
     z-index: 2;
-    height: auto;
+    height: 360px;
     width: 199px;
     color: #000000;
     font-size: 12px;
@@ -347,7 +347,7 @@
   }
 
   .rdrWeekDays {
-    width: 95% !important;
+    width: 94% !important;
     display: flex;
   }
 
