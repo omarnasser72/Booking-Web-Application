@@ -168,6 +168,7 @@
   .headerList {
     display: flex;
     background-color: rgb(66, 66, 66);
+    margin-left: 5%;
   }
 
   .headerList.listMode {
@@ -183,7 +184,7 @@
     padding: 2px 3px;
     border: 1px solid #fffb06;
     border-radius: 30px;
-    font-size: xx-small;
+    font-size: 7px;
   }
 
   .headerListItem:hover {
@@ -232,6 +233,7 @@
     border: 3px solid #fffb06;
     border-radius: 15px;
     position: absolute;
+    margin-left: 2%;
   }
 
   .headerIcon {
@@ -401,7 +403,7 @@
   .options {
     position: absolute;
     top: 32px;
-    right: 0px;
+    right: 16px;
     background-color: white;
     color: #494949;
     border-radius: 5px;

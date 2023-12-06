@@ -46,7 +46,7 @@
     color: #ffffff;
     border-radius: 10px;
     overflow: hidden;
-    width: 93px;
+    width: 22%;
     height: 250px;
   }
 
@@ -59,7 +59,7 @@
   .featuredTitles {
     position: absolute;
     bottom: 8px;
-    left: 8px;
+    left: 4px;
   }
 
   .placesTitles {

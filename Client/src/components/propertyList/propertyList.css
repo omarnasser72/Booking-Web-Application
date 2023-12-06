@@ -19,12 +19,15 @@
 
 @media screen and (max-width: 440px) {
   .pList {
+    width: fit-content;
     display: flex;
     justify-content: space-evenly;
     margin: 0% 5%;
+    gap: 1%;
   }
 
   .pListItem {
+    margin: 3px;
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
