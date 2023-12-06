@@ -173,9 +173,9 @@
 
   .headerList.listMode {
     gap: 10px;
-    margin-left: 1%;
+    margin-left: 6%;
     background-color: rgb(66, 66, 66);
-    padding-bottom: 50px;
+    padding-bottom: 0px;
   }
 
   .headerListItem {
@@ -244,6 +244,13 @@
     width: 60%;
     color: #3b3b3b;
     cursor: pointer;
+  }
+
+  .date {
+    height: 350px;
+    position: absolute;
+    top: 29px;
+    right: 0px;
   }
 
   .rdrCalendarWrapper {
@@ -340,12 +347,12 @@
   }
 
   .rdrWeekDays {
-    width: 57% !important;
+    width: 95% !important;
     display: flex;
   }
 
   .rdrDays {
-    width: 188px;
+    width: 189px;
     height: 169px;
     display: flex;
     flex-wrap: wrap;
@@ -394,11 +401,6 @@
     font-size: x-small;
   }
 
-  .date {
-    position: absolute;
-    top: 29px;
-    right: 0px;
-  }
 
   .options {
     position: absolute;

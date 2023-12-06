@@ -97,7 +97,7 @@ const List = () => {
                 <label>Options</label>
                 <div className="optionItem">
                   <span className="optionItemLabel">
-                    Min price <small>per night</small>
+                    Min<sub>price per night</sub>
                   </span>
                   <input
                     type="text"
@@ -107,7 +107,7 @@ const List = () => {
                 </div>
                 <div className="optionItem">
                   <span className="optionItemLabel">
-                    Max price <small>per night</small>
+                    Max<sub>price per night</sub>
                   </span>
                   <input
                     type="text"

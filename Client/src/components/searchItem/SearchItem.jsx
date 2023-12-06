@@ -41,14 +41,17 @@ const SearchItem = ({ item }) => {
         </span>
       </div>
       <div className="searchItemDetails">
-        {item.rating ? (
-          <div className="searchItemRating">
-            <span> {rateCategory}</span>
-            <button>{item.rating}</button>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="searchItemRating">
+          {item.rating ? (
+            <>
+              <span> {rateCategory}</span>
+              <button>{item.rating}</button>
+            </>
+          ) : (
+            " "
+          )}
+        </div>
+
         <div className="searchItemDetailsText">
           <span className="searchItemPrice">${item.cheapestPrice}</span>
           <span className="searchItemDetailsTaxiOption">
