@@ -115,13 +115,13 @@ const Profile = () => {
 
   const [submitting, setSubmitting] = useState(false);
 
-  const [height, setHeight] = useState((reservationData.length / 5) * 200);
+  const [height, setHeight] = useState(120);
 
   //update Height
   useEffect(() => {
     setHeight(
-      (reservationData.length / 5) * 200 < 80
-        ? 80
+      (reservationData.length / 5) * 200 < 100
+        ? 100
         : (reservationData.length / 5) * 200
     );
   }, [reservationData]);
@@ -642,7 +642,7 @@ const Profile = () => {
         {
           <div
             className={!uploading ? "reservations" : "uploadReservationsState"}
-            // style={{ height: `${height}vh` }}
+             style={{ height: `${height}vh` }}
           >
             <h2 className="title" onClick={() => navigate(`/`)}>
               My Nights
