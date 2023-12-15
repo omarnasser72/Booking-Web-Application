@@ -104,8 +104,8 @@ const NewPwd = () => {
   };
 
   return (
-    <div className="changePwd">
-      <div className="changePwdContainer">
+    <div className="newPwd">
+      <div className="newPwdContainer">
         {/* <h1>Welcome to My Nights</h1> */}
         <div className="labelInputWrapper">
           <label className="pwdLabel">

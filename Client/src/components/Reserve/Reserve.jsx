@@ -3,7 +3,7 @@ import "./reserve.css";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../hooks/useFetch";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios"
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { DateRange } from "react-date-range";
@@ -189,6 +189,7 @@ const Reserve = ({ hotelId }) => {
 
       navigate("/");
     } catch (error) {
+      console.log(error);
       console.log(error.response.data);
     }
   };

@@ -379,7 +379,7 @@ const Profile = () => {
             <div>Updating Profile</div>
           </div>
         ) : (
-          <div className="info">
+          <div className="info" >
             <div className="profileImg">
               <img
                 src={
@@ -622,7 +622,7 @@ const Profile = () => {
                 </div>
               )}
               {updateBtn && (
-                <div className="Btns">
+                <div className="UpdateBtns">
                   {!excceded && (
                     <button
                       className={!excceded ? "Btn" : "notAllowed"}
@@ -642,7 +642,7 @@ const Profile = () => {
         {
           <div
             className={!uploading ? "reservations" : "uploadReservationsState"}
-            style={{ height: `${height}vh` }}
+            // style={{ height: `${height}vh` }}
           >
             <h2 className="title" onClick={() => navigate(`/`)}>
               My Nights

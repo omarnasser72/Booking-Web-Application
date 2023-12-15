@@ -87,6 +87,7 @@ const List = () => {
                   onChange={(item) => {
                     setDate([item.selection]);
                   }}
+                  className="dateInList"
                   minDate={new Date()}
                   ranges={date}
                 />

@@ -1,4 +1,4 @@
-.changePwd {
+.newPwd {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -6,7 +6,7 @@
   background-color: rgb(66, 66, 66);
 }
 
-.changePwdContainer {
+.newPwdContainer {
   width: 40%;
   display: flex;
   flex-direction: column;

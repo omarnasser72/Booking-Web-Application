@@ -53,10 +53,22 @@ const Header = ({ type }) => {
   const handleNavbarbuttons = (page) => {
     navigate(`/${page}`);
   };
+  const [calendarClass, setCalendarClass] = useState("dateInList");
 
   useEffect(() => {
     console.log(date);
   }, [date]);
+
+  useEffect(() => {
+    if(type === "list"){
+      setCalendarClass("dateInList")
+      console.log("yes");
+    } else{
+      setCalendarClass("dateInHome")
+    }
+    console.log(type);
+  }, [type]);
+
 
   return (
     <div className="header">
@@ -129,7 +141,7 @@ const Header = ({ type }) => {
                   onChange={(item) => setDate([item.selection])}
                   moveRangeOnFirstSelection={false}
                   ranges={date}
-                  className="date"
+                  className={type === "list" ? "dateInList" : "dateInHome"}
                   minDate={new Date()}
                 />
               )}

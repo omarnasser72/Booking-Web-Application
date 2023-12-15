@@ -161,6 +161,7 @@ const Hotel = () => {
                   <span>Rate This Hotel</span>
                   <p>Share your experience with others</p>
                   <Rating
+                    className="rateValue"
                     onChange={(e) => setRate(e.target.value)}
                     precision={0.5}
                   />

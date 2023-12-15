@@ -275,13 +275,20 @@ const ChangePwd = () => {
             {submitting && matchPwd === "" ? "This field is required" : ""}
           </p>
         </div>
-        <div className="submitBtn">
+        <div className="Btns">
           <button
             className="changePwdBtn"
             disabled={loading}
             onClick={handleClick}
           >
             Submit
+          </button>
+          <button
+            className="changePwdBtn"
+            disabled={loading}
+            onClick={()=>navigate("/profile")}
+          >
+            Cancel
           </button>
         </div>
         {error && <span className="changePwdErrMsg">{error.message}</span>}

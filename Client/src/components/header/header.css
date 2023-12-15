@@ -246,22 +246,22 @@
     cursor: pointer;
   }
 
-  .date {
+  .dateInHome {
     height: 360px;
     position: absolute;
     top: 29px;
     right: 0px;
-  }
-
-  .rdrCalendarWrapper {
-    position: absolute;
-    top: 20px;
     z-index: 2;
     height: 360px;
     width: 199px;
     color: #000000;
     font-size: 12px;
   }
+
+  /* .rdrCalendarWrapper {
+    position: absolute;
+    top: 20px;
+  } */
 
   .rdrDateDisplayItemActive {
     height: fit-content;
