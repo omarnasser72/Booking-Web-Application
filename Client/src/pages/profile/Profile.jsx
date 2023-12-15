@@ -246,6 +246,11 @@ const Profile = () => {
     }
   };
 
+  const handleCancel = async()=>{
+    setEditBtn(true);
+    setUpdateBtn(false)
+  }
+
   const getReservations = async () => {
     try {
       const reservationsRes = await axios.get(
@@ -631,7 +636,7 @@ const Profile = () => {
                       Update
                     </button>
                   )}
-                  <button className="Btn" onClick={() => setUpdateMode(false)}>
+                  <button className="Btn" onClick={handleCancel}>
                     Cancel
                   </button>
                 </div>
