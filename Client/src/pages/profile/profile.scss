@@ -1,6 +1,8 @@
 body {
   margin: 0;
-
+  .swal2-popup {
+    font-size: 1rem;
+  }
   .Profile {
     width: 100%;
     max-width: 100vw;
@@ -25,7 +27,6 @@ body {
         margin-right: 30%;
         background-color: rgb(66, 66, 66);
 
-
         .profileImg {
           position: absolute;
           top: 10px;
@@ -45,8 +46,8 @@ body {
             .removeImg {
               cursor: pointer;
               position: absolute;
-              bottom: 470%;
-              left: 32%;
+              bottom: 480%;
+              left: 45%;
               z-index: 1;
               font-size: x-large;
             }
@@ -69,7 +70,7 @@ body {
           gap: 20px;
           justify-content: center;
           align-items: start;
-          margin-top: 40%;
+          margin-top: 50%;
           margin-left: 0%;
 
           .formInput {
@@ -87,7 +88,6 @@ body {
               border-radius: 5px;
               color: black;
             }
-
 
             .inputErrMsg {
               text-align: center;
@@ -163,6 +163,53 @@ body {
               background-color: yellow;
             }
           }
+          .UpdateBtns {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            height: fit-content;
+            margin: 0;
+            .Btn {
+              align-self: center;
+              width: fit-content;
+              padding: 5px 10px;
+              border: none;
+              border-radius: 5px;
+              margin: 0;
+              cursor: pointer;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
+
+            .notAllowed {
+              align-self: center;
+              width: 150px;
+              padding: 5px 30px;
+              border: none;
+              border-radius: 5px;
+              margin: 10px;
+              margin-left: 30px;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
+
+            .notAllowed:hover {
+              align-self: center;
+              width: 150px;
+              padding: 5px 30px;
+              border: none;
+              border-radius: 5px;
+              margin: 10px;
+              margin-left: 30px;
+              cursor: not-allowed;
+              font-weight: 600;
+              color: #000;
+              background-color: yellow;
+            }
+          }
         }
       }
 
@@ -188,7 +235,6 @@ body {
         }
 
         .eachReservation {
-          height: 50vh;
           box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
           margin: 3%;
           margin-left: 5%;
@@ -212,9 +258,6 @@ body {
           }
 
           button {
-            position: absolute;
-            bottom: 10;
-            right: 0;
             width: 200px;
             padding: 5px 10px;
             border: none;
@@ -224,6 +267,7 @@ body {
             color: #000;
             background-color: yellow;
             margin: 20px;
+            margin-left: 70%;
           }
         }
 
@@ -247,7 +291,7 @@ body {
           margin: 3%;
         }
       }
-      .error{
+      .error {
         width: fit-content;
         height: fit-content;
         text-align: center;
@@ -277,7 +321,6 @@ body {
           width: 80px;
           height: 80px;
         }
-
       }
 
       .reservations {
@@ -298,61 +341,6 @@ body {
           color: #fffb06;
           padding-left: 0%;
           cursor: pointer;
-        }
-
-        .eachReservation {
-          height: 50vh;
-          box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
-          margin: 3%;
-          margin-left: 5%;
-          border-radius: 5px;
-          font-size: medium;
-          background-color: rgb(66, 66, 66);
-          color: #fffb06;
-          padding: 10px;
-          position: relative;
-
-          .property {
-            width: 100%;
-            display: flex;
-            align-items: start;
-            justify-content: space-between;
-
-            label {
-              font-weight: 600;
-              font-size: larger;
-            }
-          }
-
-          button {
-            position: absolute;
-            bottom: 10;
-            right: 0;
-            width: 200px;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 800;
-            color: #000;
-            background-color: yellow;
-            margin: 20px;
-          }
-        }
-
-        .loading {
-          width: 100%;
-          text-align: center;
-          font-size: xx-large;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-
-          .loadingReservations {
-            margin-top: 10px;
-            width: 60px;
-          }
         }
 
         .resSubTitle {
@@ -381,45 +369,45 @@ body {
           cursor: pointer;
         }
 
-        .eachReservation {
-          height: 50vh;
-          box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
-          margin: 3%;
-          margin-left: 5%;
-          border-radius: 5px;
-          font-size: medium;
-          background-color: rgb(66, 66, 66);
-          color: #fffb06;
-          padding: 10px;
-          position: relative;
+        // .eachReservation {
+        //   height: 50vh;
+        //   box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
+        //   margin: 3%;
+        //   margin-left: 5%;
+        //   border-radius: 5px;
+        //   font-size: medium;
+        //   background-color: rgb(66, 66, 66);
+        //   color: #fffb06;
+        //   padding: 10px;
+        //   position: relative;
 
-          .property {
-            width: 100%;
-            display: flex;
-            align-items: start;
-            justify-content: space-between;
+        //   .property {
+        //     width: 100%;
+        //     display: flex;
+        //     align-items: start;
+        //     justify-content: space-between;
 
-            label {
-              font-weight: 600;
-              font-size: larger;
-            }
-          }
+        //     label {
+        //       font-weight: 600;
+        //       font-size: larger;
+        //     }
+        //   }
 
-          button {
-            position: absolute;
-            bottom: 10;
-            right: 0;
-            width: 200px;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 800;
-            color: #000;
-            background-color: yellow;
-            margin: 20px;
-          }
-        }
+        //   button {
+        //     position: absolute;
+        //     bottom: 10;
+        //     right: 0;
+        //     width: 200px;
+        //     padding: 5px 10px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     font-weight: 800;
+        //     color: #000;
+        //     background-color: yellow;
+        //     margin: 20px;
+        //   }
+        // }
 
         .loading {
           width: 100%;
@@ -457,7 +445,7 @@ body {
   display: none;
 }
 
-.instructions {
+.profileInstructions {
   background-color: #000;
   border-radius: 5px;
   position: relative;
@@ -465,7 +453,7 @@ body {
   padding: 5px;
 }
 
-.offscreen {
+.profileOffscreen {
   position: absolute;
   left: -9999px;
 }
@@ -474,24 +462,25 @@ body {
   background-color: #fffb06;
 }
 
-
-@media screen and (max-width: 440px){
+@media screen and (max-width: 440px) {
   body {
     margin: 0;
-  
+    .swal2-popup {
+      font-size: 0.4rem;
+    }
     .Profile {
       //width: 100%;
       max-width: 100vw;
       height: 100vh;
       background-color: rgb(66, 66, 66);
-  
+
       .profileContainer {
         //width: 100%;
         display: flex;
         background-color: rgb(66, 66, 66);
         color: #fffb06;
         gap: 30%;
-        
+
         .info {
           flex: 1;
           display: flex;
@@ -503,23 +492,23 @@ body {
           margin-right: 30%;
           background-color: rgb(66, 66, 66);
           z-index: 1;
-  
+
           .profileImg {
             position: absolute;
             top: 25px;
             left: 25px;
             width: 100%;
-  
+
             .upload {
               width: 100%;
               display: flex;
               font-size: smaller;
               position: relative;
-  
+
               .uploadIcon {
                 cursor: pointer;
               }
-  
+
               .removeImg {
                 cursor: pointer;
                 position: absolute;
@@ -529,18 +518,18 @@ body {
                 font-size: x-large;
               }
             }
-  
+
             img {
               width: 60px;
               height: 60px;
             }
           }
-  
+
           .exceededMsg {
             margin: 5px;
             color: rgb(212, 75, 75);
           }
-  
+
           form {
             width: max-content;
             display: flex;
@@ -555,12 +544,12 @@ body {
               display: flex;
               flex-direction: column;
               margin-left: 7%;
-  
+
               label {
                 width: max-content;
                 margin-right: 20px;
               }
-  
+
               input {
                 width: 70px;
                 font-size: 10px;
@@ -568,7 +557,7 @@ body {
                 border-radius: 5px;
                 color: black;
               }
-  
+
               .inputErrMsg {
                 text-align: center;
                 color: red;
@@ -576,13 +565,14 @@ body {
                 border-radius: 5px;
                 margin: 5px;
               }
-  
+
               .infoMsg {
+                max-width: 90px;
                 display: flex;
                 flex-direction: column;
               }
             }
-  
+
             .infoLabels {
               display: flex;
               flex-direction: column;
@@ -593,12 +583,13 @@ body {
                 width: 50px;
                 margin: 0%;
               }
-  
-              p {min-width: 50px;
+
+              p {
+                min-width: 50px;
                 width: fit-content;
               }
             }
-  
+
             .Btns {
               width: 100%;
               display: flex;
@@ -619,7 +610,7 @@ body {
                 color: #000;
                 background-color: yellow;
               }
-  
+
               .notAllowed {
                 align-self: center;
                 width: 150px;
@@ -632,7 +623,7 @@ body {
                 color: #000;
                 background-color: yellow;
               }
-  
+
               .notAllowed:hover {
                 align-self: center;
                 width: 150px;
@@ -647,7 +638,7 @@ body {
                 background-color: yellow;
               }
             }
-            .UpdateBtns{
+            .UpdateBtns {
               width: 94px;
               display: flex;
               flex-direction: column;
@@ -667,7 +658,7 @@ body {
                 color: #000;
                 background-color: yellow;
               }
-  
+
               .notAllowed {
                 align-self: center;
                 width: 150px;
@@ -680,7 +671,7 @@ body {
                 color: #000;
                 background-color: yellow;
               }
-  
+
               .notAllowed:hover {
                 align-self: center;
                 width: 150px;
@@ -697,7 +688,7 @@ body {
             }
           }
         }
-  
+
         .reservations {
           flex: 2;
           height: 100vh;
@@ -708,8 +699,8 @@ body {
           background-color: #fffb06da;
           color: black;
           padding-bottom: 10%;
-          position: relative; 
-          z-index: 0;  
+          position: relative;
+          z-index: 0;
           .title {
             width: 100%;
             background-color: rgb(66, 66, 66);
@@ -717,7 +708,7 @@ body {
             padding-left: 0%;
             cursor: pointer;
           }
-  
+
           .eachReservation {
             width: fit-content;
             height: fit-content;
@@ -728,7 +719,7 @@ body {
             color: #fffb06;
             padding: 10px;
             position: relative;
-  
+
             .property {
               width: 100%;
               display: flex;
@@ -739,15 +730,14 @@ body {
                 font-weight: 600;
                 font-size: 11px;
               }
-              p{
+              p {
                 font-size: 11px;
               }
-              span{
+              span {
                 font-size: 11px;
               }
-              
             }
-  
+
             button {
               width: auto;
               position: relative;
@@ -764,7 +754,7 @@ body {
               margin-top: 10px;
             }
           }
-  
+
           .loading {
             width: 100%;
             text-align: center;
@@ -774,42 +764,42 @@ body {
             justify-content: center;
             align-items: center;
             margin-top: 55%;
-  
+
             .loadingReservations {
               margin-top: 10px;
               width: 40px;
             }
-            span{
+            span {
               font-size: 14px;
             }
           }
-  
+
           .resSubTitle {
             color: rgb(66, 66, 66);
             margin: 3%;
           }
         }
-        
-        .uploading{
-          flex:1;
+
+        .uploading {
+          flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           margin-left: 5%;
           margin-top: 55%;
-          .uploadingUser{
+          .uploadingUser {
             //width: 80px;
             height: 70px;
           }
         }
       }
-  
+
       .uploadContainerState {
         width: 100%;
         display: flex;
         background-color: rgb(66, 66, 66);
         color: #fffb06;
-  
+
         .uploading {
           flex: 3;
           width: 100%;
@@ -817,16 +807,13 @@ body {
           flex-direction: column;
           margin-top: 3%;
           align-items: center;
-  
+
           .uploadingUser {
             width: 80px;
             height: 80px;
           }
-  
         }
-  
-        
-  
+
         .uploadReservationsState {
           flex: 8;
           width: 100%;
@@ -838,7 +825,7 @@ body {
           color: black;
           padding-bottom: 10%;
           position: relative;
-  
+
           .title {
             width: 100%;
             background-color: rgb(66, 66, 66);
@@ -846,7 +833,7 @@ body {
             padding-left: 0%;
             cursor: pointer;
           }
-  
+
           // .eachReservation {
           //   height: 50vh;
           //   box-shadow: 6px 8px 10px 1px rgba(53, 53, 48, 0.993);
@@ -858,19 +845,19 @@ body {
           //   color: #fffb06;
           //   padding: 10px;
           //   position: relative;
-  
+
           //   .property {
           //     width: 100%;
           //     display: flex;
           //     align-items: start;
           //     justify-content: space-between;
-  
+
           //     label {
           //       font-weight: 600;
           //       font-size: larger;
           //     }
           //   }
-  
+
           //   button {
           //     position: absolute;
           //     bottom: 10;
@@ -886,7 +873,7 @@ body {
           //     margin: 20px;
           //   }
           // }
-  
+
           .loading {
             width: 100%;
             text-align: center;
@@ -895,13 +882,13 @@ body {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-  
+
             .loadingReservations {
               margin-top: 10px;
               width: 60px;
             }
           }
-  
+
           .resSubTitle {
             color: rgb(66, 66, 66);
             margin: 3%;
@@ -910,34 +897,34 @@ body {
       }
     }
   }
-  
+
   .valid {
     color: limegreen;
   }
-  
+
   .invalid {
     color: red;
   }
-  
+
   .hide {
     display: none;
   }
-  
-  .instructions {
+
+  .profileInstructions {
+    max-width: 60px;
     background-color: #000;
     border-radius: 5px;
     position: relative;
     bottom: -10px;
     padding: 5px;
   }
-  
-  .offscreen {
+
+  .profileOffscreen {
     position: absolute;
     left: -9999px;
   }
-  
+
   .react-datepicker__header {
     background-color: #fffb06;
   }
-  
 }

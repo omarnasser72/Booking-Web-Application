@@ -158,20 +158,20 @@
 
   .profileImg {
     position: absolute;
-    top: 0px;
+    top: -15px;
     right: 100px;
-    width: auto;
-    height: 20px;
+    width: 33px;
+    height: 33px;
     border-radius: 50%;
     cursor: pointer;
   }
 
   .profileImgWithSettings {
     position: absolute;
-    top: -30px;
+    top: -32px;
     right: 100px;
-    width: auto;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     cursor: pointer;
   }

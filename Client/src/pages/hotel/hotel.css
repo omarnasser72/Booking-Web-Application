@@ -9,6 +9,36 @@
   align-items: center;
 }
 
+.hotelLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10%;
+}
+
+.hotelLoading > span {
+  font-size: x-large;
+}
+
+.hotelLoadingImg {
+  height: 100px;
+}
+
+.hotelError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15%;
+}
+
+.hotelErrorMsg {
+  color: red;
+  background-color: lightpink;
+  padding: 1% 3%;
+  margin: auto;
+}
+
 .hotelContainer {
   display: flex;
   flex-direction: column;
@@ -115,19 +145,19 @@
   gap: 20px;
 }
 
-.hotelDetailsPrice>h1 {
+.hotelDetailsPrice > h1 {
   font-size: 22px;
 }
 
-.hotelDetailsPrice>span {
+.hotelDetailsPrice > span {
   font-size: 16px;
 }
 
-.hotelDetailsPrice>h2 {
+.hotelDetailsPrice > h2 {
   font-weight: 400;
 }
 
-.hotelDetailsPrice>button {
+.hotelDetailsPrice > button {
   top: 10px;
   border: none;
   padding: 10px 20px;
@@ -239,7 +269,6 @@
   background-color: #ffffff6b;
 }
 
-
 @media screen and (max-width: 440px) {
   .Hotel {
     width: 100%;
@@ -249,7 +278,39 @@
   .wholePage {
     background-color: #fffc55;
     width: 100%;
+    min-height: 100vh;
     align-items: center;
+  }
+
+  .hotelLoading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 18% 10%;
+  }
+
+  .hotelLoading > span {
+    font-size: medium;
+  }
+
+  .hotelLoadingImg {
+    height: 50px;
+  }
+
+  .hotelError {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24% 15%;
+  }
+
+  .hotelErrorMsg {
+    color: red;
+    background-color: lightpink;
+    padding: 1% 3%;
+    margin: auto;
+    font-size: x-small;
   }
 
   .hotelContainer {
@@ -367,21 +428,21 @@
     gap: 5px;
   }
 
-  .hotelDetailsPrice>h1 {
+  .hotelDetailsPrice > h1 {
     font-size: 12px;
     margin-bottom: 2%;
   }
 
-  .hotelDetailsPrice>span {
+  .hotelDetailsPrice > span {
     font-size: 10px;
   }
 
-  .hotelDetailsPrice>h2 {
+  .hotelDetailsPrice > h2 {
     font-size: 12px;
     font-weight: 400;
   }
 
-  .hotelDetailsPrice>button {
+  .hotelDetailsPrice > button {
     font-size: 9px;
     top: 10px;
     border: none;
@@ -509,8 +570,7 @@
 
   .MuiRating-root
 
-  /*MuiRating-sizeMedium Mui-readOnly MuiRating-readOnly css-ryrseu-MuiRating-root*/
-    {
+  /*MuiRating-sizeMedium Mui-readOnly MuiRating-readOnly css-ryrseu-MuiRating-root*/ {
     font-size: -0.5em;
   }
 }

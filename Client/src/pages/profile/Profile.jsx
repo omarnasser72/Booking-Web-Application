@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PHONE_REGEX =
   /^(?:\d{3}\s?\d{4}\s?\d{4}|\+\d{1,3}\s?\(\d{1,4}\)\s?\d{1,4}(?:[-\s]?\d{1,4})*|\d{10,})$/;
@@ -115,14 +116,17 @@ const Profile = () => {
 
   const [submitting, setSubmitting] = useState(false);
 
-  const [height, setHeight] = useState(120);
+  const [height, setHeight] = useState(150);
 
   //update Height
   useEffect(() => {
+    // setHeight(
+    //   (reservationData.length / 5) * 200 < 150
+    //     ? 150
+    //     : (reservationData.length / 5) * 200
+    // );
     setHeight(
-      (reservationData.length / 5) * 200 < 100
-        ? 100
-        : (reservationData.length / 5) * 200
+      reservationData.length * 60 < 150 ? 150 : reservationData.length * 60
     );
   }, [reservationData]);
 
@@ -246,10 +250,11 @@ const Profile = () => {
     }
   };
 
-  const handleCancel = async()=>{
+  const handleCancel = async () => {
     setEditBtn(true);
-    setUpdateBtn(false)
-  }
+    setUpdateMode(false);
+    setUpdateBtn(false);
+  };
 
   const getReservations = async () => {
     try {
@@ -336,33 +341,51 @@ const Profile = () => {
 
   const handleDelete = async (e) => {
     try {
-      const resvDivId = e.target.dataset.reservationId;
+      Swal.fire({
+        position: "center",
+        title: "Are you sure you want to cancel this reservation?",
+        text: "You won't be able to revert it!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "red",
+        cancelButtonColor: "rgb(66, 66, 66)",
+        confirmButtonText: "Delete Reservation",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const resvDivId = e.target.dataset.reservationId;
 
-      const resvationResponse = await axios.delete(
-        `/users/reservations/${resvDivId}`
-      );
+          const resvationResponse = await axios.delete(
+            `/users/reservations/${resvDivId}`
+          );
 
-      const resvDivToDelete = reservationData.find(
-        (resvDiv) => resvDiv.id === resvDivId
-      );
+          const resvDivToDelete = reservationData.find(
+            (resvDiv) => resvDiv.id === resvDivId
+          );
 
-      const updatedReservationData = reservationData.filter(
-        (reservation) => reservation.id !== resvDivId
-      );
+          const updatedReservationData = reservationData.filter(
+            (reservation) => reservation.id !== resvDivId
+          );
 
-      try {
-        const reservationDateResponse = await axios.delete(
-          `/rooms/${resvDivToDelete.hotel._id}/${resvDivToDelete.roomType._id}/${resvDivToDelete.roomNumber._id}/${resvDivToDelete.startDate}/${resvDivToDelete.endDate}`
-        );
-      } catch (err) {
-        console.log(err);
-      }
-      setReservationData(updatedReservationData); // Update reservationData directly
-
-      getReservations(); // Fetch the updated list of reservations
-      console.log(
-        `Reservation with _id = ${resvDivId} has been successfully deleted`
-      );
+          try {
+            const reservationDateResponse = await axios.delete(
+              `/rooms/${resvDivToDelete.hotel._id}/${resvDivToDelete.roomType._id}/${resvDivToDelete.roomNumber._id}/${resvDivToDelete.startDate}/${resvDivToDelete.endDate}`
+            );
+          } catch (err) {
+            console.log(err);
+          }
+          setReservationData(updatedReservationData); // Update reservationData directly
+          getReservations(); // Fetch the updated list of reservations
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your Reservation has cancelled.",
+            icon: "success",
+            confirmButtonColor: "rgb(66, 66, 66)",
+          });
+          console.log(
+            `Reservation with _id = ${resvDivId} has deleted successfully.`
+          );
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -384,7 +407,30 @@ const Profile = () => {
             <div>Updating Profile</div>
           </div>
         ) : (
-          <div className="info" >
+          <div
+            className="info"
+            onClick={() => {
+              Swal.fire({
+                position: "center",
+                title: "Are you sure you want to cancel this reservation?",
+                text: "You won't be able to revert it!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "red",
+                cancelButtonColor: "rgb(66, 66, 66)",
+                confirmButtonText: "Delete Reservation",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your Reservation has cancelled.",
+                    icon: "success",
+                    confirmButtonColor: "rgb(66, 66, 66)",
+                  });
+                }
+              });
+            }}
+          >
             <div className="profileImg">
               <img
                 src={
@@ -414,7 +460,7 @@ const Profile = () => {
                 </div>
               )}
             </div>
-            <form>
+            <form style={{ marginTop: updateMode ? "100%" : "" }}>
               {excceded && (
                 <p className="exceededMsg">
                   Please, select Img size less than 1 MB to be uploaded
@@ -467,8 +513,8 @@ const Profile = () => {
                         id="phonenote"
                         className={
                           phoneFocus && phone && !validPhone
-                            ? "instructions"
-                            : "offscreen"
+                            ? "profileInstructions"
+                            : "profileOffscreen"
                         }
                       >
                         <FontAwesomeIcon icon={faInfoCircle} />
@@ -520,8 +566,8 @@ const Profile = () => {
                       id="countrynote"
                       className={
                         countryFocus && country && !validCountry
-                          ? "instructions"
-                          : "offscreen"
+                          ? "profileInstructions"
+                          : "profileOffscreen"
                       }
                     >
                       <FontAwesomeIcon icon={faInfoCircle} />
@@ -566,8 +612,8 @@ const Profile = () => {
                       id="citynote"
                       className={
                         cityFocus && city && !validCity
-                          ? "instructions"
-                          : "offscreen"
+                          ? "profileInstructions"
+                          : "profileOffscreen"
                       }
                     >
                       <FontAwesomeIcon icon={faInfoCircle} />
@@ -647,7 +693,7 @@ const Profile = () => {
         {
           <div
             className={!uploading ? "reservations" : "uploadReservationsState"}
-             style={{ height: `${height}vh` }}
+            style={{ height: `${height}vh` }}
           >
             <h2 className="title" onClick={() => navigate(`/`)}>
               My Nights

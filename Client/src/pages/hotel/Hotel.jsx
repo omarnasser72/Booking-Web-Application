@@ -17,7 +17,7 @@ import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../components/Reserve/Reserve";
 import { Rating } from "@mui/material";
-import axios from "axios";
+import axios from "../../axios";
 const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
 
 const Hotel = () => {
@@ -74,33 +74,23 @@ const Hotel = () => {
     user ? navigate(`/hotels/reservation/${id}`) : navigate("/auth/login");
   };
 
-  const handleSubmitRate = () => {
-    setOpenRate(false);
-    reFetch();
+  const updateRate = async () => {
+    const rateObj = {
+      hotelId: hotel._id,
+      userId: user._id,
+      rating: rate,
+    };
+    if (hotel._id && user._id) {
+      await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj);
+      console.log(await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj));
+    }
   };
 
-  useEffect(() => {
-    try {
-      const update = async () => {
-        const rateObj = {
-          hotelId: hotel._id,
-          userId: user._id,
-          rating: rate,
-        };
-        if (hotel._id && user._id) {
-          await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj);
-          console.log(
-            await axios.post(`/rates/${user._id}/${hotel._id}`, rateObj)
-          );
-        }
-      };
-      update();
-      //reFetch();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [rate]);
-
+  const handleSubmitRate = () => {
+    setOpenRate(false);
+    updateRate();
+    reFetch();
+  };
   useEffect(() => {
     console.log(rate);
   }, [rate]);
@@ -115,9 +105,17 @@ const Hotel = () => {
         <Navbar />
         <Header type="list" />
         {error ? (
-          error
+          <div className="hotelError">
+            <span className="hotelErrorMsg">{error}</span>
+          </div>
         ) : loading ? (
-          "loading"
+          <div className="hotelLoading">
+            <img
+              className="hotelLoadingImg"
+              src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
+            />
+            <span>loading</span>
+          </div>
         ) : (
           <div className="hotelContainer">
             {isImgSliderOpen && (
