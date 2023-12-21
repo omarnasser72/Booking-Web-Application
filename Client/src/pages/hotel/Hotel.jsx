@@ -108,7 +108,7 @@ const Hotel = () => {
           <div className="hotelError">
             <span className="hotelErrorMsg">{error}</span>
           </div>
-        ) : !loading ? (
+        ) : loading ? (
           <div className="hotelLoading">
             <img
               className="hotelLoadingImg"

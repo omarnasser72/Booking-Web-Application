@@ -695,7 +695,7 @@ const Profile = () => {
                 </h4>
                 {!reservationData?.length ? (
                   <div className="loading">
-                    <span>No reservations yet</span>
+                    <span>No reservations</span>
                   </div>
                 ) : (
                   reservationData?.map((reservation, index) => {

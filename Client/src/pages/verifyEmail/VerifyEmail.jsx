@@ -48,9 +48,9 @@ const VerifyEmail = () => {
       console.log(res);
       if (res?.data) {
         Swal.fire({
-          position: "middlw",
+          position: "middle",
           icon: "success",
-          title: `${email} has deleted successfully`,
+          title: `${email} has verified successfully`,
           showConfirmButton: false,
           timer: 1500,
         });
