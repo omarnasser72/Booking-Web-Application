@@ -112,8 +112,8 @@
 }
 
 .hotelImg {
-  width: 100%;
-  height: min-content;
+  width: 330px;
+  height: 200px;
   object-fit: cover;
   cursor: pointer;
 }
@@ -387,12 +387,12 @@
   }
 
   .hotelImageWrapper {
-    width: 33%;
+    width: fit-content;
   }
 
   .hotelImg {
-    width: 100%;
-    height: min-content;
+    width: 95px;
+    height: 70px;
     object-fit: cover;
     cursor: pointer;
   }

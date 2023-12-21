@@ -38,6 +38,9 @@ import ResetPwd from "./pages/resetPwd/ResetPwd";
 import DashboardChoice from "./pages/dashboardChoice/DashboardChoice";
 import VerifyEmail from "./pages/verifyEmail/VerifyEmail";
 import NewPwd from "./pages/newPwd/newPwd";
+import CheckOutSuccess from "./pages/checkoutSuccess/CheckOutSuccess";
+import CheckOutFailed from "./pages/checkoutFailed/CheckOutFailed";
+
 function App() {
   const ProtectedRoute = ({ element }) => {
     const { user } = useContext(AuthContext);
@@ -223,6 +226,14 @@ function App() {
               element={<ProtectedRoute element={<ListType />} />}
             />
           </Route>
+          <Route
+            path="checkoutSuccess"
+            element={<ProtectedRoute element={<CheckOutSuccess />} />}
+          />
+          <Route
+            path="checkoutFailed"
+            element={<ProtectedRoute element={<CheckOutFailed />} />}
+          />
         </Route>
       </Routes>
     </AuthContextProvider>

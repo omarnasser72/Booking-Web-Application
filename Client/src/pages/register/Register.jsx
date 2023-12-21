@@ -271,7 +271,7 @@ const Register = () => {
                   id="uidnote"
                   className={
                     usernameFocus && username && !validName
-                      ? "instructions"
+                      ? "registerInstructions"
                       : "offscreen"
                   }
                 >
@@ -317,7 +317,9 @@ const Register = () => {
                 <p
                   id="pwdnote"
                   className={
-                    pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"
+                    pwdFocus && pwd && !validPwd
+                      ? "registerInstructions"
+                      : "offscreen"
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
@@ -365,7 +367,7 @@ const Register = () => {
                   id="confirmnote"
                   className={
                     matchFocus && matchPwd && !validMatch
-                      ? "instructions"
+                      ? "registerInstructions"
                       : "offscreen"
                   }
                 >
@@ -408,7 +410,7 @@ const Register = () => {
                   id="confirmnote"
                   className={
                     emailFocus && email && !validEmail
-                      ? "instructions"
+                      ? "emailInstructions"
                       : "offscreen"
                   }
                 >
@@ -450,7 +452,7 @@ const Register = () => {
                   id="phonenote"
                   className={
                     phoneFocus && phone && !validPhone
-                      ? "instructions"
+                      ? "registerInstructions"
                       : "offscreen"
                   }
                 >
@@ -493,7 +495,7 @@ const Register = () => {
                   id="countrynote"
                   className={
                     countryFocus && country && !validCountry
-                      ? "instructions"
+                      ? "registerInstructions"
                       : "offscreen"
                   }
                 >
@@ -532,7 +534,7 @@ const Register = () => {
                   id="citynote"
                   className={
                     cityFocus && city && !validCity
-                      ? "instructions"
+                      ? "registerInstructions"
                       : "offscreen"
                   }
                 >

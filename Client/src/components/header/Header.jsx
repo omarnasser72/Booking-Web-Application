@@ -60,15 +60,14 @@ const Header = ({ type }) => {
   }, [date]);
 
   useEffect(() => {
-    if(type === "list"){
-      setCalendarClass("dateInList")
+    if (type === "list") {
+      setCalendarClass("dateInList");
       console.log("yes");
-    } else{
-      setCalendarClass("dateInHome")
+    } else {
+      setCalendarClass("dateInHome");
     }
     console.log(type);
   }, [type]);
-
 
   return (
     <div className="header">

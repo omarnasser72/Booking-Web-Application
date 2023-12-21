@@ -62,12 +62,12 @@
   margin-top: 10px;
 }
 
-.searchItemRating>span {
+.searchItemRating > span {
   font-weight: 500;
   font-size: 20px;
 }
 
-.searchItemRating>button {
+.searchItemRating > button {
   background-color: #fffb06;
   color: black;
   padding: 5px;
@@ -120,7 +120,7 @@
   }
 
   .searchItemImg {
-    width: 60px;
+    width: 90px;
     height: 200px;
     object-fit: cover;
   }
@@ -174,12 +174,12 @@
     margin-top: 7px;
   }
 
-  .searchItemRating>span {
+  .searchItemRating > span {
     font-weight: 500;
     font-size: 10px;
   }
 
-  .searchItemRating>button {
+  .searchItemRating > button {
     font-size: 10px;
     background-color: #fffb06;
     color: black;

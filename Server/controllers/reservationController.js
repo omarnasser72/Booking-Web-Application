@@ -1,6 +1,35 @@
 import Reservation from "../models/Reservation.js";
 import moment from "moment";
 import "moment-timezone";
+import Stripe from "stripe";
+
+export const stripePayment = async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_KEY);
+
+  console.log(req.body.reservations);
+
+  const line_items = req.body.reservations.map((reservation) => {
+    return {
+      price_data: {
+        currency: "egp",
+        product_data: {
+          name: reservation.hotelName,
+          images: reservation.roomImages,
+        },
+        unit_amount: reservation.cost * 100,
+      },
+      quantity: 1,
+    };
+  });
+  const session = await stripe.checkout.sessions.create({
+    line_items,
+    mode: "payment",
+    success_url: `${process.env.CLIENT_URL}/#/checkoutSuccess`,
+    cancel_url: `${process.env.CLIENT_URL}/#/checkoutFailed`,
+  });
+
+  res.send({ url: session.url });
+};
 
 export const createReservation = async (req, res, next) => {
   const startDate = moment.tz(req.body.reservationDuration.startDate, "UTC");

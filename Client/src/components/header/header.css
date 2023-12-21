@@ -288,7 +288,7 @@
     padding: 0;
     border: 0;
     border-radius: 5px;
-    background: #EFF2F7;
+    background: #eff2f7;
   }
 
   .rdrMonthAndYearPickers {
@@ -313,7 +313,7 @@
     font-size: 12px;
   }
 
-  .rdrDateDisplayItem+.rdrDateDisplayItem {
+  .rdrDateDisplayItem + .rdrDateDisplayItem {
     height: fit-content;
     margin-left: 0.833em;
   }
@@ -368,7 +368,7 @@
     user-select: none;
     border: 0;
     padding: 0;
-    line-height: 3.000em;
+    line-height: 3em;
     height: 3em;
     text-align: center;
     color: #1d2429;
@@ -400,7 +400,6 @@
     outline: none;
     font-size: x-small;
   }
-
 
   .options {
     position: absolute;

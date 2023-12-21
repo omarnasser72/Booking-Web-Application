@@ -407,30 +407,7 @@ const Profile = () => {
             <div>Updating Profile</div>
           </div>
         ) : (
-          <div
-            className="info"
-            onClick={() => {
-              Swal.fire({
-                position: "center",
-                title: "Are you sure you want to cancel this reservation?",
-                text: "You won't be able to revert it!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "red",
-                cancelButtonColor: "rgb(66, 66, 66)",
-                confirmButtonText: "Delete Reservation",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  Swal.fire({
-                    title: "Deleted!",
-                    text: "Your Reservation has cancelled.",
-                    icon: "success",
-                    confirmButtonColor: "rgb(66, 66, 66)",
-                  });
-                }
-              });
-            }}
-          >
+          <div className="info">
             <div className="profileImg">
               <img
                 src={

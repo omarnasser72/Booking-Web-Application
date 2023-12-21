@@ -13,7 +13,7 @@
   display: flex;
   gap: 10px;
   padding: 50px;
-  margin-left: 5%;
+  margin-left: 2%;
 }
 
 .listSearch {
@@ -50,7 +50,7 @@
   padding-bottom: 10px;
 }
 
-.listSearchItem>input {
+.listSearchItem > input {
   font-size: 14px;
   color: black;
   font-weight: 600;
@@ -61,7 +61,7 @@
   width: 250px;
 }
 
-.listSearchItem>span {
+.listSearchItem > span {
   height: 25px;
   cursor: pointer;
   display: flex;
@@ -89,7 +89,7 @@
   width: 00%;
 }
 
-.optionItem>input {
+.optionItem > input {
   color: black;
   display: flex;
   width: 100px;
@@ -98,7 +98,7 @@
   margin-left: 5%;
 }
 
-.optionItem>input::placeholder {
+.optionItem > input::placeholder {
   color: black;
 }
 
@@ -158,6 +158,7 @@
   .listResult {
     flex: 3;
     width: 100%;
+    margin-right: 5%;
   }
 
   .listSearchItem {
@@ -170,11 +171,11 @@
     margin: -4px;
   }
 
-  .listSearchItem>label {
+  .listSearchItem > label {
     font-size: 10px;
   }
 
-  .listSearchItem>input {
+  .listSearchItem > input {
     height: fit-content;
     width: fit-content;
     font-size: 7px;
@@ -185,7 +186,7 @@
     margin-bottom: 10px;
   }
 
-  .listSearchItem>span {
+  .listSearchItem > span {
     font-size: 10px;
     height: fit-content;
     cursor: pointer;
@@ -219,7 +220,7 @@
     height: fit-content;
   }
 
-  .optionItem>input {
+  .optionItem > input {
     color: black;
     display: flex;
     border: none;
@@ -230,7 +231,7 @@
     height: fit-content;
   }
 
-  .optionItem>input::placeholder {
+  .optionItem > input::placeholder {
     color: black;
   }
 
@@ -289,7 +290,7 @@
     padding: 0;
     border: 0;
     border-radius: 5px;
-    background: #EFF2F7;
+    background: #eff2f7;
   }
 
   .rdrMonthAndYearPickers {
@@ -314,7 +315,7 @@
     font-size: 12px;
   }
 
-  .rdrDateDisplayItem+.rdrDateDisplayItem {
+  .rdrDateDisplayItem + .rdrDateDisplayItem {
     height: fit-content;
     margin-left: 0.833em;
   }
@@ -369,7 +370,7 @@
     user-select: none;
     border: 0;
     padding: 0;
-    line-height: 3.000em;
+    line-height: 3em;
     height: 3em;
     text-align: center;
     color: #1d2429;
@@ -401,7 +402,6 @@
     outline: none;
     font-size: x-small;
   }
-
 
   .options {
     position: absolute;

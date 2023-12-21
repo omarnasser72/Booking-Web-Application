@@ -300,20 +300,23 @@ const SingleHotel = () => {
       console.log("uploading....");
       try {
         for (let i = 0; i < currImgs.length; i++) {
+          const data = new FormData();
           if (currImgs[i] instanceof File) {
-            const data = new FormData();
             data.append("file", currImgs[i]);
-            data.append("upload_preset", "upload");
-            const uploadRes = await org_axios.post(
-              "https://api.cloudinary.com/v1_1/omarnasser/upload",
-              data
-            );
-            console.log(currImgs[i], " uploaded");
-            console.log(uploadRes?.data?.url);
-            uploadedUrls.push(uploadRes?.data?.url);
           } else {
-            uploadedUrls.push(currImgs[i]);
+            // Fetch the image from the URL
+            const response = await fetch(currImgs[i]);
+            const blob = await response.blob();
+            data.append("file", blob);
           }
+          data.append("upload_preset", "upload");
+          const uploadRes = await org_axios.post(
+            "https://api.cloudinary.com/v1_1/omarnasser/upload",
+            data
+          );
+          console.log(currImgs[i], " uploaded");
+          console.log(uploadRes?.data?.url);
+          uploadedUrls.push(uploadRes?.data?.url);
         }
         setUploading(false);
         console.log("uploaded successfully");
@@ -368,7 +371,9 @@ const SingleHotel = () => {
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }
-        navigate("/adminDashboard/hotels");
+        setEditMode(false);
+        reFetch();
+        //navigate("/adminDashboard/hotels");
       } catch (error) {
         setErrMsg(error.response.data.message);
         console.log(error.response.data.message);
