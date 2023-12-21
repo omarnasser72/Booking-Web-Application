@@ -53,7 +53,10 @@ export const login = async (req, res, next) => {
     if (!bcrypt.compareSync(req.body.password, user.password))
       return next(createError(400, "Wrong Password!"));
 
-    const pendingUser = await PendingUser.findOne({ email: req.body.email });
+    const pendingUser = await PendingUser.findOne({
+      username: req.body.username,
+    });
+
     if (pendingUser) return next(createError(400, "Email not verified yet"));
 
     const token = createToken(user);
@@ -108,6 +111,7 @@ export const signup = async (req, res, next) => {
 
     const pendingUser = new PendingUser({
       userId: newUser._id,
+      username: newUser.username,
       email: newUser.email,
     });
 
