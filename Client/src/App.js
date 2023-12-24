@@ -20,7 +20,6 @@ import { AuthContext, AuthContextProvider } from "./context/AuthContext"; // Imp
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import { useContext } from "react";
-import Reservation from "./pages/Reservation/Reservation";
 import ListType from "./pages/ListType/ListType";
 import ChangePwd from "./pages/change pwd/ChangePwd";
 import {
