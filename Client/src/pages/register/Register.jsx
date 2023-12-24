@@ -13,6 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -179,9 +180,22 @@ const Register = () => {
           age: age,
         };
         console.log(newUser);
-        const res = await axios.post("/auth/signup", newUser);
-        console.log(res);
-        navigate("/");
+        await axios
+          .post("/auth/signup", newUser)
+          .then(
+            Swal.fire({
+              title: "Registration Completed",
+              text: "We sent a verification mail to you!",
+              icon: "success",
+              confirmButtonColor: "rgb(66, 66, 66)",
+            }).then((result) => {
+              if (result.isConfirmed) navigate("/");
+            })
+          )
+          .catch((error) => {
+            console.log(error);
+            setErrMsg(error?.response?.data?.message);
+          });
       } catch (error) {
         setErrMsg(error?.response?.data?.message);
         console.log(error);

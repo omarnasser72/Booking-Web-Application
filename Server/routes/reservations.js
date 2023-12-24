@@ -4,7 +4,6 @@ import {
   getAllReservations,
   getReservation,
   stripePayment,
-  stripePayments,
   updateReservation,
 } from "../controllers/reservationController.js";
 import { verifyAdmin, verifyUser } from "../utils/jwt.js";
