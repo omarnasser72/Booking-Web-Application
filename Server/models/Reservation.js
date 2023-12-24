@@ -31,6 +31,11 @@ const ReservationSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  payed: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 export default mongoose.model("Reservation", ReservationSchema);

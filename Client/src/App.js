@@ -40,6 +40,8 @@ import VerifyEmail from "./pages/verifyEmail/VerifyEmail";
 import NewPwd from "./pages/newPwd/newPwd";
 import CheckOutSuccess from "./pages/checkoutSuccess/CheckOutSuccess";
 import CheckOutFailed from "./pages/checkoutFailed/CheckOutFailed";
+import RoomReservation from "./pages/RoomReservation/RoomReservation";
+import HotelReservation from "./pages/HotelReservation/HotelReservation";
 
 function App() {
   const ProtectedRoute = ({ element }) => {
@@ -202,7 +204,7 @@ function App() {
           />
           <Route
             path="/hotels/reservation/:id"
-            element={<ProtectedRoute element={<Reservation />} />}
+            element={<ProtectedRoute element={<HotelReservation />} />}
           />
           <Route path="/ListAll/">
             <Route
@@ -233,6 +235,10 @@ function App() {
           <Route
             path="checkoutFailed"
             element={<ProtectedRoute element={<CheckOutFailed />} />}
+          />
+          <Route
+            path="/reservations/:hotelId/:roomTypeId"
+            element={<RoomReservation />}
           />
         </Route>
       </Routes>

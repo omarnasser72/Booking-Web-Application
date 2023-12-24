@@ -1,0 +1,334 @@
+.reserveRoomContainer {
+  height: 100vh;
+  background-color: rgb(66, 66, 66); //#fffc55;
+  .changeReserveDate {
+    background: rgb(66, 66, 66);
+    padding-bottom: 1%;
+    padding-left: 2%;
+  }
+  .reserveWrapper {
+    background-color: #fffc55;
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    justify-content: center;
+
+    .reservingRoom {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 5% auto;
+      font-size: xx-large;
+      img {
+        width: 150px;
+      }
+    }
+
+    .roomError {
+      align-self: center;
+      padding: 7px 14px;
+      margin: 5% auto;
+      font-size: large;
+      color: red;
+      background-color: coral;
+    }
+
+    .roomLoading {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 5% auto;
+      font-size: xx-large;
+      img {
+        width: 150px;
+      }
+    }
+    .roomInfoImagesWrapper {
+      width: 1000px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 5%;
+      margin-right: 25%;
+      .roomReserveInfo {
+        font-size: xx-large;
+      }
+      .roomImages {
+        width: max-content;
+
+        .roomImage {
+          width: 200px;
+        }
+        .roomImage > img {
+          width: 200px;
+        }
+      }
+    }
+    .reserveRoomNumbers {
+      display: flex;
+      flex-direction: column;
+      font-size: 20px;
+      margin-left: 5%;
+      .numbers {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        .room {
+          gap: 3px;
+        }
+      }
+    }
+    .reserveBtn {
+      align-self: center;
+      width: fit-content;
+      cursor: pointer;
+      font-size: medium;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      color: #fffc55;
+      background-color: rgb(66, 66, 66);
+      padding: 5px 10px;
+      margin: 5%;
+    }
+    .reserveBtn.disabled {
+      align-self: center;
+      width: fit-content;
+      cursor: not-allowed;
+      font-size: medium;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      color: #fffc55;
+      background-color: rgb(66, 66, 66);
+      padding: 5px 10px;
+      margin: 5%;
+    }
+    .newDateRoomReserve {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: max-content;
+      margin: 5% auto;
+      .dateRangeRoomReserve {
+        .dateReserve {
+        }
+      }
+      .dateTitle {
+        position: absolute;
+        top: -48px;
+      }
+      .closeIcon {
+        position: absolute;
+        top: -8px;
+        right: 0px;
+        font-size: x-large;
+        margin-bottom: 15px;
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      .closeIcon.disabled {
+        cursor: not-allowed;
+        margin-left: -999px;
+      }
+      .closeCalendarBtn {
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        color: #fffc55;
+        background-color: rgb(66, 66, 66);
+        padding: 5px 10px;
+        margin: 5px;
+      }
+      .closeCalendarBtn.disabled {
+        cursor: not-allowed;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        color: #fffc55;
+        background-color: rgb(66, 66, 66);
+        padding: 5px 10px;
+        margin: 5px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .reserveRoomContainer {
+    height: 100vh;
+    background-color: rgb(66, 66, 66); //#fffc55;
+    .changeReserveDate {
+      background: rgb(66, 66, 66);
+      padding-bottom: 5%;
+      padding-left: 2%;
+    }
+    .reserveWrapper {
+      background-color: #fffc55;
+      display: flex;
+      flex-direction: column;
+      //align-items: center;
+      justify-content: center;
+
+      .reservingRoom {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 45% auto;
+        font-size: large;
+        img {
+          width: 70px;
+        }
+      }
+
+      .roomError {
+        align-self: center;
+        padding: 7px 14px;
+        margin: 45% auto;
+        font-size: large;
+        color: red;
+        background-color: coral;
+      }
+
+      .roomLoading {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 45% auto;
+        font-size: large;
+        img {
+          width: 70px;
+        }
+      }
+      .roomInfoImagesWrapper {
+        width: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 5%;
+        .roomReserveInfo {
+          font-size: medium;
+          .reserveRoomTitle {
+            font-size: large;
+          }
+        }
+        .roomImages {
+          width: max-content;
+
+          .roomImage {
+            width: 70px;
+          }
+          .roomImage > img {
+            width: 70px;
+          }
+        }
+      }
+      .reserveRoomNumbers {
+        display: flex;
+        flex-direction: column;
+        font-size: small;
+        margin-left: 5%;
+        .numbers {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+          .room {
+            gap: 3px;
+          }
+        }
+      }
+      .reserveBtn {
+        align-self: center;
+        width: fit-content;
+        cursor: pointer;
+        font-size: small;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        color: #fffc55;
+        background-color: rgb(66, 66, 66);
+        padding: 5px 10px;
+        margin: 5%;
+      }
+      .reserveBtn.disabled {
+        align-self: center;
+        width: fit-content;
+        cursor: not-allowed;
+        font-size: small;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        color: #fffc55;
+        background-color: rgb(66, 66, 66);
+        padding: 5px 10px;
+        margin: 5%;
+      }
+      .newDateRoomReserve {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        min-height: max-content;
+        margin: 5% auto;
+        .dateRangeRoomReserve {
+          margin: 17% auto;
+          .dateReserveRoom {
+          }
+          .rdrCalendarWrapper {
+            height: 345px;
+          }
+        }
+        .dateTitle {
+          position: absolute;
+          top: -11px;
+          right: -41px;
+        }
+        .closeIcon {
+          position: absolute;
+          top: 22px;
+          left: 206px;
+          font-size: x-large;
+          margin-bottom: 15px;
+          cursor: pointer;
+          z-index: 1;
+        }
+
+        .closeIcon.disabled {
+          cursor: not-allowed;
+          margin-left: -999px;
+        }
+        .closeCalendarBtn {
+          cursor: pointer;
+          font-weight: bold;
+          border: none;
+          border-radius: 5px;
+          color: #fffc55;
+          background-color: rgb(66, 66, 66);
+          padding: 5px 10px;
+          margin: 5px;
+        }
+        .closeCalendarBtn.disabled {
+          cursor: not-allowed;
+          font-weight: bold;
+          border: none;
+          border-radius: 5px;
+          color: #fffc55;
+          background-color: rgb(66, 66, 66);
+          padding: 5px 10px;
+          margin: 5px;
+        }
+      }
+    }
+  }
+}

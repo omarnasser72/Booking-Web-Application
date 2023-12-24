@@ -6,9 +6,39 @@ import Stripe from "stripe";
 export const stripePayment = async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_KEY);
 
-  console.log(req.body.reservations);
+  const reservation = req.body.reservation;
+  console.log(reservation);
 
-  const line_items = req.body.reservations.map((reservation) => {
+  const reservationId = reservation.reservationId;
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: "egp",
+          product_data: {
+            name: reservation.hotelName,
+            images: reservation.roomImages,
+          },
+          unit_amount: reservation.cost * 100,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${process.env.LOCAL_CLIENT_URL}/#/checkoutSuccess?${reservationId}`,
+    cancel_url: `${process.env.LOCAL_CLIENT_URL}/#/checkoutFailed?${reservationId}`,
+  });
+
+  res.send({ url: session.url });
+};
+
+export const stripePayments = async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_KEY);
+
+  const reservations = req.body.reservations;
+
+  const line_items = await reservations.map((reservation) => {
     return {
       price_data: {
         currency: "egp",
@@ -21,14 +51,15 @@ export const stripePayment = async (req, res) => {
       quantity: 1,
     };
   });
+
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
-    success_url: `${process.env.CLIENT_URL}/#/checkoutSuccess`,
-    cancel_url: `${process.env.CLIENT_URL}/#/checkoutFailed`,
+    success_url: `${process.env.LOCAL_CLIENT_URL}/#/checkoutSuccess`,
+    cancel_url: `${process.env.LOCAL_CLIENT_URL}/#/checkoutFailed`,
   });
 
-  res.send({ url: session.url });
+  res.send({ url: session.url, reservations: req.body.reservations });
 };
 
 export const createReservation = async (req, res, next) => {
@@ -52,22 +83,34 @@ export const createReservation = async (req, res, next) => {
 
 export const updateReservation = async (req, res, next) => {
   try {
-    const { startDate, endDate } = req.body.reservationDuration;
+    let updatedReservation;
+    if (req.body.reservationDuration) {
+      const { startDate, endDate } = req.body.reservationDuration;
 
-    // Convert the incoming dates to UTC with time zone offset set to +0 GMT
-    const utcStartDate = moment(startDate).utcOffset(0).toDate();
-    const utcEndDate = moment(endDate).utcOffset(0).toDate();
+      // Convert the incoming dates to UTC with time zone offset set to +0 GMT
+      const utcStartDate = moment(startDate).utcOffset(0).toDate();
+      const utcEndDate = moment(endDate).utcOffset(0).toDate();
 
-    const updatedReservation = await Reservation.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: {
-          "reservationDuration.startDate": utcStartDate,
-          "reservationDuration.endDate": utcEndDate,
+      updatedReservation = await Reservation.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            "reservationDuration.startDate": utcStartDate,
+            "reservationDuration.endDate": utcEndDate,
+          },
         },
-      },
-      { new: true }
-    );
+        { new: true }
+      );
+    } else if (req.body.reservation.payed) {
+      updatedReservation = await Reservation.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body.reservation,
+        },
+        { new: true }
+      );
+    }
+
     console.log(updatedReservation);
     res.status(200).json(updatedReservation);
   } catch (error) {

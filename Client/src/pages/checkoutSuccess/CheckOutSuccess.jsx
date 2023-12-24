@@ -1,12 +1,77 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import checkoutSuccess from "./checkoutSuccess.scss";
 import Footer from "../../components/footer/Footer";
 import MailList from "../../components/mailList/MailList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import useFetch from "../../hooks/useFetch";
+import axios from "../../axios";
 
 const CheckOutSuccess = () => {
+  const reservationId = new URL(window.location.href).hash.split("?")[1];
+  console.log(reservationId);
+
+  const {
+    data: reservation,
+    loading,
+    error,
+    reFetch,
+  } = useFetch(`/reservations/${reservationId}`);
+
+  const getDatesInRange = (startDate, endDate) => {
+    if (startDate === undefined) {
+      return []; // Return an empty array if startDate is undefined
+    }
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const initialDate =
+      startDate !== undefined ? new Date(start.getTime()) : "";
+    const dates = [];
+
+    while (initialDate <= end) {
+      dates.push(new Date(initialDate).getTime());
+      initialDate.setDate(new Date(initialDate.getDate() + 1));
+    }
+    return dates;
+  };
+
+  useEffect(() => {
+    if (reservation) {
+      const reserveRoom = async () => {
+        const allDates =
+          reservation?.reservationDuration?.startDate !== undefined &&
+          reservation?.reservationDuration?.endDate !== undefined
+            ? getDatesInRange(
+                reservation.reservationDuration.startDate,
+                reservation.reservationDuration.endDate
+              )
+            : null;
+
+        await axios
+          .put(
+            `/rooms/availability/${reservation.roomNumberId}`,
+            { headers: { accesstoken: localStorage.getItem("accessToken") } },
+            {
+              dates: allDates,
+            }
+          )
+          .catch((err) => {
+            console.log(err);
+          });
+
+        reservation.payed = true;
+        await axios
+          .put(`/reservations/${reservationId}`, { reservation })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      reserveRoom();
+    }
+  }, [reservation]);
+
   return (
     <div className="checkoutContainer">
       <Navbar />

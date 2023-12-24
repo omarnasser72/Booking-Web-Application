@@ -87,6 +87,7 @@
 }
 
 .reserveRoom {
+  cursor: pointer;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -169,6 +170,14 @@
 .changeDateBtn {
   border: none;
   cursor: pointer;
+  padding: 10px 20px;
+  background-color: #fffc55;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.changeDateBtn.disabled {
+  cursor: not-allowed;
+  border: none;
   padding: 10px 20px;
   background-color: #fffc55;
   font-weight: bold;
@@ -295,6 +304,7 @@
   }
 
   .reserveRoom {
+    cursor: pointer;
     font-size: xx-small;
     width: 100%;
     display: flex;
@@ -383,6 +393,15 @@
     font-size: x-small;
     border: none;
     cursor: pointer;
+    padding: 5px 10px;
+    background-color: #fffc55;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  .changeDateBtn.disabled {
+    cursor: not-allowed;
+    font-size: x-small;
+    border: none;
     padding: 5px 10px;
     background-color: #fffc55;
     font-weight: bold;

@@ -15,7 +15,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
-import Reserve from "../../components/Reserve/Reserve";
 import { Rating } from "@mui/material";
 import axios from "../../axios";
 const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
@@ -227,7 +226,7 @@ const Hotel = () => {
         <MailList />
         <Footer />
       </div>
-      {openBook && <Reserve setOpen={setOpenBook} hotelId={id} />}
+      {/* {openBook && <HotelReservation setOpen={setOpenBook} hotelId={id} />} */}
     </div>
   );
 };

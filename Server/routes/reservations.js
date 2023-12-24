@@ -4,6 +4,7 @@ import {
   getAllReservations,
   getReservation,
   stripePayment,
+  stripePayments,
   updateReservation,
 } from "../controllers/reservationController.js";
 import { verifyAdmin, verifyUser } from "../utils/jwt.js";
@@ -20,9 +21,9 @@ router.get("/", verifyAdmin, getAllReservations);
 router.get("/:id", verifyUser, getReservation);
 
 //UPDATE
-router.put("/:id", verifyAdmin, updateReservation);
+router.put("/:id", verifyUser, updateReservation);
 
 //DELETE
-router.delete("/:id", verifyAdmin, deleteReservation);
+router.delete("/:id", verifyUser, deleteReservation);
 
 export default router;

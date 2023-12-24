@@ -291,6 +291,7 @@ const Profile = () => {
           startDate: reservation.reservationDuration.startDate,
           endDate: reservation.reservationDuration.endDate,
           cost: reservation.cost,
+          payed: reservation.payed,
         };
 
         const existingIndex = uniqueReservationData.findIndex(
@@ -700,6 +701,12 @@ const Profile = () => {
                 ) : (
                   reservationData?.map((reservation, index) => {
                     if (Object.keys(reservation).length === 0) return null;
+                    else if (
+                      reservation.hasOwnProperty("payed") &&
+                      !reservation.payed
+                    ) {
+                      return null;
+                    }
                     return (
                       <div
                         className="eachReservation"
