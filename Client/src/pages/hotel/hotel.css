@@ -519,21 +519,20 @@
   }
 
   .sliderImg {
-    height: 80vh;
+    width: 100%;
+    height: 50%;
   }
-
   .closeImgSlider {
     position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 30px;
+    font-size: 20px;
     color: #4d4d4d;
     cursor: pointer;
   }
-
   .arrow {
-    margin: 20px;
-    font-size: 40px;
+    margin: 3px;
+    font-size: 14px;
     color: #4d4d4d;
     cursor: pointer;
   }
@@ -572,5 +571,25 @@
 
   /*MuiRating-sizeMedium Mui-readOnly MuiRating-readOnly css-ryrseu-MuiRating-root*/ {
     font-size: -0.5em;
+  }
+}
+@media screen and (max-width: 300px) {
+  .sliderImg {
+    width: 100%;
+    height: 50%;
+  }
+  .closeImgSlider {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    color: #4d4d4d;
+    cursor: pointer;
+  }
+  .arrow {
+    margin: 3px;
+    font-size: 14px;
+    color: #4d4d4d;
+    cursor: pointer;
   }
 }

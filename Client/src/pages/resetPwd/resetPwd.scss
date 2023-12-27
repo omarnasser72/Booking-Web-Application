@@ -1,92 +1,184 @@
-.login {
+.resetPwd {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(66, 66, 66);
+}
+
+.resetContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .validIcon {
+    color: rgb(8, 194, 8);
+  }
+
+  .invalidIcon {
+    color: rgb(221, 17, 17);
+  }
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #fffc55;
+}
+
+.loginInput {
+  height: 30px;
+  padding: 10px;
+}
+
+.loginBtn {
+  border: none;
+  padding: 10px 30px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #fffc55;
+}
+
+.loginBtn:disabled {
+  background-color: #fdfca7;
+  cursor: none;
+}
+
+.registerNow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: #fffc55;
+  font-size: smaller;
+}
+
+pre {
+  width: 100%;
+  display: flex;
+}
+
+p {
+  cursor: pointer;
+}
+
+.logInErrMsg {
+  text-align: center;
+  color: red;
+  background-color: lightpink;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.valid {
+  color: limegreen;
+}
+
+.invalid {
+  color: red;
+}
+
+.hide {
+  display: none;
+}
+
+.inputErrMsg {
+  text-align: center;
+  color: red;
+  background-color: lightpink;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+@media screen and (max-width: 300px) {
+  .resetPwd {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgb(66, 66, 66);
-}
+  }
 
-.loginContainer {
+  .resetContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: auto 10%;
 
     .validIcon {
-        color: rgb(8, 194, 8);
+      color: rgb(8, 194, 8);
     }
 
     .invalidIcon {
-        color: rgb(221, 17, 17);
+      color: rgb(221, 17, 17);
     }
-}
+  }
 
-h1 {
+  h1 {
     margin-bottom: 30px;
     color: #fffc55;
-}
+  }
 
-.loginInput {
+  .loginInput {
     height: 30px;
     padding: 10px;
-}
+  }
 
-.loginBtn {
+  .loginBtn {
     border: none;
     padding: 10px 30px;
     font-weight: bold;
     cursor: pointer;
     border-radius: 5px;
     background-color: #fffc55;
-}
+  }
 
-.loginBtn:disabled {
+  .loginBtn:disabled {
     background-color: #fdfca7;
     cursor: none;
-}
+  }
 
-.registerNow {
+  .registerNow {
     width: 100%;
     display: flex;
     flex-direction: column;
     color: #fffc55;
     font-size: smaller;
+  }
 
-}
-
-pre {
+  pre {
     width: 100%;
     display: flex;
-}
+  }
 
-p {
+  p {
     cursor: pointer;
-}
+  }
 
-.logInErrMsg {
+  .logInErrMsg {
     text-align: center;
     color: red;
     background-color: lightpink;
     border-radius: 5px;
     margin: 5px;
-}
+  }
 
-.valid {
+  .valid {
     color: limegreen;
-}
+  }
 
-.invalid {
+  .invalid {
     color: red;
-}
+  }
 
-.hide {
+  .hide {
     display: none;
-}
+  }
 
-
-.inputErrMsg {
+  .inputErrMsg {
     text-align: center;
     color: red;
     background-color: lightpink;
     border-radius: 5px;
     margin: 5px;
+  }
 }

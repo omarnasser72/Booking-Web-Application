@@ -125,7 +125,7 @@
 @media screen and (max-width: 440px) {
   .register {
     width: 100%;
-    height: 200vh;
+    height: 244vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -149,18 +149,153 @@
 
         .userInfo {
           width: 100%;
-          height: 150vh;
+          height: 200vh;
           align-self: center;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           align-items: center;
-          margin: 40px;
+          margin: 7%;
           gap: 20px;
           background-color: rgb(39, 36, 36);
           border-radius: 5px;
           .eachInput {
-            width: 30%;
+            width: auto;
+            margin: 0;
+            img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+            }
+            input {
+              width: 100%;
+              height: 30px;
+              border-radius: 5px;
+              border: none;
+              color: black;
+              margin-top: 10px;
+            }
+            p.existAttribute {
+              background-color: lightpink;
+              color: firebrick;
+              font-weight: bold;
+              border-radius: 5px;
+              margin-top: 5px;
+              text-align: center;
+            }
+          }
+          .inputErrMsg {
+            text-align: center;
+            color: red;
+            background-color: lightpink;
+            border-radius: 5px;
+            margin: 5px;
+          }
+          .submitBtn {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            button {
+              width: 200px;
+              height: 50px;
+              padding: 5px 10px;
+              border: none;
+              border-radius: 5px;
+              margin-bottom: 10px;
+              cursor: pointer;
+              font-weight: 800;
+              background-color: yellow;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .valid {
+    color: limegreen;
+  }
+
+  .invalid {
+    color: red;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .registerInstructions {
+    background-color: #000;
+    border-radius: 5px;
+    position: relative;
+    bottom: -10px;
+    padding: 5px;
+  }
+  .emailInstructions {
+    width: fit-content;
+    font-size: medium;
+    background-color: #000;
+    border-radius: 5px;
+    position: relative;
+    bottom: -10px;
+    padding: 5px;
+  }
+
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+  .react-datepicker {
+    //   position: absolute;
+    bottom: 6px;
+    left: -26px;
+  }
+  .react-datepicker__header {
+    background-color: #fffb06;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .register {
+    width: 100%;
+    height: 350vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(66, 66, 66);
+    color: #fffc55;
+
+    .errmsg {
+      background-color: lightpink;
+      color: firebrick;
+      font-weight: bold;
+    }
+    h1 {
+      font-size: x-large;
+      height: max-content;
+      align-self: center;
+      margin-top: 20px;
+    }
+    .registerContainer {
+      .registerForm {
+        width: 100%;
+        display: flex;
+
+        .userInfo {
+          width: 100%;
+          height: 285vh;
+          align-self: center;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          margin: 8%;
+          margin-bottom: 23%;
+          gap: 20px;
+          background-color: rgb(39, 36, 36);
+          border-radius: 5px;
+          .eachInput {
+            width: auto;
             gap: 15px;
             margin: 20px;
             img {
@@ -234,7 +369,8 @@
   }
   .emailInstructions {
     width: fit-content;
-    font-size: x-small;
+    font-size: medium;
+    //font-size: x-small;
     background-color: #000;
     border-radius: 5px;
     position: relative;

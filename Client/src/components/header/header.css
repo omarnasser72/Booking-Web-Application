@@ -441,3 +441,293 @@
     cursor: not-allowed;
   }
 }
+
+@media screen and (max-width: 300px) {
+  .header {
+    background-color: rgb(66, 66, 66);
+    color: #fffb06;
+    display: block;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 35px;
+  }
+
+  .headerList {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(66, 66, 66);
+    margin-left: 0;
+    gap: 2%;
+  }
+
+  .headerList.listMode {
+    gap: 2%;
+    margin-left: 0;
+    background-color: rgb(66, 66, 66);
+    padding-bottom: 0px;
+  }
+
+  .headerListItem {
+    width: auto;
+    display: flex;
+    padding: 2px 3px;
+    border: 1px solid #fffb06;
+    border-radius: 30px;
+    font-size: 7px;
+    gap: 4%;
+  }
+
+  .headerListItem:hover {
+    background-color: #494949;
+    cursor: pointer;
+  }
+
+  .headerListItem.active {
+    border: 1px solid #fffb06;
+    padding: 1%;
+    border-radius: 20px;
+  }
+
+  .about {
+    display: block;
+    margin: 5%;
+    margin-bottom: 0;
+    font-size: small;
+    font-family: Courier, monospace;
+  }
+
+  .headerBtn {
+    background-color: #1b1b1a;
+    color: white;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 70%;
+    justify-content: right;
+    margin-bottom: 3.5%;
+  }
+
+  .headerSearch {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 8px;
+    width: fit-content;
+    height: fit-content;
+    padding: 4px 4px;
+    position: absolute;
+    bottom: -20px;
+    background-color: #fff;
+    border: 3px solid #fffb06;
+    border-radius: 15px;
+    position: absolute;
+    margin-left: 2%;
+  }
+
+  .headerIcon {
+    color: #a79e9e;
+  }
+
+  .headerSearchText {
+    width: 60%;
+    color: #3b3b3b;
+    cursor: pointer;
+  }
+
+  .dateInHome {
+    height: 360px;
+    position: absolute;
+    top: 29px;
+    right: 0px;
+    z-index: 2;
+    height: 360px;
+    width: 199px;
+    color: #000000;
+    font-size: 12px;
+  }
+
+  /* .rdrCalendarWrapper {
+    position: absolute;
+    top: 20px;
+  } */
+
+  .rdrDateDisplayItemActive {
+    height: fit-content;
+    border-color: currentColor;
+  }
+
+  .rdrDateDisplayItemActive input {
+    font-size: x-small;
+    color: #7d888d;
+  }
+
+  .rdrMonthAndYearWrapper {
+    width: 201px;
+    align-items: center;
+    height: 76px;
+    padding-top: 10px;
+  }
+
+  .rdrNextPrevButton {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 0 0.833em;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: #eff2f7;
+  }
+
+  .rdrMonthAndYearPickers {
+    position: absolute;
+    right: 97px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: -15px;
+    font-weight: 600;
+  }
+
+  .rdrMonthPicker,
+  .rdrYearPicker {
+    font-size: x-small;
+    width: 57px;
+    margin: 0 5px;
+  }
+
+  .rdrMonthAndYearPickers select {
+    width: 99px;
+    font-size: 12px;
+  }
+
+  .rdrDateDisplayItem + .rdrDateDisplayItem {
+    height: fit-content;
+    margin-left: 0.833em;
+  }
+
+  .rdrYearPicker {
+    font-size: xx-small;
+    width: 55px;
+    margin: 0 5px;
+  }
+
+  .rdrMonthsVertical {
+    height: fit-content;
+    flex-direction: column;
+  }
+
+  .rdrMonth {
+    width: 193px;
+    padding: 0 0.833em 1.666em 0.833em;
+  }
+
+  .rdrMonthsVertical {
+    height: 200px;
+    flex-direction: column;
+  }
+
+  .rdrNextButton i {
+    margin: 0 0 0 0px;
+    border-width: 4px 4px 4px 6px;
+    border-color: transparent transparent transparent rgb(52, 73, 94);
+    transform: translate(3px, 0px);
+  }
+
+  .rdrWeekDays {
+    width: 94% !important;
+    display: flex;
+  }
+
+  .rdrDays {
+    width: 189px;
+    height: 169px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .rdrDay {
+    font-size: 10px !important;
+    width: 27px;
+    font-size: xx-small;
+    background: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 0;
+    padding: 0;
+    line-height: 3em;
+    height: 3em;
+    text-align: center;
+    color: #1d2429;
+  }
+
+  .headerSearchItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    margin-right: -10px;
+  }
+
+  .headerSearchBtn {
+    position: absolute;
+    bottom: -41px;
+    right: 120px;
+    background-color: rgb(66, 66, 66);
+    color: white;
+    font-weight: 500;
+    font-size: xx-small;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .headerSearchInput {
+    border: none;
+    outline: none;
+    font-size: 8px;
+  }
+
+  .options {
+    position: absolute;
+    top: 32px;
+    right: 16px;
+    background-color: white;
+    color: #494949;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -5px;
+    z-index: 1;
+  }
+
+  .optionItem {
+    width: fit-content;
+    justify-content: space-between;
+    display: flex;
+    margin: 7px;
+  }
+
+  .optionText {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .optionCounter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .optionCounterBtn {
+    border: 1px solid #c5c200;
+    color: #9c9a00;
+    cursor: pointer;
+  }
+
+  .optionCounterBtn:disabled {
+    cursor: not-allowed;
+  }
+}

@@ -200,3 +200,102 @@
     color: #1b1b1a;
   }
 }
+
+@media screen and (max-width: 300px) {
+  .navbar {
+    background-color: rgb(66, 66, 66);
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    height: fit-content;
+  }
+
+  .navContainer {
+    color: #fffb06;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: fit-content;
+    margin: 12% 7%;
+    gap: 1%;
+  }
+
+  .logo {
+    font-size: x-large;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .navItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .logoutBtn {
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+    background-color: #1b1b1a;
+    border: none;
+    flex-wrap: nowrap;
+  }
+
+  .profile {
+    width: auto;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profileImg {
+    position: absolute;
+    top: -15px;
+    right: 100px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .profileImgWithSettings {
+    position: absolute;
+    top: -32px;
+    right: 100px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .settings {
+    font-size: xx-small;
+    width: fit-content;
+    position: absolute;
+    background-color: white;
+    color: gray;
+    border-radius: 5px;
+    padding: 5px;
+    top: -7px;
+    left: 10px;
+  }
+
+  .viewProfile:hover {
+    cursor: pointer;
+    background-color: gray;
+    color: #1b1b1a;
+  }
+
+  .logout:hover {
+    cursor: pointer;
+    background-color: gray;
+    color: #1b1b1a;
+  }
+}

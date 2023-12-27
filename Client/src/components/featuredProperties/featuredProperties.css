@@ -32,14 +32,14 @@
   gap: 6px;
 }
 
-.fbRating>button {
+.fbRating > button {
   background-color: #000000;
   color: #f1ff2b;
   border-radius: 5px;
   margin-right: 7px;
 }
 
-.fbRating>span {
+.fbRating > span {
   font-size: 14px;
 }
 
@@ -84,14 +84,70 @@
     width: fit-content;
   }
 
-  .fbRating>button {
+  .fbRating > button {
     background-color: #000000;
     color: #f1ff2b;
     border-radius: 5px;
     margin-right: 7px;
   }
 
-  .fbRating>span {
+  .fbRating > span {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .fb {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+  }
+
+  .fbItem {
+    width: fit-content;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fbImg {
+    width: 75%;
+    height: 50%;
+  }
+
+  .fbName {
+    font-size: x-small;
+    width: fit-content;
+    font-weight: bold;
+  }
+
+  .fbCity {
+    width: fit-content;
+    font-weight: 600;
+    font-size: x-small;
+  }
+
+  .fbPrice {
+    font-size: xx-small;
+    width: fit-content;
+    font-weight: 550;
+    gap: 6px;
+  }
+
+  .fbRating {
+    width: fit-content;
+  }
+
+  .fbRating > button {
+    background-color: #000000;
+    color: #f1ff2b;
+    border-radius: 5px;
+    margin-right: 7px;
+    font-size: x-small;
+  }
+
+  .fbRating > span {
+    font-size: x-small;
   }
 }

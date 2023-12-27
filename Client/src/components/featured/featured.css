@@ -70,5 +70,45 @@
   .propertiesNo {
     font-size: 12px;
   }
+}
 
+@media screen and (max-width: 300px) {
+  .featured {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0px;
+    padding: 0px;
+    z-index: 1;
+  }
+
+  .featuredItem {
+    cursor: pointer;
+    position: relative;
+    color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 22%;
+    height: fit-content;
+  }
+
+  .featuredImg {
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  .featuredTitles {
+    position: absolute;
+    bottom: 8px;
+    left: 2px;
+  }
+
+  .placesTitles {
+    font-size: 12px;
+    margin-bottom: 0px;
+  }
+
+  .propertiesNo {
+    font-size: 11px;
+  }
 }

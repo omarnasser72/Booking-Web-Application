@@ -38,11 +38,11 @@
     margin: 2% 4%;
   }
 
-  .pList {
+  /* .pList {
     width: 94%;
     max-width: 1024px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
-  }
+  } */
 }

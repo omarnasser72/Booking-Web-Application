@@ -282,7 +282,7 @@
         min-height: max-content;
         margin: 5% auto;
         .dateRangeRoomReserve {
-          margin: 17% auto;
+          margin: 8% auto;
           .dateReserveRoom {
           }
           .rdrCalendarWrapper {
@@ -290,14 +290,12 @@
           }
         }
         .dateTitle {
-          position: absolute;
-          top: -11px;
-          right: -41px;
+          position: static;
         }
         .closeIcon {
           position: absolute;
-          top: 22px;
-          left: 206px;
+          top: 29px;
+          left: 223px;
           font-size: x-large;
           margin-bottom: 15px;
           cursor: pointer;

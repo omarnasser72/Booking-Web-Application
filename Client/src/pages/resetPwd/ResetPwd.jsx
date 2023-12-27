@@ -65,8 +65,8 @@ const ResetPwd = () => {
     }
   };
   return (
-    <div className="login">
-      <div className="loginContainer">
+    <div className="resetPwd">
+      <div className="resetContainer">
         <h1>Welcome to My Nights</h1>
         {email && (
           <p id="uidnote">

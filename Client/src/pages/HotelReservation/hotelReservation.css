@@ -446,3 +446,233 @@
     cursor: not-allowed;
   }
 }
+
+@media screen and (max-width: 300px) {
+  .reserve {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: flex-start;
+    z-index: 3;
+    background-color: rgb(66, 66, 66);
+    color: #fffc55;
+    position: relative;
+  }
+
+  .reserveContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0;
+    margin-top: 0;
+  }
+
+  .loadingRooms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: static;
+    margin-top: 40%;
+  }
+
+  .loadingRooms > img {
+    width: 70px;
+  }
+  .reservingRooms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 155px;
+    top: 150px;
+  }
+
+  .reservingRooms > img {
+    width: 70px;
+  }
+
+  .errorRooms {
+    position: absolute;
+    top: 100px;
+    right: 130px;
+    padding: 7px 10px;
+    color: red;
+    background-color: lightcoral;
+  }
+
+  .changeDate {
+    width: 90%;
+  }
+
+  .selectRooms {
+    width: 100%;
+    height: fit-content;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 15%;
+    margin-left: 0%;
+  }
+
+  .reservationRooms {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /*padding: 40px;*/
+    gap: 20px;
+  }
+
+  .reserveClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+
+  .reserveRoom {
+    cursor: pointer;
+    font-size: xx-small;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgb(66, 66, 66);
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.712);
+  }
+
+  .roomImage > img {
+    width: 100px;
+  }
+
+  .reserveButton {
+    width: 100%;
+  }
+
+  .reserveBtn {
+    font-size: x-small;
+    width: fit-content;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #fffc55;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .room {
+    display: flex;
+  }
+
+  .roomInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .roomNumbers {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .reserveRoomTitle {
+    font-size: small;
+    font-weight: 500;
+    margin-bottom: 3%;
+  }
+
+  .reserveRoomDesc {
+    font-weight: 300;
+  }
+
+  .reserveMax {
+    font-size: 12px;
+  }
+
+  .reservePrice {
+    font-weight: 500;
+  }
+
+  .reserveSelectedRooms {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .room {
+    gap: 5px;
+  }
+
+  .room1 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .changeDateBtn {
+    font-size: x-small;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #fffc55;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  .changeDateBtn.disabled {
+    cursor: not-allowed;
+    font-size: x-small;
+    border: none;
+    padding: 5px 10px;
+    background-color: #fffc55;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .newDate {
+    margin: 0;
+    margin-top: 10%;
+    align-self: center;
+    justify-content: center;
+    position: static;
+  }
+  .dateTitle {
+    width: 100%;
+    font-size: medium;
+    position: static;
+  }
+  .dateRange {
+    display: flex;
+    justify-content: center;
+    margin-top: 9%;
+    margin-bottom: 15%;
+  }
+  .dateReserve {
+    height: 350px;
+    position: static;
+  }
+  .closeIcon {
+    position: absolute;
+    top: 100px;
+    left: 237px;
+    font-size: x-large;
+    margin-bottom: 15px;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .closeIcon.disabled {
+    cursor: not-allowed;
+  }
+}
