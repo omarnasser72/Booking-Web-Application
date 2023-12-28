@@ -158,7 +158,8 @@
   .header {
     background-color: rgb(66, 66, 66);
     color: #fffb06;
-    display: block;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     position: relative;
     z-index: 2;
@@ -166,9 +167,11 @@
   }
 
   .headerList {
+    width: 100%;
     display: flex;
+    justify-content: center;
     background-color: rgb(66, 66, 66);
-    margin-left: 5%;
+    margin-left: 0;
   }
 
   .headerList.listMode {
@@ -442,11 +445,12 @@
   }
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
   .header {
     background-color: rgb(66, 66, 66);
     color: #fffb06;
-    display: block;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     position: relative;
     z-index: 2;
@@ -458,7 +462,7 @@
     justify-content: center;
     background-color: rgb(66, 66, 66);
     margin-left: 0;
-    gap: 2%;
+    gap: 3%;
   }
 
   .headerList.listMode {
@@ -523,7 +527,7 @@
     border: 3px solid #fffb06;
     border-radius: 15px;
     position: absolute;
-    margin-left: 2%;
+    margin-left: 0;
   }
 
   .headerIcon {

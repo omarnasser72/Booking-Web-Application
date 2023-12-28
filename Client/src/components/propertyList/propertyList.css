@@ -19,7 +19,7 @@
 
 @media screen and (max-width: 440px) {
   .pList {
-    width: fit-content;
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     margin: 0% 5%;
@@ -51,9 +51,9 @@
   }
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
   .pList {
-    width: fit-content;
+    width: 95%;
     display: flex;
     justify-content: space-evenly;
     margin: 0% 5%;
