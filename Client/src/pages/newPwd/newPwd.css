@@ -109,3 +109,117 @@ p {
   border-radius: 5px;
   margin: 5px;
 }
+@media screen and (max-width: 400px) {
+  .newPwd {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(66, 66, 66);
+  }
+
+  .newPwdContainer {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    color: #fffc55;
+  }
+
+  .labelInputWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .pwdLabel {
+    color: #fffc55;
+    width: 40%;
+  }
+
+  .changePwdInput {
+    width: 30%;
+    height: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 0%;
+  }
+
+  .submitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .changePwdBtn {
+    border: none;
+    width: auto;
+    align-self: center;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #fffc55;
+  }
+
+  .changePwdBtn:disabled {
+    background-color: #fdfca7;
+    cursor: none;
+  }
+
+  pre {
+    width: 100%;
+    display: flex;
+  }
+
+  p {
+    cursor: pointer;
+  }
+
+  .changePwdErrMsg {
+    text-align: center;
+    color: red;
+    background-color: lightpink;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .valid {
+    color: limegreen;
+  }
+
+  .invalid {
+    color: red;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .instructions {
+    color: #fffc55;
+    background-color: #000;
+    border-radius: 5px;
+    position: relative;
+    bottom: -10px;
+    padding: 5px;
+  }
+
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .inputErrMsg {
+    text-align: center;
+    color: red;
+    background-color: lightpink;
+    border-radius: 5px;
+    margin: 5px;
+  }
+}

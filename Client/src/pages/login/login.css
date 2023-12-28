@@ -95,7 +95,7 @@ p {
   margin: 5px;
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
   .login {
     height: 100vh;
     display: flex;
