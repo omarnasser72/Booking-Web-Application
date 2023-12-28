@@ -28,12 +28,12 @@ const connect = async () => {
 };
 
 // MIDDLEWARES
-app.use(cors({ origin: "*" }));
-// app.use(
-//   cors({
-//     origin: "https://bookingwebapp.onrender.com",
-//   })
-// );
+//app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 app.use(cookieParser());
 app.use(express.json());
