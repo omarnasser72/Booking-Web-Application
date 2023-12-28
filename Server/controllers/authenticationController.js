@@ -250,7 +250,7 @@ export const verifyEmail = async (req, res, next) => {
   try {
     console.log(req?.params);
     await PendingUser.deleteOne({ email: req.params.email });
-    res.status(200).json({ message: `${req.body.email} is verified` });
+    res.status(200).json({ message: `${req.params.email} is verified` });
   } catch (error) {
     next(error);
   }

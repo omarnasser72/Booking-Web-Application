@@ -386,7 +386,7 @@ const NewReservation = () => {
         };
         console.log(newReservation);
         const reservationRes = await axios.post(
-          `/hotels/reserve/${hotelId}`,
+          `/reservations`,
           newReservation
         );
         //assign reservation duration to room's unavailable dates

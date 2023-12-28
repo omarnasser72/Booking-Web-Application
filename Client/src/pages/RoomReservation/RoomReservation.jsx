@@ -180,10 +180,7 @@ const RoomReservation = () => {
             : reservationDays * roomPrice,
       };
       console.log(reservationObj);
-      const reserveRes = await axios.post(
-        `/hotels/reserve/${hotelId}`,
-        reservationObj
-      );
+      const reserveRes = await axios.post(`/reservations`, reservationObj);
 
       console.log(reserveRes);
 

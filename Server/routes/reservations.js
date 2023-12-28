@@ -1,5 +1,6 @@
 import Express from "express";
 import {
+  createReservation,
   deleteReservation,
   getAllReservations,
   getReservation,
@@ -11,6 +12,8 @@ import { verifyAdmin, verifyUser } from "../utils/jwt.js";
 const router = Express.Router();
 
 //POST
+router.post("/", verifyUser, createReservation);
+
 router.post("/create-checkout-session", verifyUser, stripePayment);
 
 //GETALL

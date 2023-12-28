@@ -22,7 +22,7 @@ router.get("/checkAuthentication", validateToken, (req, res, next) => {
 });
 
 router.get("/checkUser/:id", verifyUser, (req, res, next) => {
-  res.send("user logged in and you can delete account");
+  res.send("user logged in");
 });
 
 router.get("/checkAdmin/:id", verifyAdmin, (req, res, next) => {
