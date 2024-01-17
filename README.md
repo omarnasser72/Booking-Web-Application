@@ -4,23 +4,26 @@ this is full stack web application using MERN stack
 it's similar to idea of booking web app
 this is my 1st full stack MERN web app
 I build it using MVC design pattern
+
 <h1><bold>Stack</bold></h1>
 <ul><li>MongoDB</li>
 <li>Express</li><li>Reactjs</li>
 <li>Nodejs</li><li>ESM Javascript </li><li>cloudinary</li>
-<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><</ul>
+<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><li>stripe payment</li></ul>
 <h1><bold>Features</bold></h1>
 <ul><li>authentication system for user using jwt auth</li>
 <li>authorization system for Admin, user using middlewares</li><li>Real-time input validation for all forms</li><li>User able to update his own profile info</li><li>User can change his password </li><li>User can reset his password using his email</li><li>User, Hotel, Room, Reservations and Hotel Rates CRUD operations</li>
 <li>User can reserve room in a hotel for specific duration and able to cancel reservation </li><li>Realtime Search for hotels </li><li>filters using min and max price, no of people, reservation duration</li>
 <li>Rating hotel</li>
-<li></li></ul>
+</ul>
 <h2>Backend Side</h2>
 <p>I used express using middlewares, moongose for connecting to MongoDB server and created my routes</p>
 <h2>Models</h2>
-<p>We have 5 models for User, Hotel, Reservation, Room and Hotel's Rate</p>
+<p>We have 6 models for User, PendingUser, Hotel, Reservation, Room and Hotel's Rate</p>
 <h3>User model </h3>
 <p>describes user's information represented in username, email, profile's photo, password, birthdate, phone, city, country, isAdmin to detect if it's Admin or not </p>
+<h3>Pending User model </h3>
+<p>this model just contain userId, username, email and it exists in the database until email verification</p>
 <h3>Hotel model </h3>
 <p>describes hotel's information represented in name, city, 
 hotel's photos, type, title, description, city, country, distance(distance from city's location), address, rating, cheapestPrice(the cheapest room's price in hotel), featured(is it featured hotel or not), rooms(array of rooms including type and numbers with it's reservation dates) </p>
@@ -45,29 +48,33 @@ userId(to identify which user rate this value with this rate)  </p>
 
 <p><strong>getUserReservations</strong> api takse user's id from params and search for all user's reservations using user's id and return all if exist otherwise reservation not found</p>
 <h3>Authentication Controller</h3>
-<strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong><p><strong>signup</strong> api takes user object and check if the username, email, phone already exists in database if not we save new user in and hash password before saving it in database using bycrypt then using node mailer we send mail to the user's email informing him that he has registered on our webapp</p>
+<strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong><p><strong>signup</strong> api takes user object and check if the username, email, phone already exists in database if not we save a new user in database and hash password before saving it in database using bycrypt and add a new pending user in database if it'sn't exists already then using node mailer we send mail to the user's email informing him that he has registered on our webapp</p>
 <strong>login</strong> api takes credentials for logging in represented in (username, password ) and search for user using username in database if exists it signs new token and extracts password, is Admin and return other information in the user object</p>
 <p><strong>logout</strong> api it resets access Token to empty</p>
 <p><strong>forgetPwd</strong>takes email of user and generate random password using generateRandomPwd function and set user's password to this random password and send this password to user's email</p>
+<p><strong>resetPwd</strong>takes email of user and checks if exists then we sent a mail to this email which takes user to resetPwd page where he creates new password otherwise we return an error message that user isn't exist</p>
+<p><strong>getPendingUser</strong>return pendingUser using userId if exists</p>
+<p><strong>verifyUser</strong>this api takes user's email and delete it from pendingUser document</p>
+<p><strong>getUserInfo</strong>this api takes token and return user id if token matched using jwt.</p>
 <h3>Hotel Controller</h3>
 <strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong>
-<p><strong>createHotel</strong> api takes hotel object and check if it's name doesn't exist it saves it on database</p>
-<p><strong>updateHotel</strong> api takes updated data and retrieve previous state of the hotel then calculates new rate value after that it checks if the new name in updated data doesn't exist it update the hotel with the new data and saves it in database</p>
+<p><strong>createHotel</strong> api takes hotel object and check if it's name doesn't exist it saves it on database.</p>
+<p><strong>updateHotel</strong> api takes updated data and retrieve previous state of the hotel then calculates new rate value after that it checks if the new name in updated data doesn't exist it update the hotel with the new data and saves it in database.</p>
 <p><strong>deleteHotel</strong>
-api takes hotel's id of hotel has rooms it iterate over it and delete each room using deleteRoomForHotel function this function delete the room and pull it from hotel doc in database and delete all reservations that related to it if exists and search if exists in database it deletes it</p>
-<p><strong>getHotel</strong> api return the hotel if exists using hotelId</p>
-<p><strong>getAllHotels</strong> api get all hotels in database and return at max the max Limit sent by the user in frontend</p>
-<p><strong>getHotels</strong> api takes max, min, city to search for all hotels that their names begin with city send by the user (not just the equal to it), have cheapestPrice that falls between min and max and returns them</p>
-<p><strong>countByCity</strong> api takes city attribute and return the no of all hotels that exist in that city</p>
+api takes hotel's id of hotel has rooms it iterate over it and delete each room using deleteRoomForHotel function this function delete the room and pull it from hotel doc in database and delete all reservations that related to it if exists and search if exists in database it deletes it.</p>
+<p><strong>getHotel</strong> api return the hotel if exists using hotelId.</p>
+<p><strong>getAllHotels</strong> api get all hotels in database and return at max the max Limit sent by the user in frontend.</p>
+<p><strong>getHotels</strong> api takes max, min, city to search for all hotels that their names begin with city send by the user (not just the equal to it), have cheapestPrice that falls between min and max and returns them.</p>
+<p><strong>countByCity</strong> api takes city attribute and return the no of all hotels that exist in that city.</p>
 <p><strong>countByType</strong> api return the number of hotels, apartments, resorts, villas and cabins </p>
-<p><strong>getHotelRooms</strong> api takes hotelId and returns all returns all types of rooms exist in this hotels</p>
+<p><strong>getHotelRooms</strong> api takes hotelId and returns all returns all types of rooms exist in this hotels.</p>
 <h3>Hotel Rate Controller</h3>
 <p><strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong></p>
-<p><strong>createRate</strong> api takes userId, hotelId, rating and create rate object and check if this user rated this hotel before if so we update it's value with the new rate sent if not we save new one in database then we get all rates of this hotel and iterate on them to set the new accumulative rate of the hotel and and update the rate in the hotel model in the database</p>
-<p><strong>updateRate</strong> api takes hotelRate obj and updates in the database </p>
-<p><strong>getRate</strong> api return the hotelRate using hotelRateId if exists</p>
+<p><strong>createRate</strong> api takes userId, hotelId, rating and create rate object and check if this user rated this hotel before if so we update it's value with the new rate sent if not we save new one in database then we get all rates of this hotel and iterate on them to set the new accumulative rate of the hotel and and update the rate in the hotel model in the database.</p>
+<p><strong>updateRate</strong> api takes hotelRate obj and updates in the database.</p>
+<p><strong>getRate</strong> api return the hotelRate using hotelRateId if exists.</p>
 <p><strong>getAllRates</strong> api return all hotel Rates from database</p>
-<p><strong>deleteRate</strong> api deletes rate using rateId if exists</p>
+<p><strong>deleteRate</strong> api deletes rate using rateId if exists.</p>
 <h3>Room Controller</h3>
 <p><strong>***To be clear that if any step isn't successfully executed we use next helper function to sent error this error is handled by errorhandler function in index.js ***</strong></p>
 <p><strong>createRoom</strong>
@@ -75,7 +82,15 @@ This api takes hotelId and room object then adds it to database and add it's ID 
 <p><strong>updateRoom</strong>
 This api takes room object then updates it in database</p>
 <p><strong>updateRoomAvailability</strong>
-This api takes roomId, roomNumberId, dates(reservation duration dates) and push it to unavailableDates attribute in roomNumber</p>
+This api takes roomId, roomNumberId, dates(reservation duration dates) and push it to unavailableDates attribute in roomNumber.</p>
+<h3>Reservation Controller</h3>
+<p><strong>stripePayment</strong>this api is working with stripe payment gateway using reservation's data if payment completed successfully it forwards to checkout success page else it goes to checkout failed page.</p>
+<p><strong>createReservation</strong>it creates new reservation object which contains userId, hotelId, roomTypeId, roomNumberId, reservationDuration (including startDate, endDate), cost, payed(whcih indicates reservation has been payed or not) to the reservations document in the database.</p>
+<p><strong>updateReservation</strong>it updates reservation where admin can change reservation duration or if reservation is payed we update this payed attribute to true in the reservation document in the database</p>
+<p><strong>getUserReservations</strong>it returns all user's reservations using userId if he have reservations.</p>
+<p><strong>deleteReservation</strong>it deletes reservations using id if it exists.</p>
+<p><strong>getReservation</strong>it returns reservation using reservation's id if it exists.</p>
+<p><strong>getAllReservations</strong>returs all the reservations exists in the database.</p>
 <h2>Utils</h2>
 <h4>error.js</h4>
 <p>exports createError function creates new object of Error and sets status and message properties with the calling ones and return the error</p>
@@ -125,9 +140,6 @@ Contains properties like hotels, villas, apartments, cabins each with it's count
 <h4>SearchItem</h4>
 <p>this belongs to userDashboard
 Contains image and description which has name, distance from city center, taxi options, cancel options and rate if it has</p>
-<h4>Reserve</h4>
-<p>this belongs to userDashboard
-Contains change date duration button which open calendar to specify reservation duration and hotel's rooms types with it's room numbers the available ones based on search criteria and unavailable ones and Reserve button to reserve selected rooms</p>
 <h4>Widget</h4>
 <p>this belongs to adminDashboard
 Contains items (users, hotels, rooms, reservations) each with it's quantity and link to it's page</p>
@@ -164,8 +176,8 @@ Contains data the user request in url like users, hotels, rooms and reservations
 <h4>ListType</h4>
 <p>this page display list according to type sent to it. 
 It's not supported yet</p>
-<h4>Reservation</h4>
-<p>this page is for reservation process it contains two components navbar and Reserve </p>
+<h4>HotelReservation</h4>
+<p>this page is for reservation process it contains navbar components. it also contains a list of hotel's rooms each with it's corresponding data including room's title, room's description, room's price, max people and room's images, also in contains calendar where user can change duration of reservation if he wants also in case he didn't choose one or refreshed the page he it will be opened by default to pick new dates.</p>
 <h4>Profile</h4>
 <p>this page is spitted into two halves first half on the left side contains user's info, profile page and two buttons one for update user's info and profile image and the other navigates to changePwd page where you can change your password, the second half contains user's reservations where you can see each reservation's info and cancel it if you want using cancel button </p>
 <h4>Verify Email</h4>
@@ -174,6 +186,9 @@ It's not supported yet</p>
 <p>this page is used in case of forgetting password after you enter your email and click reset button an email is sent to you where you can create new password for your account </p>
 <h4>NewPwd</h4>
 <p>this page is used for creating new password in case user forget and it can be sent only using the link sent to your email </p>
+<h4>CheckOutSuccess</h4><p>
+this page is used after success completion of reservation's payment. It's purpose is to acknowledge user's reservation by adding reservation's duration to the corresponding room and update reseravtion's payed attribute to true.</p>
+<h4>CheckOutFailed</h4><p>this page is used after failed completion of payment it removes reservation from database</p>
 <h3>pages Admin user only can access</h3>
 <h4>Dashboard Choice</h4>
 <p>this page is displayed after successful login for the Admin where Admin choose either to navigate to userDashboard or adminDashboard</p>
