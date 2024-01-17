@@ -67,6 +67,7 @@ const Profile = () => {
   const [currImg, setCurrImg] = useState(user?.img);
   const [uploading, setUploading] = useState(false);
   const [excceded, setExceeded] = useState(false);
+  const [exccededMsg, setExceededMsg] = useState(false);
 
   console.log(reservations);
   console.log(reservationData);
@@ -328,6 +329,15 @@ const Profile = () => {
     getReservations();
   }, []);
 
+  useEffect(() => {
+    if (excceded) {
+      setExceededMsg(true);
+      setTimeout(() => {
+        setExceededMsg(false);
+      }, 2000);
+    }
+  }, [excceded]);
+
   const [reservationsLoading, setReservationsLoading] = useState(true);
   useEffect(() => {
     if (reservations.length > 0) {
@@ -438,8 +448,8 @@ const Profile = () => {
                 </div>
               )}
             </div>
-            <form style={{ marginTop: updateMode ? "100%" : "" }}>
-              {excceded && (
+            <form style={{ marginTop: updateMode ? "" : "" }}>
+              {excceded && exccededMsg && (
                 <p className="exceededMsg">
                   Please, select Img size less than 1 MB to be uploaded
                 </p>

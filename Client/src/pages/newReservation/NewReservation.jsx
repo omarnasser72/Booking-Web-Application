@@ -626,10 +626,7 @@ const NewReservation = () => {
                       <br />
                     </label>
                     <FontAwesomeIcon icon={faCalendarDays} />
-                    <span
-                      className="headerSearchText"
-                      style={{ marginLeft: "5px" }}
-                    >
+                    <span className="calendarDate">
                       {`${format(dateRange.startDate, "dd/MM/yyyy ")}`} to
                       {`${format(dateRange.endDate, " dd/MM/yyyy")}`}
                     </span>
