@@ -3,17 +3,17 @@ import "./dashboardChoice.css";
 import { useEffect } from "react";
 
 const Dashboard = () => {
-  // useEffect(() => {
-  //   // Check if the page needs to be reloaded
-  //   const needsReload = localStorage.getItem("needsReload");
-  //   if (needsReload) {
-  //     // Perform the reload
-  //     window.location.reload();
+  useEffect(() => {
+    // Check if the page needs to be reloaded
+    const needsReload = localStorage.getItem("needsReload");
+    if (needsReload) {
+      // Perform the reload
+      window.location.reload();
 
-  //     // Reset the flag to prevent further reloading
-  //     localStorage.removeItem("needsReload");
-  //   }
-  // }, []);
+      // Reset the flag to prevent further reloading
+      localStorage.removeItem("needsReload");
+    }
+  }, []);
   return (
     <div className="dashboardChoice">
       <button
