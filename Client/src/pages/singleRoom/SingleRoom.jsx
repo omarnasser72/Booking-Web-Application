@@ -382,7 +382,7 @@ const SingleRoom = () => {
                 className="uploadingHotel"
                 src="https://media.tenor.com/hQz0Kl373E8AAAAj/loading-waiting.gif"
               />
-              <div>Updating hotel</div>
+              <div>Updating Room</div>
             </div>
           ) : !editMode ? (
             <div className="infoWrapper">
