@@ -29,7 +29,7 @@ const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const SingleUser = () => {
   const location = useLocation();
   const userId = location.pathname.split("/")[3];
-  const { data: user, loading, error } = useFetch(`/users/${userId}`);
+  const { data: user, loading, error, reFetch } = useFetch(`/users/${userId}`);
   const [sidebar, setSidebar] = useState(false);
 
   const [info, setInfo] = useState({});
@@ -202,6 +202,7 @@ const SingleUser = () => {
         const res = await axios.put(`/users/${user._id}`, newUser);
         console.log(res);
         setEditMode(false);
+        reFetch();
       } catch (error) {
         setErrMsg(error?.response?.data?.message);
         console.log(error);
