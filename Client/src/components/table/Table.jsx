@@ -6,17 +6,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "../../axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const List = () => {
+  const { accessToken } = useContext(AuthContext);
   const [fetchedReservations, setFetchedReservations] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState("true");
 
   const getLastReservations = async () => {
     try {
-      const res = await axios.get(`/reservations`);
+      const res = await axios.get(`/reservations`, {
+        headers: { accessToken: accessToken },
+      });
       setFetchedReservations(res.data);
     } catch (error) {
       console.log(error.response.data);
@@ -37,7 +41,10 @@ const List = () => {
             last10Reservations.map(async (fetchedReservation) => {
               // Fetch user data
               const userResponse = await axios.get(
-                `/users/${fetchedReservation.userId}`
+                `/users/${fetchedReservation.userId}`,
+                {
+                  headers: { accessToken: accessToken },
+                }
               );
               console.log(userResponse.data);
               const username = userResponse.data?.username;
@@ -46,19 +53,28 @@ const List = () => {
 
               // Fetch hotel data
               const hotelResponse = await axios.get(
-                `/hotels/find/${fetchedReservation.hotelId}`
+                `/hotels/find/${fetchedReservation.hotelId}`,
+                {
+                  headers: { accessToken: accessToken },
+                }
               );
               const hotel = hotelResponse.data?.name;
 
               // Fetch room type data
               const roomTypeResponse = await axios.get(
-                `/rooms/${fetchedReservation.roomTypeId}`
+                `/rooms/${fetchedReservation.roomTypeId}`,
+                {
+                  headers: { accessToken: accessToken },
+                }
               );
               const roomType = roomTypeResponse.data?.title;
 
               // Fetch room number data
               const roomNumberResponse = await axios.get(
-                `/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`
+                `/rooms/${fetchedReservation.roomTypeId}/${fetchedReservation.roomNumberId}`,
+                {
+                  headers: { accessToken: accessToken },
+                }
               );
               const roomNumber = roomNumberResponse.data?.number;
 

@@ -4,10 +4,13 @@ import StoreIcon from "@mui/icons-material/Store";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import axios from "../../axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Widget = ({ type }) => {
+  const { accessToken } = useContext(AuthContext);
+  console.log(accessToken);
   let data;
   const navigate = useNavigate();
   const [noOfUsers, setNoOfUsers] = useState();
@@ -19,10 +22,34 @@ const Widget = ({ type }) => {
 
   const handleWidgets = async (e) => {
     try {
-      setNoOfUsers((await axios.get(`/users/getUsers/all`)).data.length);
-      setNoOfHotels((await axios.get(`/hotels`)).data.length);
-      setNoOfRooms((await axios.get(`/rooms`)).data.length);
-      setNoOfReservations((await axios.get(`/reservations`)).data.length);
+      setNoOfUsers(
+        (
+          await axios.get(`/users/getUsers/all`, {
+            headers: { accessToken: accessToken },
+          })
+        ).data.length
+      );
+      setNoOfHotels(
+        (
+          await axios.get(`/hotels`, {
+            headers: { accessToken: accessToken },
+          })
+        ).data.length
+      );
+      setNoOfRooms(
+        (
+          await axios.get(`/rooms`, {
+            headers: { accessToken: accessToken },
+          })
+        ).data.length
+      );
+      setNoOfReservations(
+        (
+          await axios.get(`/reservations`, {
+            headers: { accessToken: accessToken },
+          })
+        ).data.length
+      );
       setLoading(false);
     } catch (error) {
       console.log(error);

@@ -9,17 +9,17 @@ import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 const AdminHome = () => {
   const [sidebar, setSidebar] = useState(false);
 
-  useEffect(() => {
-    // Check if the page needs to be reloaded
-    const needsReload = localStorage.getItem("needsReload");
-    if (needsReload) {
-      // Perform the reload
-      window.location.reload();
+  // useEffect(() => {
+  //   // Check if the page needs to be reloaded
+  //   const needsReload = localStorage.getItem("needsReload");
+  //   if (needsReload) {
+  //     // Perform the reload
+  //     window.location.reload();
 
-      // Reset the flag to prevent further reloading
-      localStorage.removeItem("needsReload");
-    }
-  }, []);
+  //     // Reset the flag to prevent further reloading
+  //     localStorage.removeItem("needsReload");
+  //   }
+  // }, []);
 
   return (
     <div className="adminHome">
