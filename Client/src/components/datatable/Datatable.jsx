@@ -1,14 +1,16 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import axios from "../../axios";
 import moment from "moment";
 import "moment-timezone";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthContext";
 
 const Datatable = ({ columns }) => {
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -42,7 +44,11 @@ const Datatable = ({ columns }) => {
   const handleDelete = async (id) => {
     try {
       if (path == "reservations") {
-        const reservation = (await axios.get(`/reservations/${id}`)).data;
+        const reservation = (
+          await axios.get(`/reservations/${id}`, {
+            headers: { accessToken: accessToken },
+          })
+        ).data;
         console.log(reservation);
 
         const { hotelId, userId, roomTypeId, roomNumberId } = reservation;
@@ -58,7 +64,10 @@ const Datatable = ({ columns }) => {
         );
 
         const roomRes = await axios.delete(
-          `/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`
+          `/rooms/${hotelId}/${roomTypeId}/${roomNumberId}/${startDate}/${endDate}`,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         console.log(roomRes);
         //const reservationRes = await axios.delete(`/${path}/${id}`);
@@ -66,7 +75,9 @@ const Datatable = ({ columns }) => {
 
         setList(list.filter((item) => item._id !== id));
       }
-      await axios.delete(`/${path}/${id}`);
+      await axios.delete(`/${path}/${id}`, {
+        headers: { accessToken: accessToken },
+      });
       setList(list.filter((item) => item._id !== id));
       Swal.fire({
         position: "top-end",
