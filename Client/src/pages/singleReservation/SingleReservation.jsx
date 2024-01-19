@@ -412,8 +412,8 @@ const SingleReservation = () => {
                   src={`${
                     type === "hotel"
                       ? hotel.photos[slideNumber]
-                      : process.env.PUBLIC_URL
-                  }/upload/rooms/${room.images[slideNumber]}`}
+                      : room.images[slideNumber]
+                  }`}
                   alt=""
                   className="sliderImg"
                 />
@@ -518,11 +518,7 @@ const SingleReservation = () => {
                       {hotel.photos?.map((photo, index) => {
                         return (
                           <img
-                            src={
-                              photo.includes("http")
-                                ? photo
-                                : `${process.env.PUBLIC_URL}/upload/hotels/${photo}`
-                            }
+                            src={photo}
                             alt=""
                             key={index}
                             onClick={() => handleOpenImgSlider(index, "hotel")}
