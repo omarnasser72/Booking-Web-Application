@@ -170,10 +170,7 @@ const NewUser = () => {
         data.append("upload_preset", "upload");
         const uploadRes = await org_axios.post(
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
-          data,
-          {
-            headers: { accessToken: accessToken },
-          }
+          data
         );
         console.log("uploaded successfully");
         console.log(uploadRes);

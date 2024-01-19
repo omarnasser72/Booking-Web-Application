@@ -219,10 +219,7 @@ const NewHotel = () => {
             data.append("upload_preset", "upload");
             const uploadRes = await org_axios.post(
               "https://api.cloudinary.com/v1_1/omarnasser/upload",
-              data,
-              {
-                headers: { accessToken: accessToken },
-              }
+              data
             );
             console.log(currImgs[i], " uploaded");
             console.log(uploadRes?.data?.url);
