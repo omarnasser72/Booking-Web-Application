@@ -259,8 +259,10 @@ const SingleRoom = () => {
           if (currImgs[i] instanceof File) {
             data.append("file", currImgs[i]);
           } else {
+            //Since we working on https we can't load http urls
+            const securedUrl = currImgs[i].replace(/^http:/, "https:");
             // Fetch the image from the URL
-            const response = await fetch(currImgs[i]);
+            const response = await fetch(securedUrl);
             const blob = await response.blob();
             data.append("file", blob);
           }
