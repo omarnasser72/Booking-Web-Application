@@ -88,6 +88,7 @@ const NewUser = () => {
   const [submitting, setSubmitting] = useState(false);
   const [excceded, setExceeded] = useState(false);
   const [uploading, setUploading] = useState(false);
+  let imgRes;
 
   useEffect(() => {
     userRef.current?.focus();
@@ -173,6 +174,7 @@ const NewUser = () => {
           data
         );
         setCurrImg(uploadRes?.data?.url);
+        imgRes = uploadRes?.data?.url;
         console.log(uploadRes);
         console.log("uploaded successfully");
       } catch (error) {
@@ -188,7 +190,7 @@ const NewUser = () => {
     try {
       const newUser = {
         ...info,
-        img: currImg,
+        img: currImg || imgRes,
         age: age,
       };
       console.log(newUser);
