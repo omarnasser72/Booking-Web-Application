@@ -716,7 +716,7 @@ const SingleReservation = () => {
                       {room.images?.map((image, index) => {
                         return (
                           <img
-                            src={`${process.env.PUBLIC_URL}/upload/rooms/${image}`}
+                            src={image}
                             alt=""
                             key={index}
                             onClick={() => handleOpenImgSlider(index, "room")}
