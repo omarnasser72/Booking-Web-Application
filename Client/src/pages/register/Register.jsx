@@ -189,7 +189,7 @@ const Register = () => {
               icon: "success",
               confirmButtonColor: "rgb(66, 66, 66)",
             }).then((result) => {
-              if (result.isConfirmed) navigate("/");
+              if (result.isConfirmed) navigate("/#/login");
             })
           )
           .catch((error) => {
