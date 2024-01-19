@@ -298,7 +298,7 @@ const NewHotel = () => {
       if (!validFeatured) setFeaturedFocus(true);
     } else {
       try {
-        if (files) await handleUpload();
+        if (files || currImgs) await handleUpload();
         const { photo } = info;
         const newHotel = {
           ...info,
