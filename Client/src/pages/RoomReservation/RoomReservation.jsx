@@ -65,6 +65,9 @@ const RoomReservation = () => {
 
     console.log("date:", date[0]);
     console.log("contextDate: ", contextDate);
+    const reservationDays =
+      (date[0].endDate - date[0].startDate) / (24 * 60 * 60 * 1000);
+    console.log("reservationDays: ", reservationDays);
   }, [date, contextDate]);
 
   //set date to the current selected one
@@ -163,7 +166,7 @@ const RoomReservation = () => {
       const roomPrice = roomRes.data.price;
       const roomImages = roomRes.data.images;
       const reservationDays =
-        (date[0].endDate - date[0].startDate) / (24 * 60 * 60 * 1000);
+        (date[0].endDate - date[0].startDate) / (24 * 60 * 60 * 1000) + 1;
 
       const reservationObj = {
         userId: JSON.parse(localStorage.getItem("user"))._id,
