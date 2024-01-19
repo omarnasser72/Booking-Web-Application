@@ -176,7 +176,7 @@
 
   .headerList.listMode {
     gap: 10px;
-    margin-left: 6%;
+    margin-left: 0;
     background-color: rgb(66, 66, 66);
     padding-bottom: 0px;
   }
