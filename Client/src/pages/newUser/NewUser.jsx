@@ -172,9 +172,9 @@ const NewUser = () => {
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
           data
         );
-        console.log("uploaded successfully");
-        console.log(uploadRes);
         setCurrImg(uploadRes?.data?.url);
+        console.log(uploadRes);
+        console.log("uploaded successfully");
       } catch (error) {
         console.log(error);
       }
@@ -184,7 +184,7 @@ const NewUser = () => {
     e.preventDefault();
     setUploading(true);
     setSubmitting(true);
-    if (file) handleUpload();
+    if (file) await handleUpload();
     try {
       const newUser = {
         ...info,
