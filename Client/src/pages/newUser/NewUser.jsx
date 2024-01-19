@@ -206,6 +206,7 @@ const NewUser = () => {
       setUploading(false);
     } catch (error) {
       setErrMsg(error.response.data.message);
+      setUploading(false);
       console.log(error);
     }
   };
