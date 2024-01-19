@@ -262,7 +262,7 @@ const NewHotel = () => {
           ununavailableDates: [],
         }));
         console.log(files);
-        if (files || currImgs) await handleUpload();
+        if (currImgs || files) await handleUpload();
         const { photo } = info;
         console.log(uploadedUrls);
         const newRoom = {
