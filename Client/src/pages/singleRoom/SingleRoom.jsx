@@ -2,7 +2,7 @@ import "./singleRoom.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import axios from "../../axios";
 import org_axios from "axios";
 import useFetch from "../../hooks/useFetch";
@@ -20,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
+import { AuthContext } from "../../context/AuthContext";
 
 const ROOM_TITLE_REGEX = /^[A-Za-z0-9\s.'-]{3,}$/;
 const ROOM_DESCRIPTION_REGEX = /^.{10,500}$/;
@@ -29,6 +30,7 @@ const NUMBER_OF_ROOMS_REGEX = /^([1-9]|[1-9][0-9]|100)$/;
 const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
 
 const SingleRoom = () => {
+  const { accessToken } = useContext(AuthContext);
   const location = useLocation();
   const roomId = location.pathname.split("/")[3];
   console.log(roomId);
@@ -265,7 +267,10 @@ const SingleRoom = () => {
           data.append("upload_preset", "upload");
           const uploadRes = await org_axios.post(
             "https://api.cloudinary.com/v1_1/omarnasser/upload",
-            data
+            data,
+            {
+              headers: { accessToken: accessToken },
+            }
           );
           console.log(currImgs[i], " uploaded");
           console.log(uploadRes?.data?.url);
@@ -323,7 +328,9 @@ const SingleRoom = () => {
           images: uploadedUrls.length > 0 ? uploadedUrls : currImgs,
           roomNumbers,
         };
-        await axios.put(`/rooms/${roomId}`, updatedRoom);
+        await axios.put(`/rooms/${roomId}`, updatedRoom, {
+          headers: { accessToken: accessToken },
+        });
         setEditMode(false);
         reFetch();
         //navigate("/adminDashboard/rooms");

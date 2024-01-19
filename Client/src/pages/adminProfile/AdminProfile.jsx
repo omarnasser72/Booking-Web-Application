@@ -28,7 +28,8 @@ const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const AdminProfile = () => {
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const { user, loading, error, dispatch, accessToken } =
+    useContext(AuthContext);
   const [info, setInfo] = useState({});
   const [file, setFile] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
@@ -216,7 +217,10 @@ const AdminProfile = () => {
         data.append("upload_preset", "upload");
         const uploadRes = await org_axios.post(
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
-          data
+          data,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         uploadedImgUrl = uploadRes?.data?.url;
         setCurrImg(uploadRes?.data?.url);
@@ -251,7 +255,9 @@ const AdminProfile = () => {
         };
         console.log(newUser);
         setEditBtn(true);
-        const res = await axios.put(`/users/${user._id}`, newUser);
+        const res = await axios.put(`/users/${user._id}`, newUser, {
+          headers: { accessToken: accessToken },
+        });
         if (res.data) {
           dispatch({
             type: "LOGIN_SUCCESS",
@@ -285,7 +291,10 @@ const AdminProfile = () => {
         console.log(updatedUser);
         const res = await axios.put(
           `/users/changePwd/${user._id}`,
-          updatedUser
+          updatedUser,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         setChangePwdMode(false);
       } catch (error) {
@@ -297,7 +306,9 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/users/${user._id}`);
+        const response = await axios.get(`/users/${user._id}`, {
+          headers: { accessToken: accessToken },
+        });
         localStorage.setItem("user", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);

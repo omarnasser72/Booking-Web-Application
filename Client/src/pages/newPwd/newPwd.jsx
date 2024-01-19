@@ -13,6 +13,7 @@ import {
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const NewPwd = () => {
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const errRef = useRef();
@@ -46,7 +47,9 @@ const NewPwd = () => {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const res = await axios.get(`/auth/getUserInfo?token=${token}`);
+        const res = await axios.get(`/auth/getUserInfo?token=${token}`, {
+          headers: { accessToken: accessToken },
+        });
         console.log(res);
         setUserId(res.data);
       } catch (err) {
@@ -93,7 +96,9 @@ const NewPwd = () => {
           newPwd: newPwd,
         };
         console.log(updatedUser);
-        const res = await axios.put(`/users/newPwd/${userId}`, updatedUser);
+        const res = await axios.put(`/users/newPwd/${userId}`, updatedUser, {
+          headers: { accessToken: accessToken },
+        });
         if (res.data) navigate("/login");
       } catch (err) {
         setError(err);

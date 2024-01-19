@@ -25,8 +25,10 @@ import { DateRange } from "react-date-range";
 import moment from "moment";
 import "moment-timezone";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
+import { AuthContext } from "../../context/AuthContext";
 
 const SingleReservation = () => {
+  const { accessToken } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const reservationId = location.pathname.split("/")[3];
@@ -114,7 +116,10 @@ const SingleReservation = () => {
         const fetchRoomNumber = async () => {
           console.log(reservation.roomTypeId, reservation.roomNumberId);
           const roomRes = await axios.get(
-            `/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`
+            `/rooms/${reservation.roomTypeId}/${reservation.roomNumberId}`,
+            {
+              headers: { accessToken: accessToken },
+            }
           );
           return roomRes.data;
         };
@@ -309,7 +314,9 @@ const SingleReservation = () => {
     if (!validDates) {
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(`/rooms/${reservation.roomTypeId}`);
+      const roomRes = await axios.get(`/rooms/${reservation.roomTypeId}`, {
+        headers: { accessToken: accessToken },
+      });
       const room = roomRes.data;
       const price = room.price;
       try {
@@ -332,7 +339,10 @@ const SingleReservation = () => {
           console.log("DELETE URL:", deleteReservationUrl);
 
           const reservationDateResponse = await axios.delete(
-            deleteReservationUrl
+            deleteReservationUrl,
+            {
+              headers: { accessToken: accessToken },
+            }
           );
         } catch (error) {
           console.log(error);
@@ -340,7 +350,10 @@ const SingleReservation = () => {
         console.log(updatedReservation);
         const reservationRes = await axios.put(
           `/reservations/${reservation._id}`,
-          updatedReservation
+          updatedReservation,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         //assign reservation duration to room's unavailable dates
         try {
@@ -355,6 +368,9 @@ const SingleReservation = () => {
             `/rooms/availability/${reservation.roomNumberId}`,
             {
               dates: roomAvailabilityDates,
+            },
+            {
+              headers: { accessToken: accessToken },
             }
           );
         } catch (err) {

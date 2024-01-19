@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   faCheck,
   faTimes,
@@ -19,6 +19,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import axios from "../../axios";
 import org_axios from "axios";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
+import { AuthContext } from "../../context/AuthContext";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PHONE_REGEX =
@@ -27,6 +28,7 @@ const CITY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 const COUNTRY_REGEX = /^[A-Za-z\s\']*([A-Za-z][A-Za-z\s\']*){3,}$/;
 
 const SingleUser = () => {
+  const { accessToken } = useContext(AuthContext);
   const location = useLocation();
   const userId = location.pathname.split("/")[3];
   const { data: user, loading, error, reFetch } = useFetch(`/users/${userId}`);
@@ -165,7 +167,10 @@ const SingleUser = () => {
         data.append("upload_preset", "upload");
         const uploadRes = await org_axios.post(
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
-          data
+          data,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         uploadedImgUrl = uploadRes?.data?.url;
         setCurrImg(uploadRes?.data?.url);
@@ -199,7 +204,9 @@ const SingleUser = () => {
         };
         const { username } = newUser;
         console.log(newUser);
-        const res = await axios.put(`/users/${user._id}`, newUser);
+        const res = await axios.put(`/users/${user._id}`, newUser, {
+          headers: { accessToken: accessToken },
+        });
         console.log(res);
         setEditMode(false);
         reFetch();

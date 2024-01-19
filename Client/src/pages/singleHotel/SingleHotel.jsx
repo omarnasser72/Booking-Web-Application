@@ -2,7 +2,7 @@ import "./singleHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import axios from "../../axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,6 +21,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 import org_axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const HOTEL_REGEX = /^[A-Za-z0-9\s.'-]{3,}$/;
 const CITY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
@@ -33,6 +34,7 @@ const COUNTRY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
 const allowedExtensions = /^[^.\/]+\.(jpg|jpeg|png|gif|bmp)$/i;
 
 const SingleHotel = () => {
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const hotelId = location.pathname.split("/")[3];
@@ -130,7 +132,9 @@ const SingleHotel = () => {
         if (roomsIDs.length > 0) {
           const roomsData = await Promise.all(
             roomsIDs.map(async (roomId) => {
-              const roomReq = await axios.get(`/rooms/${roomId}`);
+              const roomReq = await axios.get(`/rooms/${roomId}`, {
+                headers: { accessToken: accessToken },
+              });
               if (roomReq.data) {
                 roomsRows.push(roomReq.data);
               }
@@ -312,7 +316,10 @@ const SingleHotel = () => {
           data.append("upload_preset", "upload");
           const uploadRes = await org_axios.post(
             "https://api.cloudinary.com/v1_1/omarnasser/upload",
-            data
+            data,
+            {
+              headers: { accessToken: accessToken },
+            }
           );
           console.log(currImgs[i], " uploaded");
           console.log(uploadRes?.data?.url);
@@ -366,7 +373,9 @@ const SingleHotel = () => {
           photos: uploadedUrls.length > 0 ? uploadedUrls : currImgs,
         };
         console.log(newHotel);
-        const res = await axios.put(`/hotels/${hotelId}`, newHotel);
+        const res = await axios.put(`/hotels/${hotelId}`, newHotel, {
+          headers: { accessToken: accessToken },
+        });
         console.log(res);
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");

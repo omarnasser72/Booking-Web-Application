@@ -1,7 +1,7 @@
 import "./newUser.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import axios from "../../axios";
 import org_axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import { AuthContext } from "../../context/AuthContext";
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -27,6 +28,7 @@ const COUNTRY_REGEX = /^[A-Za-z\s\']+$/;
 const AGE_REGEX = /^(?:[1-9]|[1-9][0-9]|1[0-4][0-9]|150)$/;
 
 const NewUser = () => {
+  const { accessToken } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -168,7 +170,10 @@ const NewUser = () => {
         data.append("upload_preset", "upload");
         const uploadRes = await org_axios.post(
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
-          data
+          data,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         console.log("uploaded successfully");
         console.log(uploadRes);
@@ -190,7 +195,9 @@ const NewUser = () => {
         age: age,
       };
       console.log(newUser);
-      const res = await axios.post("/auth/signup", newUser);
+      const res = await axios.post("/auth/signup", newUser, {
+        headers: { accessToken: accessToken },
+      });
       console.log(res);
       if (res.data.success === false) {
         setErrMsg("Signup was not successful."); // Set an appropriate error message

@@ -1,7 +1,7 @@
 import "./newReservation.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -19,8 +19,10 @@ import {
 import { parseISO } from "date-fns";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import { AuthContext } from "../../context/AuthContext";
 
 const NewReservation = () => {
+  const { accessToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [info, setInfo] = useState({});
@@ -118,7 +120,12 @@ const NewReservation = () => {
     if (roomTypeId && roomNumberId) {
       const fetchRoomNumber = async () => {
         console.log(roomTypeId, roomNumberId);
-        const roomRes = await axios.get(`/rooms/${roomTypeId}/${roomNumberId}`);
+        const roomRes = await axios.get(
+          `/rooms/${roomTypeId}/${roomNumberId}`,
+          {
+            headers: { accessToken: accessToken },
+          }
+        );
         return roomRes.data;
       };
 
@@ -197,7 +204,9 @@ const NewReservation = () => {
     const fetch = async () => {
       if (hotelId) {
         try {
-          const roomsRes = await axios.get(`/hotels/room/${hotelId}`);
+          const roomsRes = await axios.get(`/hotels/room/${hotelId}`, {
+            headers: { accessToken: accessToken },
+          });
           setRooms(roomsRes.data);
           return roomsRes.data;
         } catch (error) {
@@ -213,7 +222,9 @@ const NewReservation = () => {
   useEffect(() => {
     const fetch = async () => {
       if (roomTypeId) {
-        const roomsRes = await axios.get(`/rooms/${roomTypeId}`);
+        const roomsRes = await axios.get(`/rooms/${roomTypeId}`, {
+          headers: { accessToken: accessToken },
+        });
         console.log(roomsRes.data.roomNumbers);
         setRoomNumbers(roomsRes.data.roomNumbers);
         return roomsRes.data;
@@ -362,7 +373,9 @@ const NewReservation = () => {
       if (!validRoomNumber) setRoomNumberFocus(true);
       if (!validDates) setDateFocus(true);
     } else {
-      const roomRes = await axios.get(`/rooms/${roomTypeId}`);
+      const roomRes = await axios.get(`/rooms/${roomTypeId}`, {
+        headers: { accessToken: accessToken },
+      });
       const room = roomRes.data;
       const price = room.price;
       try {
@@ -387,7 +400,10 @@ const NewReservation = () => {
         console.log(newReservation);
         const reservationRes = await axios.post(
           `/reservations`,
-          newReservation
+          newReservation,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         //assign reservation duration to room's unavailable dates
         try {
@@ -402,6 +418,9 @@ const NewReservation = () => {
             `/rooms/availability/${roomNumberId}`,
             {
               dates: roomAvailabilityDates,
+            },
+            {
+              headers: { accessToken: accessToken },
             }
           );
         } catch (err) {

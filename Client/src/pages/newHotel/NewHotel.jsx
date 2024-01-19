@@ -1,7 +1,7 @@
 import "./newHotel.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavbarAdmin from "../../components/navbarAdmin/NavbarAdmin";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import org_axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const HOTEL_REGEX = /^[A-Za-z0-9\s.'-]{3,}$/;
 const CITY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
@@ -27,6 +28,7 @@ const PRICE_REGEX = /^\d+(\.\d{2})?$/;
 const COUNTRY_REGEX = /^[A-Za-z\s.'-]{3,}$/;
 
 const NewHotel = () => {
+  const { accessToken } = useContext(AuthContext);
   const [files, setFiles] = useState("");
   const [info, setInfo] = useState({});
 
@@ -252,7 +254,10 @@ const NewHotel = () => {
             data.append("upload_preset", "upload");
             const uploadRes = await org_axios.post(
               "https://api.cloudinary.com/v1_1/omarnasser/upload",
-              data
+              data,
+              {
+                headers: { accessToken: accessToken },
+              }
             );
             console.log(currImgs[i], " uploaded");
             console.log(uploadRes?.data?.url);
@@ -303,7 +308,9 @@ const NewHotel = () => {
           photos: uploadedUrls,
         };
         console.log(newHotel);
-        const res = await axios.post("/hotels", newHotel);
+        const res = await axios.post("/hotels", newHotel, {
+          headers: { accessToken: accessToken },
+        });
         if (res.data.success === false) {
           setErrMsg("Adding new hotel wasn't successful");
         }

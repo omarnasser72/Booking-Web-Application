@@ -13,7 +13,8 @@ import {
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const ChangePwd = () => {
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const { user, loading, error, dispatch, accessToken } =
+    useContext(AuthContext);
   const [credentials, setCredentials] = useState({
     username: user?.username,
     password: undefined,
@@ -97,7 +98,10 @@ const ChangePwd = () => {
         console.log(updatedUser);
         const res = await axios.put(
           `/users/changePwd/${user._id}`,
-          updatedUser
+          updatedUser,
+          {
+            headers: { accessToken: accessToken },
+          }
         );
         if (res.data) navigate("/profile");
       } catch (error) {
@@ -286,7 +290,7 @@ const ChangePwd = () => {
           <button
             className="changePwdBtn"
             disabled={loading}
-            onClick={()=>navigate("/profile")}
+            onClick={() => navigate("/profile")}
           >
             Cancel
           </button>
