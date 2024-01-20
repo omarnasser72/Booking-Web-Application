@@ -16,7 +16,7 @@ I build it using MVC design pattern
 
 <h1><bold>Features</bold></h1>
 <p>✅ authentication system for user using jwt auth</p>
-<p>✅ authorization system for Admin, user using middlewares</p><p>✅ Protected Route for users and admin </p><p>✅ Authentication context</p><p></p><p>✅ Real-time input ✅ Search Contextvalidation for all forms</p><p>✅ User able to update his own profile info</p><p>User can change his password </p><p>✅ User can reset his password using his email. </p><p>✅ User, Hotel, Room, Reservations and Hotel Rates CRUD operations</p>
+<p>✅ authorization system for Admin, user using middlewares</p><p>✅ Protected Route for users and admin </p><p>✅ Authentication context</p><p>✅ Search Context</p><p>✅ Real-time input validation for all forms</p><p>✅ User able to update his own profile info, User can change his password </p><p>✅ User can reset his password using his email. </p><p>✅ User, Hotel, Room, Reservations and Hotel Rates CRUD operations</p>
 <p>💥The following feature was a challenged one for me. </p>
 <p>✅ User can reserve room in hotel for specific duration and able to cancel reservation sure in this duration for this room won't be available to anyone to be reserved or be overlapped and once reservation is cancelled it becomes available to the users once more. </p><p>✅ Realtime Search for hotels </p><p>✅ filters using min and max price, no of people, reservation duration</p>
 <p>✅ Rating hotel</p>
