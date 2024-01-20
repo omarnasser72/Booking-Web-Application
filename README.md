@@ -21,6 +21,10 @@ I build it using MVC design pattern
 <p>✅ User can reserve room in hotel for specific duration and able to cancel reservation sure in this duration for this room won't be available to anyone to be reserved or be overlapped and once reservation is cancelled it becomes available to the users once more. </p><p>✅ Realtime Search for hotels </p><p>✅ filters using min and max price, no of people, reservation duration</p>
 <p>✅ Rating hotel</p>
 <p>✅ Responsive design for most types of mobiles </p>
+<h1><bold>Future enhancements:</bold></h1>
+<p>1️⃣ Adding flights plan </p> 
+<p>2️⃣ Adding attractions with it's custom reservations </p>
+<p>3️⃣ Adding Cars rentals, Airport taxi reservations</p>
 <h2>Backend Side</h2>
 <p>I used express using middlewares, moongose for connecting to MongoDB server and created my routes</p>
 <h2>Models</h2>
