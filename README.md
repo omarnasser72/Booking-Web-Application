@@ -9,7 +9,11 @@ I build it using MVC design pattern
 <ul><li>MongoDB</li>
 <li>Express</li><li>Reactjs</li>
 <li>Nodejs</li><li>ESM Javascript </li><li>cloudinary</li>
-<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><li>stripe payment</li></ul>
+<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><li>stripe payment</li>
+<p>☑️ React hooks, React router doom</p>
+<p>☑️ Context</p>
+<p>☑️ Html, Css, Scss</p>
+</ul>
 <h1><bold>Features</bold></h1>
 <ul><li>authentication system for user using jwt auth</li>
 <li>authorization system for Admin, user using middlewares</li><li>Real-time input validation for all forms</li><li>User able to update his own profile info</li><li>User can change his password </li><li>User can reset his password using his email</li><li>User, Hotel, Room, Reservations and Hotel Rates CRUD operations</li>
