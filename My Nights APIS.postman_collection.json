@@ -1,0 +1,1178 @@
+{
+	"info": {
+		"_postman_id": "a5be62c1-3598-4918-b7b5-471112d19e9a",
+		"name": "My Nights APIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26571473"
+	},
+	"item": [
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Rates",
+					"item": [
+						{
+							"name": "Add/Update HotelRate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\":\"5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/rates/64b62159b4fd869dbb9147d3/64af10615c3bd73e17682708",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rates",
+										"64b62159b4fd869dbb9147d3",
+										"64af10615c3bd73e17682708"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete HotelRate",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/rates/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rates",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get HotelRate",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/rates/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rates",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All HotelRates",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/rates/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rates",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Hotel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{       \r\n    \"name\": \"NUB INN 4\",\r\n    \"type\": \"hotel\",\r\n    \"city\": \"aswan\",\r\n    \"country\": \"Egypt\",\r\n    \"address\": \"directly on the Nile river view\",\r\n    \"distance\": \"500\",\r\n    \"title\": \"Most Comfortable hotel\",\r\n    \"desc\": \"worldwide hotel\",\r\n    \"cheapestPrice\": 100,\r\n    \"featured\": \"false\",\r\n    \"photos\":[\"pexels-anas-jawed-1697076.jpg\",\"pexels-bruno-maceiras-2467558.jpg\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/hotels",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Hotel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"address\": \"gfdgdgfdg\",\r\n    \"cheapestPrice\": 12,\r\n    \"city\":\"gfdgd\",\r\n    \"country\": \"jfhgffg\",\r\n    \"desc\": \"gfdgfdgfdg\",\r\n    \"distance\": \"65 mi\",\r\n    \"featured\": \"false\", \r\n    \"name\": \"fddgdg\",\r\n    \"photos\": \"data:image/jpeg;base64,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\",\r\n        \"title\": \"gfdgfdgfd\",\r\n        \"type\": \"hotel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/hotels/652b6cf309b8115362cdd0b8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"652b6cf309b8115362cdd0b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Hotel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels/648b0e717629e46b6e3a3a4d",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"648b0e717629e46b6e3a3a4d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels/find/64af10615c3bd73e17682708",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"find",
+								"64af10615c3bd73e17682708"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Hotels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "countByCity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels/countByCity?cities=cairo,giza,alexandria,aswan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"countByCity"
+							],
+							"query": [
+								{
+									"key": "cities",
+									"value": "cairo,giza,alexandria,aswan"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "countByType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels/countByType",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"countByType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FeaturedHotels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels?featured=true&max=3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels"
+							],
+							"query": [
+								{
+									"key": "featured",
+									"value": "true"
+								},
+								{
+									"key": "max",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/hotels?city=cairo&min=12&max=101",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "cairo"
+								},
+								{
+									"key": "min",
+									"value": "12"
+								},
+								{
+									"key": "max",
+									"value": "101"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hotelPage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hotels/648cc91c022862731eda59ce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hotels",
+								"648cc91c022862731eda59ce"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"omcsar\",\r\n    \"email\": \"omfdsfar@gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"country\":\"Egypt\",\r\n    \"city\":\"Cairo\",\r\n    \"age\":\"23\",\r\n    \"phone\":\"0115465682\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Kevin\",\r\n    \"password\":\"Kevin1234!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log In User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"ahmed00\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Authentication",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"omarnasser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8888/users/checkAuthentication",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"users",
+								"checkAuthentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"omarnasser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/checkUser/652768a88cecd5409bbf1612",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"checkUser",
+								"652768a88cecd5409bbf1612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/checkAdmin/652768a88cecd5409bbf1612",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"checkAdmin",
+								"652768a88cecd5409bbf1612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/users/getUsers/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"users",
+								"getUsers",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"omcsar\",\r\n    \"email\": \"omfdsfar@gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"country\":\"Egypt\",\r\n    \"city\":\"Cairo\",\r\n    \"age\":\"23\",\r\n    \"phone\":\"0115465682\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"omarheroku72@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/resetPwd",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"resetPwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/auth/pendingUser/652768a88cecd5409bbf1612",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"pendingUser",
+								"652768a88cecd5409bbf1612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"Kevin@mail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/verifyEmail/Kevin@mail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"verifyEmail",
+								"Kevin@mail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"64c73eafb6f44f30e9f19d1f\",\r\n    \"username\": \"ahmedali\",\r\n    \"email\": \"ahmedali@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"phone\": \"012561545\",\r\n    \"country\": \"Egypt\",\r\n    \"city\": \"Giza,\",\r\n    \"age\": 23,\r\n    \"img\": \"IMG_20230316_004429_714.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/64c73eafb6f44f30e9f19d1f",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"64c73eafb6f44f30e9f19d1f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"aliahmedd1\",\r\n    \"email\": \"aliahemd01v@gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"country\":\"Egypt\",\r\n    \"city\":\"Cairo\",\r\n    \"age\":\"23\",\r\n    \"phone\":\"0115465682\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/652768a88cecd5409bbf1612",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"652768a88cecd5409bbf1612"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/64f7800ef15f3f637dc904bf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"64f7800ef15f3f637dc904bf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/getUsers/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"getUsers",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/users/reservations/64c73eafb6f44f30e9f19d1f",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"reservations",
+								"64c73eafb6f44f30e9f19d1f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePwd",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": 23,\r\n    \"birthDate\": \"2001-03-15T22:00:00.000Z\",\r\n    \"city\": \"Giza\",\r\n    \"country\": \"Egypt\",\r\n    \"email\": \"omarnasser7272@gmail.com\",\r\n    \"img\": \"IMG_20230316_004429_714.jpg\",\r\n    \"password\": \"Omar1234!\",\r\n    \"phone\": \"1273335725\",\r\n    \"username\":\"omar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8888/users/changePwd/64bf687b15c75e35c0fd8568",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"users",
+								"changePwd",
+								"64bf687b15c75e35c0fd8568"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPwd\":\"Kevin1234#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/newPwd/652768a88cecd5409bbf1612",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"newPwd",
+								"652768a88cecd5409bbf1612"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "652768a88cecd5409bbf1612",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reservation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/reservations/64e441f06717cd1e6cdbfe80",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"reservations",
+								"64e441f06717cd1e6cdbfe80"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Create Room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"hotelId\":\"648b128d01f928fe216ae820\",\r\n    \"title\": \"double\",\r\n    \"price\": 150,\r\n    \"maxPeople\": 2,\r\n    \"desc\": \"fdv\",\r\n    \"roomNumbers\":[{\"number\": 1},{\"number\": 2},{\"number\": 3}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/rooms/648b128d01f928fe216ae820",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rooms",
+								"648b128d01f928fe216ae820"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/rooms/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rooms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel's rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8888/hotels/room/648b128d01f928fe216ae820",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"hotels",
+								"room",
+								"648b128d01f928fe216ae820"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Room Number For Reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/rooms/6540b8ace458918e902bc381/6540b8ace458918e902bc382",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rooms",
+								"6540b8ace458918e902bc381",
+								"6540b8ace458918e902bc382"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reservation Dates",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/rooms/648cd22f3257218af9174772/64c250d17806af2394449bfe/64c250d17806af2394449bff /2023-10-24T21:00:00.000Z/2023-10-26T22:00:00.000Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rooms",
+								"648cd22f3257218af9174772",
+								"64c250d17806af2394449bfe",
+								"64c250d17806af2394449bff ",
+								"2023-10-24T21:00:00.000Z",
+								"2023-10-26T22:00:00.000Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/rooms/64c250d07806af2394449bf3/64c250d07806af2394449bf6/2023-09-06T21:00:00.000Z/2023-09-07T21:00:00.000Z",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"rooms",
+								"64c250d07806af2394449bf3",
+								"64c250d07806af2394449bf6",
+								"2023-09-06T21:00:00.000Z",
+								"2023-09-07T21:00:00.000Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/rooms/650498eb0641921043abee5f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"rooms",
+								"650498eb0641921043abee5f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservations",
+			"item": [
+				{
+					"name": "Add Reservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Reservation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reservationDuration\": {\r\n        \"startDate\": \"2023-08-07T21:00:00.000Z\",\r\n        \"endDate\": \"2023-08-10T21:00:00.000Z\"\r\n    },\r\n    \"userId\": \"64ce75e063d1cd88fb90252d\",\r\n    \"hotelId\": \"648b128d01f928fe216ae820\",\r\n    \"roomTypeId\": \"64c2164249d9b393b263fc65\",\r\n    \"roomNumberId\": \"64c2164249d9b393b263fc67\",\r\n    \"cost\":150,\r\n    \"payed\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/reservations/64d1df3c54a439571c519df4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservations",
+								"64d1df3c54a439571c519df4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reservation with ID without updating room",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/reservations/64cca00fc36f8414d109aebe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"reservations",
+								"64cca00fc36f8414d109aebe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/reservations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/reservations/65881d7f4ad8928e3a49bfbc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservations",
+								"65881d7f4ad8928e3a49bfbc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reservation\":{\r\n        \"hotelName\":\"\",\r\n        \"roomImages\":[],\r\n        \"cost\":\"\"\r\n    }    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/reservations/create-checkout-session",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"reservations",
+								"create-checkout-session"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
