@@ -249,7 +249,7 @@ export const getPendingUser = async (req, res, next) => {
 export const verifyEmail = async (req, res, next) => {
   try {
     console.log(req?.params);
-    await PendingUser.deleteOne({ email: req.params.email });
+    await PendingUser.deleteMany({ email: req.params.email });
     res.status(200).json({ message: `${req.params.email} is verified` });
   } catch (error) {
     next(error);

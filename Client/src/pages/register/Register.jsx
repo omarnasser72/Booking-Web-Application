@@ -78,6 +78,7 @@ const Register = () => {
   const [phoneExists, setPhoneExists] = useState(false);
 
   const [currImg, setCurrImg] = useState("");
+  let userImg;
   const [submitting, setSubmitting] = useState(false);
 
   const [birthDate, setBirthDate] = useState(null);
@@ -170,12 +171,12 @@ const Register = () => {
       if (!validPhone) setPhoneFocus(true);
     } else {
       try {
-        if (file) handleUpload();
+        if (file) await handleUpload();
 
         const newUser = {
           ...info,
           email: email,
-          img: currImg,
+          img: file ? currImg || userImg : currImg,
           birthDate: birthDate,
           age: age,
         };
@@ -216,6 +217,7 @@ const Register = () => {
       console.log("uploaded successfully");
       console.log(uploadRes);
       setCurrImg(uploadRes?.data?.url);
+      userImg = uploadRes?.data?.url;
     } catch (error) {
       console.log(error);
     }
