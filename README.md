@@ -6,16 +6,25 @@ this is my 1st full stack MERN web app
 I build it using MVC design pattern
 
 <h1><bold>Stack</bold></h1>
-<ul><li>MongoDB</li>
-<li>Express</li><li>Reactjs</li>
-<li>Nodejs</li><li>ESM Javascript </li><li>cloudinary</li>
-<li>Bycrbt</li><li>nodemailer</li><li>jwt</li><li>stripe payment</li></ul>
+<p>☑️ MongoDB</p>
+<p>☑️ Express</p><p>☑️ Reactjs</p>
+<p>☑️ Nodejs</p><p>☑️ ESM Javascript</p><p>☑️ cloudinary</p>
+<p>☑️ Bycrbt</p><p>☑️ nodemailer</p><p>☑️ jwt</p><p>☑️ stripe payment</p>
+<p>☑️ React hooks, React router doom</p>
+<p>☑️ Context</p>
+<p>☑️ Html, Css, Scss</p>
+
 <h1><bold>Features</bold></h1>
-<ul><li>authentication system for user using jwt auth</li>
-<li>authorization system for Admin, user using middlewares</li><li>Real-time input validation for all forms</li><li>User able to update his own profile info</li><li>User can change his password </li><li>User can reset his password using his email</li><li>User, Hotel, Room, Reservations and Hotel Rates CRUD operations</li>
-<li>User can reserve room in a hotel for specific duration and able to cancel reservation </li><li>Realtime Search for hotels </li><li>filters using min and max price, no of people, reservation duration</li>
-<li>Rating hotel</li>
-</ul>
+<p>✅ authentication system for user using jwt auth</p>
+<p>✅ authorization system for Admin, user using middlewares</p><p>✅ Protected Route for users and admin </p><p>✅ Authentication context</p><p>✅ Search Context</p><p>✅ Real-time input validation for all forms</p><p>✅ User able to update his own profile info, User can change his password </p><p>✅ User can reset his password using his email. </p><p>✅ User, Hotel, Room, Reservations and Hotel Rates CRUD operations</p>
+<p>💥The following feature was a challenged one for me. </p>
+<p>✅ User can reserve room in hotel for specific duration and able to cancel reservation sure in this duration for this room won't be available to anyone to be reserved or be overlapped and once reservation is cancelled it becomes available to the users once more. </p><p>✅ Realtime Search for hotels </p><p>✅ filters using min and max price, no of people, reservation duration</p>
+<p>✅ Rating hotel</p>
+<p>✅ Responsive design for most types of mobiles </p>
+<h1><bold>Future enhancements:</bold></h1>
+<p>1️⃣ Adding flights plan </p> 
+<p>2️⃣ Adding attractions with it's custom reservations </p>
+<p>3️⃣ Adding Cars rentals, Airport taxi reservations</p>
 <h2>Backend Side</h2>
 <p>I used express using middlewares, moongose for connecting to MongoDB server and created my routes</p>
 <h2>Models</h2>
