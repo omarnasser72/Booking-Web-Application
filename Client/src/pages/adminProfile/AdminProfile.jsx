@@ -217,10 +217,7 @@ const AdminProfile = () => {
         data.append("upload_preset", "upload");
         const uploadRes = await org_axios.post(
           "https://api.cloudinary.com/v1_1/omarnasser/upload",
-          data,
-          {
-            headers: { accessToken: accessToken },
-          }
+          data
         );
         uploadedImgUrl = uploadRes?.data?.url;
         setCurrImg(uploadRes?.data?.url);
