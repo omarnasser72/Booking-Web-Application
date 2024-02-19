@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../hooks/useFetch";
 import axios from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutSuccess = () => {
   const reservationId = new URL(window.location.href).hash.split("?")[1];
   console.log(reservationId);
+  const navigate = useNavigate();
 
   const {
     data: reservation,
@@ -38,7 +40,8 @@ const CheckOutSuccess = () => {
   };
 
   useEffect(() => {
-    if (reservation) {
+    if (reservation && reservation.roomNumberId !== undefined) {
+      console.log(reservation.roomNumberId);
       const reserveRoom = async () => {
         const allDates =
           reservation?.reservationDuration?.startDate !== undefined &&
@@ -50,15 +53,13 @@ const CheckOutSuccess = () => {
             : null;
 
         await axios
-          .put(
-            `/rooms/availability/${reservation.roomNumberId}`,
-            { headers: { accesstoken: localStorage.getItem("accessToken") } },
-            {
-              dates: allDates,
-            }
-          )
+          .put(`/rooms/availability/${reservation.roomNumberId}`, {
+            headers: { accesstoken: localStorage.getItem("accessToken") },
+            dates: allDates,
+          })
           .catch((err) => {
             console.log(err);
+            navigate(`/checkoutFailed/${reservationId}`);
           });
 
         reservation.payed = true;
@@ -69,8 +70,9 @@ const CheckOutSuccess = () => {
           });
       };
       reserveRoom();
+      console.log("reserveRoom has been called.");
     }
-  }, [reservation]);
+  }, [reservation, reservation.roomNumberId]);
 
   return (
     <div className="checkoutContainer">

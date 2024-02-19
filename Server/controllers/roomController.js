@@ -39,17 +39,31 @@ export const updateRoom = async (req, res, next) => {
 };
 export const updateRoomAvailability = async (req, res, next) => {
   try {
+    //console.log("req.body: ", req.body);
     const roomExist = await Room.findOne({ "roomNumbers._id": req.params.id });
-    if (roomExist) {
-      await Room.updateOne(
-        { "roomNumbers._id": req.params.id },
-        {
-          $push: {
-            "roomNumbers.$.unavailableDates": req.body.dates,
-          },
-        }
+    if (!roomExist) return next(createError(404, "Room doesn't exist !"));
+
+    // Check for duplicated dates
+    const existingDates =
+      roomExist.roomNumbers.find((room) => room._id === req.params.id)
+        ?.unavailableDates || [];
+    const duplicatedDates = req.body.dates.filter((date) =>
+      existingDates.includes(date)
+    );
+    if (duplicatedDates.length > 0)
+      return next(
+        createError(400, `Duplicate dates found: ${duplicatedDates}`)
       );
-    }
+
+    await Room.updateOne(
+      { "roomNumbers._id": req.params.id },
+      {
+        $push: {
+          "roomNumbers.$.unavailableDates": req.body.dates,
+        },
+      }
+    );
+
     res.status(200).json("Room has been updated");
   } catch (error) {
     next(error);
