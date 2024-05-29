@@ -78,7 +78,7 @@ const Login = () => {
           });
           decoded.isAdmin === true
             ? navigate("/dashboardChoice")
-            : (window.location.href = "/");
+            : navigate("/");
         } else {
           dispatch({
             type: "LOGIN_FALIURE",

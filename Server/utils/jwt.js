@@ -11,10 +11,12 @@ export const createToken = (user) => {
 };
 
 export const verifyUser = async (req, res, next) => {
-  let accessToken = req.headers.authorization || req.cookies["accessToken"];
+  let accessToken =
+    req.headers.authorization ||
+    req.cookies["accessToken"] ||
+    req.headers.accesstoken;
 
   if (accessToken === undefined && req.headers.accesstoken !== undefined) {
-    //console.log(2);
     accessToken = req.headers.accesstoken;
   } else if (
     !accessToken ||
@@ -22,7 +24,6 @@ export const verifyUser = async (req, res, next) => {
     !jwtRegex.test(accessToken)
   )
     next(createError(400, "Invalid or missing token"));
-  //console.log("accessToken: ", accessToken);
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
     req.user = decoded;
@@ -38,10 +39,12 @@ export const verifyUser = async (req, res, next) => {
 };
 
 export const verifyAdmin = async (req, res, next) => {
-  //console.log("req.headers.accesstoken: ", req.headers.accesstoken);
-  let accessToken = req.headers.authorization || req.cookies["accessToken"];
-  if (accessToken === undefined && req.headers.accesstoken !== undefined) {
-    //console.log(1);
+  let accessToken =
+    req.headers.authorization ||
+    req.cookies["accessToken"] ||
+    req.headers.accesstoken;
+
+  if (accessToken !== undefined) {
     accessToken = req.headers.accesstoken;
   } else if (
     !accessToken ||
@@ -50,7 +53,6 @@ export const verifyAdmin = async (req, res, next) => {
   )
     next(createError(400, "Invalid or missing token"));
 
-  //console.log("accessToken: ", accessToken);
   try {
     const decoded = jwt.verify(accessToken, process.env.JWT);
     req.user = decoded;
