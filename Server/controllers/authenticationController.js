@@ -84,15 +84,24 @@ export const signup = async (req, res, next) => {
     const email = req.body.email;
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
-    const usernameExist = await User.find({
-      username: req.body.username,
-    });
+    const usernameExist =
+      (await User.find({
+        username: req.body.username,
+      })) ||
+      (await pendingUser.find({
+        username: req.body.username,
+      }));
+
     if (usernameExist.length > 0)
       throw createError(400, "Username Already exists");
 
-    const emailExist = await User.find({
-      email: email,
-    });
+    const emailExist =
+      (await User.find({
+        email: email,
+      })) ||
+      (await pendingUser.find({
+        email: req.body.email,
+      }));
     if (emailExist.length > 0) throw createError(400, "Email Already exists");
 
     const phoneExist = await User.find({
@@ -117,8 +126,13 @@ export const signup = async (req, res, next) => {
 
     console.log("PendingUser:", pendingUser);
     const pendingUserExists = await PendingUser.findOne({
-      userId: newUser._id,
+      $or: [
+        { userId: newUser._id },
+        { username: newUser.username },
+        { email: newUser.email },
+      ],
     });
+
     if (pendingUserExists)
       throw createError(400, "Pending User Already exists");
     else await pendingUser.save();
