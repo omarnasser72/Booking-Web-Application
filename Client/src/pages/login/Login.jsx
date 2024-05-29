@@ -9,6 +9,7 @@ import {
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode";
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -67,18 +68,17 @@ const Login = () => {
       dispatch({ type: "LOGIN_START" });
       try {
         const res = await axios.post(`/auth/login`, credentials);
-        console.log(res.data);
-        if (res.data) {
+        const decoded = jwtDecode(res?.data?.accessToken);
+        console.log(decoded);
+        if (decoded) {
           dispatch({
             type: "LOGIN_SUCCESS",
             payload: res.data.details,
             accessToken: res.data.accessToken,
           });
-          res.data.details.isAdmin === true
-            ? navigate("/dashboardChoice") //(window.location.href = "#/dashboardChoice")
-            : // navigate("/dashboardChoice")
-              (window.location.href = "/");
-          //: navigate("/");
+          decoded.isAdmin === true
+            ? navigate("/dashboardChoice")
+            : (window.location.href = "/");
         } else {
           dispatch({
             type: "LOGIN_FALIURE",
@@ -86,6 +86,7 @@ const Login = () => {
           });
         }
       } catch (error) {
+        console.log(error);
         dispatch({ type: "LOGIN_FALIURE", payload: error.response.data });
       }
     }

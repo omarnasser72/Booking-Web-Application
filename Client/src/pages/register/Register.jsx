@@ -181,22 +181,15 @@ const Register = () => {
           age: age,
         };
         console.log(newUser);
-        await axios
-          .post("/auth/signup", newUser)
-          .then(
-            Swal.fire({
-              title: "Registration Completed",
-              text: "We sent a verification mail to you!",
-              icon: "success",
-              confirmButtonColor: "rgb(66, 66, 66)",
-            }).then((result) => {
-              if (result.isConfirmed) navigate("/login");
-            })
-          )
-          .catch((error) => {
-            console.log(error);
-            setErrMsg(error?.response?.data?.message);
-          });
+        await axios.post("/auth/signup", newUser);
+        Swal.fire({
+          title: "Registration Completed",
+          text: "We sent a verification mail to you!",
+          icon: "success",
+          confirmButtonColor: "rgb(66, 66, 66)",
+        }).then((result) => {
+          if (result.isConfirmed) navigate("/login");
+        });
       } catch (error) {
         setErrMsg(error?.response?.data?.message);
         console.log(error);
